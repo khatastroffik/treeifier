@@ -1,0 +1,7 @@
+node_modules
+dist
+coverage
+types
+.github
+*.d.ts
+*.[jt]s?(x).map

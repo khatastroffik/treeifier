@@ -1,0 +1,21 @@
+{
+  // This configuration is for linting purpose only and won't emit any output.
+  // see: https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/parser/README.md#parseroptionsproject
+  
+  "extends": "./tsconfig.json",
+  "noEmit": true,
+  "include": [
+    "jest.config.js",
+    "test",
+    "src",
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "types",
+    "doc",
+    "coverage",
+    "package-lock.json",
+    ".github"
+  ]
+}
