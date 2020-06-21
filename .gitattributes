@@ -1,0 +1,5 @@
+*.css linguist-detectable=false
+*.js linguist-detectable=false
+*.md linguist-detectable=false
+*.ts linguist-detectable=true
+doc/* linguist-documentation
