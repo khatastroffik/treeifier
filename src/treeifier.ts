@@ -2,12 +2,16 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
 /**
- * treeifier 
+ * @khatastroffik/treeifier :: Treeifier (parser)
  *
  * License: MIT
  * Copyright (c) 2020, Loïs Bégué
  *
 **/
+
+// TODO:  handle circular references properly
+
+// import { TreeifierNodeParser, TreeifierNodeTypes } from "./TreeifierNodeParser";
 
 export type TreeSortFunction = ( objPropA: [string, unknown], objPropB: [string, unknown] ) => number;
 
@@ -48,6 +52,9 @@ export class Treeifier {
   static isEmpty( candidate: any ): boolean {
     return ( candidate === null ) || ( candidate === undefined );
   }
+  static isObject(candidate: any): boolean{
+    return candidate && ( typeof candidate === 'object' ) && !Treeifier.isArray( candidate ) && !Treeifier.isValue( candidate );
+  }
   static isNonEmptyObject( candidate: any ): boolean {
     return ( typeof candidate === 'object' ) && ( Object.getOwnPropertyNames( candidate ).length > 0 );
   }
@@ -66,12 +73,9 @@ export class Treeifier {
   static isArrayOfObjects( candidate: any ): boolean {
     return Treeifier.isArray( candidate ) &&
       !Treeifier.isEmptyArray( candidate ) &&
-      ( <any[]>candidate ).every( item => item && ( typeof item === 'object' ) && !Treeifier.isArray( item ) && !Treeifier.isValue( item ) )
+      ( <any[]>candidate ).every( item => Treeifier.isObject(item)); // item && ( typeof item === 'object' ) && !Treeifier.isArray( item ) && !Treeifier.isValue( item ) )
   }
 
-  // static isStandardArray( candidate: any ): boolean {
-  //   return Treeifier.isArray( candidate ) && (  !Treeifier.isArrayOfObjects( candidate )  || ( ( <any[]>candidate ).length == 0 ) );
-  // }
   /* ===== Tests for leafs ===== */
   static isValue( candidate: any ): boolean {
     return Treeifier.isString( candidate ) ||
@@ -108,7 +112,6 @@ export class Treeifier {
   }
   static getNodeType( nodeItem: any ): NodeType {
     let result: NodeType = NodeType.unknown;
-    // identify standard node types
     ( Treeifier.isString( nodeItem ) && ( result = NodeType.string ) ) ||
       ( Treeifier.isNumber( nodeItem ) && ( result = NodeType.number ) ) ||
       ( Treeifier.isBoolean( nodeItem ) && ( result = NodeType.boolean ) ) ||
@@ -116,11 +119,9 @@ export class Treeifier {
       ( Treeifier.isFunction( nodeItem ) && ( result = NodeType.function ) ) ||
       ( Treeifier.isSymbol( nodeItem ) && ( result = NodeType.symbol ) ) ||
       ( Treeifier.isEmpty( nodeItem ) && ( result = NodeType.empty ) ) ||
-      ( Treeifier.isArray( nodeItem ) && ( result = NodeType.array ) ) ||
+      ( Treeifier.isArray( nodeItem ) && ( result = Treeifier.isArrayOfObjects( nodeItem )? NodeType.arrayofobjects: NodeType.array ) ) ||
       ( Treeifier.isEmptyObject( nodeItem ) && ( result = NodeType.emptyObject ) ) ||
       ( Treeifier.isNonEmptyObject( nodeItem ) && ( result = NodeType.nonEmptyObject ) );
-    // specifically identify "Array of Objects" if result was array
-    ( result == NodeType.array && Treeifier.isArrayOfObjects( nodeItem ) && ( result = NodeType.arrayofobjects ) );
     return result;
   }
   private joint( index: number, maxIndex: number ): string {
@@ -133,6 +134,7 @@ export class Treeifier {
 
   private pushToOutput( prefix: string, index: number, maxIndex: number, label: string, value?: any, valueType: NodeType = NodeType.unknown ): void {
     const text = prefix + this.joint( index, maxIndex ) + label + ` (${NodeType[valueType]})` + ( value ? ': ' + value : '' );
+    // const text = prefix + this.joint( index, maxIndex ) + label + ( value ? ': ' + value : '' );
     this.output.push( text );
   }
 
