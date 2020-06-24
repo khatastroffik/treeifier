@@ -11,7 +11,7 @@
 
 // TODO:  add a node type for circular references
 
-export const enum TreeifierNodeTypes {
+export enum TreeifierNodeTypes {
   unknown = 0,
   empty = 1,
   string = 2,

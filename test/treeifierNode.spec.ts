@@ -42,6 +42,7 @@ describe( 'treeifier node', () => {
     expect( nodeFactory( [1,2,3] ).toString() ).toBe( '[1, 2, 3]' );
     expect( nodeFactory( [{},{},{}] ).toString() ).toBe( 'array of objects' );
     expect( nodeFactory( {a:1} ).toString() ).toBe( 'object' );
+    expect( nodeFactory( Symbol('a symbol') ).toString() ).toBe( 'Symbol(a symbol)' );
     // expect( nodeFactory( XXXX ).toString() ).toBe( 'xxx' );
 
   } );
