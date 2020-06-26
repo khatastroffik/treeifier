@@ -9,8 +9,6 @@
  *
 **/
 
-// TODO:  add a node type for circular references
-
 export enum TreeifierNodeTypes {
   unknown = 0,
   empty = 1,

@@ -9,61 +9,30 @@
  *
 **/
 
-// TODO:  handle circular references properly
-
-import { TreeifierNodeParser, TreeifierNodeTypes } from "./TreeifierNodeParser";
+import { TreeifierNode } from './TreeifierNode';
 
 export type TreeSortFunction = ( objPropA: [string, unknown], objPropB: [string, unknown] ) => number;
-
+export type NodeProcessorFunction = ( node: TreeifierNode ) => void;
 
 export class Treeifier {
 
-  private output: Array<string> = [];
-
-  private joint( index: number, maxIndex: number ): string {
-    return ( index == maxIndex ) ? '└─ ' : '├─ ';
+  private processInternal( node: TreeifierNode, processor: NodeProcessorFunction ): void {
+    processor(node);
+    if (node.depth > 5) return;
+    if ( node.isBranch && !node.isCircular ) {
+      Object.entries( node.value ).forEach( ( [key, value], index ) => {
+        const subNode = new TreeifierNode( key, value, index, node );
+        this.processInternal( subNode, processor );
+      } );
+    }
+    // processor(node);
   }
 
-  private updatePrefix( currentPrefix: string, remainingParent: number ): string {
-    return currentPrefix + ( ( remainingParent == 0 ) ? '   ' : '│  ' );
+  process( root: any, label: string, nodeProcessorCallback: NodeProcessorFunction ): void {
+    if ( !nodeProcessorCallback ) throw new Error( 'Cannot process without a processor function.' );
+    const rootObjectNode = new TreeifierNode( label ? label:  'root', root, 0, null);
+    this.processInternal( rootObjectNode, nodeProcessorCallback);
   }
-
-  private pushToOutput( prefix: string, index: number, maxIndex: number, label: string, value: any, valueType: TreeifierNodeTypes ): void {
-    const text = prefix + this.joint( index, maxIndex ) + label + ` (${TreeifierNodeTypes[valueType]})` + ( value ? ': ' + value : '' );
-    // const text = prefix + this.joint( index, maxIndex ) + label + ( value ? ': ' + value : '' );
-    this.output.push( text );
-  }
-
-  private parseInternal( inObject: Record<string, unknown>, depth: number, prefix: string ): void {
-    //const objectType = Treeifier.getNodeType(inObject);
-    const maxIndex = inObject && Object.entries( inObject ).length - 1;
-    const entries = Object.entries( inObject );
-    entries.forEach( ( [key, value], index ) => {
-      const valueType = TreeifierNodeParser.getNodeType( value );
-      if ( TreeifierNodeParser.isLeaf( value )) {
-        this.pushToOutput( prefix, index, maxIndex, key, value, valueType );
-        return;
-      }
-      this.pushToOutput( prefix, index, maxIndex, key, '', valueType );
-      if ( valueType === TreeifierNodeTypes.arrayofobjects ) {
-        Array( value ).forEach( element => {
-          this.parseInternal( element as Record<string, unknown>, depth + 1, this.updatePrefix( prefix, maxIndex - index ) );
-        } );
-      } else {
-        this.parseInternal( value as Record<string, unknown>, depth + 1, this.updatePrefix( prefix, maxIndex - index ) );
-      }
-
-    } );
-    return;
-  }
-
-  parse( objectToParse: Record<string, unknown> ): Array<string> {
-    this.output = [];
-    if ( !objectToParse ) throw new Error( 'Cannot parse non exisiting object.' );
-    this.parseInternal( objectToParse, 0, '' );
-    return this.output;
-  }
-
 }
 
 

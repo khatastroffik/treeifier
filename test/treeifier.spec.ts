@@ -9,156 +9,136 @@
 **/
 
 import 'jest-extended';
-import { Treeifier } from "../src/treeifier";
+import { Treeifier, NodeProcessorFunction } from "../src/treeifier";
+import { TreeifierNode } from '../src/TreeifierNode';
+import { TreeifierNodeTypes } from '../src/TreeifierNodeParser';
 
-describe( 'treeifier', () => {
-  it( 'should not parse non exisiting objects', () => {
-    const treeifier = new Treeifier();
-    const z: any = null;
-    expect( () => treeifier.parse( z ) ).toThrow( 'Cannot parse non exisiting object.' );
-  } );
+let sequentialProcessor: NodeProcessorFunction;
+let sequentialFilteringProcessor: NodeProcessorFunction;
+let sequentialResult: string;
 
-  describe( 'parser', () => {
-
-    const testobject1 = {
-      "a": "Walker was here",
-      "b": {
-        "c": 123,
-        "d": NaN
-      },
-      "e": [1, 2, 3],
-      "f": {
-        "g": new Date(),
-        "h": "a string",
-        "i": null,
-        "j": undefined,
-        "k": (): boolean => {return true },
-      "l": [
-        {
-          "first": "Elvis has just left the building",
-          "second": ["a","b","c"],
-          "third": true,
-          "fourth": 'should be a symbol',//Symbol("atari")
-        },
-        {
-          "Min": -123,
-          "max": Infinity
-        }
-      ]
+describe( 'treeifier process', () => {
+  describe( 'called with a sequencial processor', () => {
+    beforeAll( function () {
+      sequentialProcessor = ( node: TreeifierNode ): void => {
+        const circular = node.isCircular ? ' -> ' + node.circularRefNode?.key ?? '?' : '';
+        // (node.depth>1) && (node.prefix = node.prefix + '   ');
+        // (node.depth>0) && (node.joint = node.joint.trim() + '──  ');
+        sequentialResult += node.prefix + node.joint + node.key + ( node.isLeaf ? ' : ' + node.toString() : '' ) + circular + '\n';
       }
-    };
+      sequentialFilteringProcessor = ( node: TreeifierNode ): void => {
+        if ( [TreeifierNodeTypes.function, TreeifierNodeTypes.symbol].includes( node.nodeType ) ) return;
+        sequentialResult += node.prefix + node.joint + node.key + ( node.isLeaf ? ' : ' + node.toString() : '' ) + '\n';
+      }
+    } );
 
-    // const testobject2 = JSON.parse(`
-    // {
-    //   "name": "@khatastroffik/treeifier",
-    //   "version": "1.0.0",
-    //   "description": "A Typescript/JavaScript library generating a tree representation of an object",
-    //   "main": "dist/treeifier",
-    //   "node": "dist/treeifier.js",
-    //   "publishConfig": {
-    //     "registry": "https://registry.npmjs.org/",
-    //     "access": "public"
-    //   },
-    //   "repository": {
-    //     "url": "https://github.com/khatastroffik/treeifier.git",
-    //     "type": "git"
-    //   },
-    //   "bugs": {
-    //     "url": "https://github.com/khatastroffik/treeifier/issues"
-    //   },
-    //   "scripts": {
-    //     "test": "jest",
-    //     "coverage": "jest --coverage",
-    //     "lint": "eslint -f pretty src",
-    //     "build": "tsc",
-    //     "dev:test": "jest --watch --verbose",
-    //     "dev:build": "tsc --watch",
-    //     "prepublishOnly": "npm run prod",
-    //     "prod": "npm run prod:clean && npm run prod:lint && npm run prod:test && npm run prod:build && npm run prod:copy",
-    //     "prod:build": "npm run build",
-    //     "prod:test": "jest --silent --all",
-    //     "prod:lint": "eslint --quiet src",
-    //     "prod:clean": "npm run clean",
-    //     "prod:copy": "npm run copy:typescripts",
-    //     "clean": "rimraf ./dist ./types ./coverage",
-    //     "copy:typescripts": "copyfiles -u 1 src/**/* dist/",
-    //     "changelog": "npx generate-changelog"
-    //   },
-    //   "keywords": [
-    //     "Typescript",
-    //     "Tree",
-    //     "Treeify",
-    //     "Treeifier"
-    //   ],
-    //   "author": {
-    //     "name": "Loïs Bégué",
-    //     "url": "https://www.khatastroffik.net"
-    //   },
-    //   "homepage": "https://www.khatastroffik.net",
-    //   "license": "MIT",
-    //   "engines": {
-    //     "node": ">=13.x",
-    //     "npm": ">=6.x"
-    //   },
-    //   "files": [
-    //     "/dist",
-    //     "/types"
-    //   ],
-    //   "directories": {
-    //     "doc": "doc"
-    //   },
-    //   "devDependencies": {
-    //     "@types/jest": "^26.0.0",
-    //     "@types/node": "^14.0.13",
-    //     "@typescript-eslint/eslint-plugin": "^3.3.0",
-    //     "@typescript-eslint/parser": "^3.3.0",
-    //     "copyfiles": "^2.3.0",
-    //     "eslint": "^7.3.0",
-    //     "eslint-formatter-pretty": "^4.0.0",
-    //     "eslint-plugin-deprecation": "^1.1.0",
-    //     "eslint-plugin-jest": "^23.16.0",
-    //     "eslint-plugin-notice": "^0.9.10",
-    //     "jest": "^26.0.1",
-    //     "jest-extended": "^0.11.5",
-    //     "rimraf": "^3.0.2",
-    //     "ts-jest": "^26.1.0",
-    //     "ts-node": "^8.10.2",
-    //     "typescript": "^3.9.5"
-    //   },
-    //   "dependencies": {
-    //     "tslib": "^2.0.0"
-    //   }
-    // }    
-    // `);
-    
-    it( 'should work...', () => {
+    beforeEach( function () {
+      sequentialResult = '';
+    } );
+
+    it( 'should work with all node types', () => {
       const tree = new Treeifier();
-      console.log( tree.parse( testobject1 ).join( '\n' ) );
+      const item = {
+        "a": "Chuck Norris was here",
+        "b": {
+          "c": 123,
+          "d": NaN
+        },
+        "e": [1, 2, 3],
+        "f": {
+          "g": new Date(),
+          "h": "a string",
+          "i": null,
+          "j": undefined,
+          "k": (): boolean => { return true },
+          "l": [
+            {
+              "first": "Elvis has just left the building",
+              "second": ["a", "b", "c"],
+              "third": true,
+              "fourth": Symbol("atari")
+            },
+            {
+              "Min": -123,
+              "max": Infinity
+            }
+          ]
+        }        
+      };
+      const expected = 'root\n├─ a : Chuck Norris was here\n├─ b\n│  ├─ c : 123\n│  └─ d : NaN\n├─ e : [1, 2, 3]\n└─ f\n   ├─ g : 26.6.2020\n   ├─ h '
+      + ': a string\n   ├─ i : null\n   ├─ j : undefined\n   ├─ k : function\n   └─ l\n      ├─ 0\n      │  ├─ first : Elvis has just '
+      + 'left the building\n      │  ├─ second : [a, b, c]\n      │  ├─ third : true\n      │  └─ fourth : Symbol(atari)\n      └─ '
+      + '1\n         ├─ Min : -123\n         └─ max : Infinity\n';
+      tree.process( item, '', sequentialProcessor );
+      expect( sequentialResult ).toBe( expected );
+    } );
+
+    it( 'should work with an array of objects', () => {
+      const tree = new Treeifier();
+      const item = [{ a: 1 }, { b: 2, c: { d: 3, e: 4, f: [1, 2, 3], g: { h: 'a', j: 'b', k: 'c' } } }];
+      const expected = 'root\n├─ 0\n│  └─ a : 1\n└─ 1\n   ├─ b : 2\n   └─ c\n      ├─ d : 3\n      ├─ e : 4\n      ├─ f : [1, 2, 3]\n      └─ g\n         ├─ h : a\n         ├─ j : b\n         └─ k : c\n';
+      tree.process( item, '', sequentialProcessor );
+      expect( sequentialResult ).toBe( expected );
+    } );
+
+    it( 'should work with a standard object', () => {
+      const tree = new Treeifier();
+      const item = { a: 1, b: { c: '#', someparent: new Object() }, f: (): number => { return 1 }, g: { h: { i: { j: 987, k: 'test' } }, l: ["a", "b", "c"] }, m: 3 };
+      const expected = 'root\n├─ a : 1\n├─ b\n│  ├─ c : #\n│  └─ someparent : {}\n├─ f : function\n├─ g\n│  ├─ h\n│  │  └─ i\n│  │     ├─ j : 987\n│  │     └─ k : test\n│  └─ l : [a, b, c]\n└─ m : 3\n';
+      tree.process( item, '', sequentialProcessor );
+      expect( sequentialResult ).toBe( expected );
+    } );
+
+    it( 'should work with an object containing circular refs', () => {
+      const tree = new Treeifier();
+      const item = { a: 1, b: { c: '#', someparent: new Object() }, f: (): number => { return 1 }, g: { h: { i: { j: 987, k: 'test' } }, l: ["a", "b", "c"] }, m: 3 };
+      item.b.someparent = item; // setup a circular reference
+      const expected = 'root\n├─ a : 1\n├─ b\n│  ├─ c : #\n│  └─ someparent : circular ref. -> root\n├─ f : function\n├─ g\n│  ├─ h\n│  │  └─ i\n│  │     ├─ j : 987\n│  │     └─ k : test\n│  └─ l : [a, b, c]\n└─ m : 3\n';
+      tree.process( item, '', sequentialProcessor );
+      expect( sequentialResult ).toBe( expected );
+    } );
+
+    it( 'should use the provided root label', () => {
+      const tree = new Treeifier();
+      const item = { a: 1 };
+      const rootLabel = 'my root label';
+      const expected = 'my root label\n└─ a : 1\n';
+      tree.process( item, rootLabel, sequentialProcessor );
+      expect( sequentialResult ).toBe( expected );
+    } );
+
+    it( 'should use filter using the processor function', () => {
+      const tree = new Treeifier();
+      const item = { a: 1, b: new Function(), c: Symbol( 'test symbol' ), d: 'd' };
+      const expected = 'root\n├─ a : 1\n└─ d : d\n';
+      tree.process( item, '', sequentialFilteringProcessor );
+      expect( sequentialResult ).toBe( expected );
+    } );
+
+    it( '++++ DEBUG ++++', () => {
+      const tree = new Treeifier();
+      const person = {
+        name: {
+          firstName: 'Bobby',
+          lastName: 'Brown'
+        },
+        age: 30,
+        gender: 'male',
+        dateOfBirth: new Date( 1990, 11, 11 ), // => 11.12.1990
+        interests: ['music', 'skiing'],
+        bio: function (): void {
+          alert( this.name.firstName + ' ' + this.name.lastName +
+            ' is ' + this.age + ' years old. He likes ' +
+            this.interests[0] + ' and ' + this.interests[1] + '.' );
+        },
+        greeting: function (): string {
+          return 'Hi! I\'m ' + this.name.firstName + '.';
+        }
+      };
+      tree.process( person, '', sequentialProcessor );
+      // console.log( sequentialResult, person.greeting() );
       expect( true ).toBeTrue();
     } );
 
   } );
 } );
-
-/*
-
-Test objects:
-
-
-var person = {
-  name: ['Bob', 'Smith'],
-  age: 32,
-  gender: 'male',
-  interests: ['music', 'skiing'],
-  bio: function() {
-    alert(this.name[0] + ' ' + this.name[1] +
-    ' is ' + this.age + ' years old. He likes ' +
-    this.interests[0] + ' and ' + this.interests[1] + '.');
-  },
-  greeting: function() {
-    alert('Hi! I\'m ' + this.name[0] + '.');
-  }
-};
-
-
-*/
