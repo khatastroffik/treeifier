@@ -18,7 +18,6 @@ export class Treeifier {
 
   private processInternal( node: TreeifierNode, processor: NodeProcessorFunction ): void {
     processor(node);
-    if (node.depth > 5) return;
     if ( node.isBranch && !node.isCircular ) {
       Object.entries( node.value ).forEach( ( [key, value], index ) => {
         const subNode = new TreeifierNode( key, value, index, node );

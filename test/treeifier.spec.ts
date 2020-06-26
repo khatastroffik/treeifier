@@ -115,6 +115,15 @@ describe( 'treeifier process', () => {
       expect( sequentialResult ).toBe( expected );
     } );
 
+    it( 'should thrown when processor function is missing', () => {
+      const tree = new Treeifier();
+      const item = { a: 1, d: 'd' };
+      const expected = 'Cannot process without a processor function.';
+      const dummyProcessorFunction: any = null;
+      expect( () => {tree.process( item, '', dummyProcessorFunction )} ).toThrow( expected );
+    } );
+
+
     it( '++++ DEBUG ++++', () => {
       const tree = new Treeifier();
       const person = {
