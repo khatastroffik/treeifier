@@ -23,8 +23,9 @@ export class TreeifierNode {
   private circularRefIndex!: number;
   public prefix: string;
   public joint: string;
-
-
+  public readonly children: Array<TreeifierNode>;
+  public processResult: any;
+  public readonly path: string;
 
   constructor(
     public readonly key: string,
@@ -45,8 +46,11 @@ export class TreeifierNode {
     this.maxIndex = parent ? Object.entries( parent.value ).length - 1 : 0; // this works for both arrays and objects
     this.prefix = parent ? ( parent.prefix ) + ( ( ( parent.maxIndex - parent.index ) === 0 ) ? ( ( this.depth > 1 ) ? '   ' : '' ) : '│  ' ) : '';
     this.joint = parent ? ( ( this.index === this.maxIndex ) ? '└─ ' : '├─ ' ) : '';
-  }
-
+    this.children = [];
+    parent && (parent.children.push(this)); // add this node to its parent's children list
+    this.path = `${parent? parent.path + '.': ''}${this.key}`;
+    this.processResult = null;
+  } 
 
   toString(): string {
     // IMPORTANT: the order of the tests is important here!

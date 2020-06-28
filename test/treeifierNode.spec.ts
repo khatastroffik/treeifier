@@ -44,6 +44,25 @@ describe( 'treeifier node', () => {
     expect( nodeFactory( { a: 1 } ).toString() ).toBe( 'object' );
     expect( nodeFactory( Symbol( 'a symbol' ) ).toString() ).toBe( 'Symbol(a symbol)' );
     // expect( nodeFactory( XXXX ).toString() ).toBe( 'xxx' );
+  } );
+  it( 'should add child nodes', () => {
 
+    const parentNode = new TreeifierNode( 'parentnode', {}, 0, null );
+    const childNode = new TreeifierNode( 'childnode', {}, 0, parentNode );
+    const grandchild = new TreeifierNode( 'grandchildnode', {}, 0, childNode );
+    expect( childNode.parent ).toBe( parentNode );
+    expect( parentNode.children ).toHaveLength( 1 );
+    expect( parentNode.children[0] ).toBe( childNode );
+    expect( childNode.children ).toHaveLength( 1 );
+    expect( childNode.children[0] ).toBe( grandchild );
+    expect( childNode.children[0].key ).toBe( 'grandchildnode' );
+  } );
+  it( 'should generate node paths', () => {
+    const parentNode = new TreeifierNode( 'parentnode.ext', {}, 0, null );
+    const childNode = new TreeifierNode( 'childnode.ext', {}, 0, parentNode );
+    const grandchild = new TreeifierNode( 'grandchildnode', {}, 0, childNode );
+    expect( parentNode.path ).toBe( 'parentnode.ext' );
+    expect( childNode.path ).toBe( 'parentnode.ext.childnode.ext' );
+    expect( grandchild.path ).toBe( 'parentnode.ext.childnode.ext.grandchildnode' );
   } );
 } );
