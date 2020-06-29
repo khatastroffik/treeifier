@@ -1,0 +1,379 @@
+<html>
+<style>
+  .leaf .key {
+    color: black
+  }
+
+  .leaf .value {
+    color: blue
+  }
+
+  .circular {
+    color: brown
+  }
+
+  li.leaf.nt_function .value,
+  li.leaf.nt_symbol .value {
+    color: green
+  }
+
+  li.leaf.nt_nonEmptyObject>span.key {
+    font-weight: bold
+  }
+
+</style>
+
+<body>
+  <h1>Object Tree</h1>
+
+  <ul id="list@root" class="branch nt_nonEmptyObject">
+    <li id="root.key" class="leaf nt_string">
+      <span class="key">key: </span><span class="value">root</span>
+    </li>
+    <li id="root.value" class="leaf nt_nonEmptyObject">
+      <span class="key">value: </span>
+      <ul id="list@root.value" class="branch nt_nonEmptyObject">
+        <li id="root.value.a" class="leaf nt_number">
+          <span class="key">a: </span><span class="value">1</span>
+        </li>
+        <li id="root.value.b" class="leaf nt_function">
+          <span class="key">b: </span><span class="value">function</span>
+        </li>
+        <li id="root.value.c" class="leaf nt_symbol">
+          <span class="key">c: </span><span class="value">Symbol(test symbol)</span>
+        </li>
+        <li id="root.value.d" class="leaf nt_string">
+          <span class="key">d: </span><span class="value">d</span>
+        </li>
+      </ul>
+    </li>
+    <li id="root.index" class="leaf nt_number">
+      <span class="key">index: </span><span class="value">0</span>
+    </li>
+    <li id="root.parent" class="leaf nt_empty">
+      <span class="key">parent: </span><span class="value">null</span>
+    </li>
+    <li id="root.nodeType" class="leaf nt_number">
+      <span class="key">nodeType: </span><span class="value">10</span>
+    </li>
+    <li id="root.ancestors" class="leaf nt_array">
+      <span class="key">ancestors: </span><span class="value">[]</span>
+    </li>
+    <li id="root.circularRefIndex" class="leaf nt_number">
+      <span class="key">circularRefIndex: </span><span class="value">-1</span>
+    </li>
+    <li id="root.isCircular" class="leaf nt_boolean">
+      <span class="key">isCircular: </span><span class="value">false</span>
+    </li>
+    <li id="root.circularRefNode" class="leaf nt_empty">
+      <span class="key">circularRefNode: </span><span class="value">null</span>
+    </li>
+    <li id="root.isLeaf" class="leaf nt_boolean">
+      <span class="key">isLeaf: </span><span class="value">false</span>
+    </li>
+    <li id="root.isBranch" class="leaf nt_boolean">
+      <span class="key">isBranch: </span><span class="value">true</span>
+    </li>
+    <li id="root.isValue" class="leaf nt_boolean">
+      <span class="key">isValue: </span><span class="value">false</span>
+    </li>
+    <li id="root.depth" class="leaf nt_number">
+      <span class="key">depth: </span><span class="value">0</span>
+    </li>
+    <li id="root.maxIndex" class="leaf nt_number">
+      <span class="key">maxIndex: </span><span class="value">0</span>
+    </li>
+    <li id="root.prefix" class="leaf nt_string">
+      <span class="key">prefix: </span><span class="value"></span>
+    </li>
+    <li id="root.joint" class="leaf nt_string">
+      <span class="key">joint: </span><span class="value"></span>
+    </li>
+    <li id="root.children" class="leaf nt_arrayofobjects">
+      <span class="key">children: </span>
+      <ol start="0" id="list@root.children" class="branch nt_arrayofobjects">
+        <li id="root.children.0" class="leaf nt_nonEmptyObject">
+
+          <ul id="list@root.children.0" class="branch nt_nonEmptyObject">
+            <li id="root.children.0.key" class="leaf nt_string">
+              <span class="key">key: </span><span class="value">a</span>
+            </li>
+            <li id="root.children.0.value" class="leaf nt_number">
+              <span class="key">value: </span><span class="value">1</span>
+            </li>
+            <li id="root.children.0.index" class="leaf nt_number">
+              <span class="key">index: </span><span class="value">0</span>
+            </li>
+            <li id="root.children.0.parent" class="leaf nt_nonEmptyObject">
+              <span class="key">parent: </span><span class="value">circular ref.</span> <span class="circular">root</span>
+            </li>
+            <li id="root.children.0.nodeType" class="leaf nt_number">
+              <span class="key">nodeType: </span><span class="value">3</span>
+            </li>
+            <li id="root.children.0.ancestors" class="leaf nt_arrayofobjects">
+              <span class="key">ancestors: </span>
+              <ol start="0" id="list@root.children.0.ancestors" class="branch nt_arrayofobjects">
+                <li id="root.children.0.ancestors.0" class="leaf nt_nonEmptyObject">
+                  <span class="value">circular ref.</span> <span class="circular">root</span>
+                </li>
+              </ol>
+            </li>
+            <li id="root.children.0.circularRefIndex" class="leaf nt_number">
+              <span class="key">circularRefIndex: </span><span class="value">-1</span>
+            </li>
+            <li id="root.children.0.isCircular" class="leaf nt_boolean">
+              <span class="key">isCircular: </span><span class="value">false</span>
+            </li>
+            <li id="root.children.0.circularRefNode" class="leaf nt_empty">
+              <span class="key">circularRefNode: </span><span class="value">null</span>
+            </li>
+            <li id="root.children.0.isLeaf" class="leaf nt_boolean">
+              <span class="key">isLeaf: </span><span class="value">true</span>
+            </li>
+            <li id="root.children.0.isBranch" class="leaf nt_boolean">
+              <span class="key">isBranch: </span><span class="value">false</span>
+            </li>
+            <li id="root.children.0.isValue" class="leaf nt_boolean">
+              <span class="key">isValue: </span><span class="value">true</span>
+            </li>
+            <li id="root.children.0.depth" class="leaf nt_number">
+              <span class="key">depth: </span><span class="value">1</span>
+            </li>
+            <li id="root.children.0.maxIndex" class="leaf nt_number">
+              <span class="key">maxIndex: </span><span class="value">3</span>
+            </li>
+            <li id="root.children.0.prefix" class="leaf nt_string">
+              <span class="key">prefix: </span><span class="value"></span>
+            </li>
+            <li id="root.children.0.joint" class="leaf nt_string">
+              <span class="key">joint: </span><span class="value">├─ </span>
+            </li>
+            <li id="root.children.0.children" class="leaf nt_array">
+              <span class="key">children: </span><span class="value">[]</span>
+            </li>
+            <li id="root.children.0.path" class="leaf nt_string">
+              <span class="key">path: </span><span class="value">root.a</span>
+            </li>
+            <li id="root.children.0.processResult" class="leaf nt_string">
+              <span class="key">processResult: </span><span class="value">├─ a : 1</span>
+            </li>
+          </ul>
+        </li>
+        <li id="root.children.1" class="leaf nt_nonEmptyObject">
+
+          <ul id="list@root.children.1" class="branch nt_nonEmptyObject">
+            <li id="root.children.1.key" class="leaf nt_string">
+              <span class="key">key: </span><span class="value">b</span>
+            </li>
+            <li id="root.children.1.value" class="leaf nt_function">
+              <span class="key">value: </span><span class="value">function</span>
+            </li>
+            <li id="root.children.1.index" class="leaf nt_number">
+              <span class="key">index: </span><span class="value">1</span>
+            </li>
+            <li id="root.children.1.parent" class="leaf nt_nonEmptyObject">
+              <span class="key">parent: </span><span class="value">circular ref.</span> <span class="circular">root</span>
+            </li>
+            <li id="root.children.1.nodeType" class="leaf nt_number">
+              <span class="key">nodeType: </span><span class="value">6</span>
+            </li>
+            <li id="root.children.1.ancestors" class="leaf nt_arrayofobjects">
+              <span class="key">ancestors: </span>
+              <ol start="0" id="list@root.children.1.ancestors" class="branch nt_arrayofobjects">
+                <li id="root.children.1.ancestors.0" class="leaf nt_nonEmptyObject">
+                  <span class="value">circular ref.</span> <span class="circular">root</span>
+                </li>
+              </ol>
+            </li>
+            <li id="root.children.1.circularRefIndex" class="leaf nt_number">
+              <span class="key">circularRefIndex: </span><span class="value">-1</span>
+            </li>
+            <li id="root.children.1.isCircular" class="leaf nt_boolean">
+              <span class="key">isCircular: </span><span class="value">false</span>
+            </li>
+            <li id="root.children.1.circularRefNode" class="leaf nt_empty">
+              <span class="key">circularRefNode: </span><span class="value">null</span>
+            </li>
+            <li id="root.children.1.isLeaf" class="leaf nt_boolean">
+              <span class="key">isLeaf: </span><span class="value">true</span>
+            </li>
+            <li id="root.children.1.isBranch" class="leaf nt_boolean">
+              <span class="key">isBranch: </span><span class="value">false</span>
+            </li>
+            <li id="root.children.1.isValue" class="leaf nt_boolean">
+              <span class="key">isValue: </span><span class="value">true</span>
+            </li>
+            <li id="root.children.1.depth" class="leaf nt_number">
+              <span class="key">depth: </span><span class="value">1</span>
+            </li>
+            <li id="root.children.1.maxIndex" class="leaf nt_number">
+              <span class="key">maxIndex: </span><span class="value">3</span>
+            </li>
+            <li id="root.children.1.prefix" class="leaf nt_string">
+              <span class="key">prefix: </span><span class="value"></span>
+            </li>
+            <li id="root.children.1.joint" class="leaf nt_string">
+              <span class="key">joint: </span><span class="value">├─ </span>
+            </li>
+            <li id="root.children.1.children" class="leaf nt_array">
+              <span class="key">children: </span><span class="value">[]</span>
+            </li>
+            <li id="root.children.1.path" class="leaf nt_string">
+              <span class="key">path: </span><span class="value">root.b</span>
+            </li>
+            <li id="root.children.1.processResult" class="leaf nt_string">
+              <span class="key">processResult: </span><span class="value">├─ b : function</span>
+            </li>
+          </ul>
+        </li>
+        <li id="root.children.2" class="leaf nt_nonEmptyObject">
+
+          <ul id="list@root.children.2" class="branch nt_nonEmptyObject">
+            <li id="root.children.2.key" class="leaf nt_string">
+              <span class="key">key: </span><span class="value">c</span>
+            </li>
+            <li id="root.children.2.value" class="leaf nt_symbol">
+              <span class="key">value: </span><span class="value">Symbol(test symbol)</span>
+            </li>
+            <li id="root.children.2.index" class="leaf nt_number">
+              <span class="key">index: </span><span class="value">2</span>
+            </li>
+            <li id="root.children.2.parent" class="leaf nt_nonEmptyObject">
+              <span class="key">parent: </span><span class="value">circular ref.</span> <span class="circular">root</span>
+            </li>
+            <li id="root.children.2.nodeType" class="leaf nt_number">
+              <span class="key">nodeType: </span><span class="value">7</span>
+            </li>
+            <li id="root.children.2.ancestors" class="leaf nt_arrayofobjects">
+              <span class="key">ancestors: </span>
+              <ol start="0" id="list@root.children.2.ancestors" class="branch nt_arrayofobjects">
+                <li id="root.children.2.ancestors.0" class="leaf nt_nonEmptyObject">
+                  <span class="value">circular ref.</span> <span class="circular">root</span>
+                </li>
+              </ol>
+            </li>
+            <li id="root.children.2.circularRefIndex" class="leaf nt_number">
+              <span class="key">circularRefIndex: </span><span class="value">-1</span>
+            </li>
+            <li id="root.children.2.isCircular" class="leaf nt_boolean">
+              <span class="key">isCircular: </span><span class="value">false</span>
+            </li>
+            <li id="root.children.2.circularRefNode" class="leaf nt_empty">
+              <span class="key">circularRefNode: </span><span class="value">null</span>
+            </li>
+            <li id="root.children.2.isLeaf" class="leaf nt_boolean">
+              <span class="key">isLeaf: </span><span class="value">true</span>
+            </li>
+            <li id="root.children.2.isBranch" class="leaf nt_boolean">
+              <span class="key">isBranch: </span><span class="value">false</span>
+            </li>
+            <li id="root.children.2.isValue" class="leaf nt_boolean">
+              <span class="key">isValue: </span><span class="value">true</span>
+            </li>
+            <li id="root.children.2.depth" class="leaf nt_number">
+              <span class="key">depth: </span><span class="value">1</span>
+            </li>
+            <li id="root.children.2.maxIndex" class="leaf nt_number">
+              <span class="key">maxIndex: </span><span class="value">3</span>
+            </li>
+            <li id="root.children.2.prefix" class="leaf nt_string">
+              <span class="key">prefix: </span><span class="value"></span>
+            </li>
+            <li id="root.children.2.joint" class="leaf nt_string">
+              <span class="key">joint: </span><span class="value">├─ </span>
+            </li>
+            <li id="root.children.2.children" class="leaf nt_array">
+              <span class="key">children: </span><span class="value">[]</span>
+            </li>
+            <li id="root.children.2.path" class="leaf nt_string">
+              <span class="key">path: </span><span class="value">root.c</span>
+            </li>
+            <li id="root.children.2.processResult" class="leaf nt_string">
+              <span class="key">processResult: </span><span class="value">├─ c : Symbol(test symbol)</span>
+            </li>
+          </ul>
+        </li>
+        <li id="root.children.3" class="leaf nt_nonEmptyObject">
+
+          <ul id="list@root.children.3" class="branch nt_nonEmptyObject">
+            <li id="root.children.3.key" class="leaf nt_string">
+              <span class="key">key: </span><span class="value">d</span>
+            </li>
+            <li id="root.children.3.value" class="leaf nt_string">
+              <span class="key">value: </span><span class="value">d</span>
+            </li>
+            <li id="root.children.3.index" class="leaf nt_number">
+              <span class="key">index: </span><span class="value">3</span>
+            </li>
+            <li id="root.children.3.parent" class="leaf nt_nonEmptyObject">
+              <span class="key">parent: </span><span class="value">circular ref.</span> <span class="circular">root</span>
+            </li>
+            <li id="root.children.3.nodeType" class="leaf nt_number">
+              <span class="key">nodeType: </span><span class="value">2</span>
+            </li>
+            <li id="root.children.3.ancestors" class="leaf nt_arrayofobjects">
+              <span class="key">ancestors: </span>
+              <ol start="0" id="list@root.children.3.ancestors" class="branch nt_arrayofobjects">
+                <li id="root.children.3.ancestors.0" class="leaf nt_nonEmptyObject">
+                  <span class="value">circular ref.</span> <span class="circular">root</span>
+                </li>
+              </ol>
+            </li>
+            <li id="root.children.3.circularRefIndex" class="leaf nt_number">
+              <span class="key">circularRefIndex: </span><span class="value">-1</span>
+            </li>
+            <li id="root.children.3.isCircular" class="leaf nt_boolean">
+              <span class="key">isCircular: </span><span class="value">false</span>
+            </li>
+            <li id="root.children.3.circularRefNode" class="leaf nt_empty">
+              <span class="key">circularRefNode: </span><span class="value">null</span>
+            </li>
+            <li id="root.children.3.isLeaf" class="leaf nt_boolean">
+              <span class="key">isLeaf: </span><span class="value">true</span>
+            </li>
+            <li id="root.children.3.isBranch" class="leaf nt_boolean">
+              <span class="key">isBranch: </span><span class="value">false</span>
+            </li>
+            <li id="root.children.3.isValue" class="leaf nt_boolean">
+              <span class="key">isValue: </span><span class="value">true</span>
+            </li>
+            <li id="root.children.3.depth" class="leaf nt_number">
+              <span class="key">depth: </span><span class="value">1</span>
+            </li>
+            <li id="root.children.3.maxIndex" class="leaf nt_number">
+              <span class="key">maxIndex: </span><span class="value">3</span>
+            </li>
+            <li id="root.children.3.prefix" class="leaf nt_string">
+              <span class="key">prefix: </span><span class="value"></span>
+            </li>
+            <li id="root.children.3.joint" class="leaf nt_string">
+              <span class="key">joint: </span><span class="value">└─ </span>
+            </li>
+            <li id="root.children.3.children" class="leaf nt_array">
+              <span class="key">children: </span><span class="value">[]</span>
+            </li>
+            <li id="root.children.3.path" class="leaf nt_string">
+              <span class="key">path: </span><span class="value">root.d</span>
+            </li>
+            <li id="root.children.3.processResult" class="leaf nt_string">
+              <span class="key">processResult: </span><span class="value">└─ d : d</span>
+            </li>
+          </ul>
+        </li>
+      </ol>
+    </li>
+    <li id="root.path" class="leaf nt_string">
+      <span class="key">path: </span><span class="value">root</span>
+    </li>
+    <li id="root.processResult" class="leaf nt_string">
+      <span class="key">processResult: </span><span class="value">root
+        ├─ a : 1
+        ├─ b : function
+        ├─ c : Symbol(test symbol)
+        └─ d : d</span>
+    </li>
+  </ul>
+
+</body>
+
+</html>

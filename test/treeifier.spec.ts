@@ -12,6 +12,8 @@ import 'jest-extended';
 import { Treeifier, NodeProcessorFunction } from "../src/treeifier";
 import { TreeifierNode } from '../src/TreeifierNode';
 import { TreeifierNodeTypes } from '../src/TreeifierNodeParser';
+import { TreeifierUtils } from '../src/treeifierUtils';
+import chalk from 'chalk';
 
 let standardProcessor: NodeProcessorFunction;
 let filteringProcessor: NodeProcessorFunction;
@@ -128,12 +130,29 @@ describe( 'treeifier', () => {
     expect( () => { tree.process( item, '', dummyProcessorFunction ) } ).toThrow( expected );
   } );
 
-  it( 'should debug', () => {
+  it( 'should debug Treeifier result node, adapting color of the output', () => {
     const tree = new Treeifier();
     const item = { a: 1, b: new Function(), c: Symbol( 'test symbol' ), d: 'd' };
-    const expected = '└─ processResult : root\\n├─ a : 1\\n├─ b : function\\n├─ c : Symbol(test symbol)\\n└─ d : d';
-    expect( tree.debug( item, '', standardProcessor ) ).toContain( expected );
+    const expected1 = 'processResult';
+    const expected2 = 'root\\n├─ a : 1\\n├─ b : function\\n├─ c : Symbol(test symbol)\\n└─ d : d';
+    const processResultNode = tree.parse( item, '', standardProcessor );
+    TreeifierUtils.CircularColor = chalk.magenta;
+    const debugResult = TreeifierUtils.debugResultNode(processResultNode, tree);
+    // console.log(debugResult);
+    expect( debugResult ).toContain( expected1 );
+    expect( debugResult ).toContain( expected2 );
   } );
+
+  it( 'should debug directly, adapting color of the output', () => {
+    const item = { a: 1, b: new Function(), c: Symbol( 'test symbol' ), d: 'd' };
+    const expected1 = 'processResult';
+    const expected2 = 'root\\n├─ a : 1\\n├─ b : function\\n├─ c : Symbol(test symbol)\\n└─ d : d';
+    TreeifierUtils.CircularColor = chalk.yellow;
+    const debugResult = TreeifierUtils.debug(item, '', standardProcessor);
+    expect( debugResult ).toContain( expected1 );
+    expect( debugResult ).toContain( expected2 );
+  } );
+
   it( '++++ DEBUG ++++', () => {
 
     const tree = new Treeifier();
@@ -156,6 +175,7 @@ describe( 'treeifier', () => {
       }
     };
     tree.process( person, '', standardProcessor );
+    // console.log(tree.process( person, '', TreeifierUtils.defaultHTMLProcessor ));
     expect( true ).toBeTrue();
   } );
 
