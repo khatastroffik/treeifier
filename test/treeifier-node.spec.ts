@@ -8,8 +8,8 @@
  *
 **/
 import 'jest-extended';
-import { TreeifierNode } from "../src/TreeifierNode";
-import { TreeifierNodeTypes } from "../src/TreeifierNodeParser";
+import { TreeifierNode } from "../src/treeifier-node";
+import { TreeifierNodeTypes } from "../src/treeifier-node-parser";
 
 describe( 'treeifier node', () => {
 

@@ -9,7 +9,7 @@
 **/
 
 import 'jest-extended';
-import { TreeifierNodeParser, TreeifierNodeTypes } from "../src/TreeifierNodeParser";
+import { TreeifierNodeParser, TreeifierNodeTypes } from "../src/treeifier-node-parser";
 
 describe( 'treeifier node parser', () => {
   class TestClass { aValue = 'a value'; }

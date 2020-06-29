@@ -9,7 +9,7 @@
  *
 **/
 
-import { TreeifierNode } from './TreeifierNode';
+import { TreeifierNode } from './treeifier-node';
 
 export type TreeSortFunction = ( objPropA: [string, unknown], objPropB: [string, unknown] ) => number;
 export type NodeProcessorFunction = ( node: TreeifierNode ) => any;

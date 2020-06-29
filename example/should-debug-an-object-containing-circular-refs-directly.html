@@ -1,0 +1,1615 @@
+<html>
+<style>
+  body {
+    font-family:Arial, Helvetica, sans-serif;
+  }
+  .leaf .key {
+    color: black;
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+  .leaf .value {
+    color: darkblue
+  }
+
+  .circular {
+    color: brown
+  }
+
+  li.leaf.nt_function .value,
+  li.leaf.nt_symbol .value {
+    color: green
+  }
+
+  li.leaf.nt_nonEmptyObject>span.key {
+    font-weight: bold;
+    color: goldenrod;
+  }
+
+  span.value.circular {
+    color: chocolate;
+  }
+
+</style>
+
+<body>
+  <h1>Debug result sample for "<i>should debug an object containing circular refs directly</i>"</h1>
+  using the <b>defaultHTMLProcessor</b> function provided in the <b>treeifier-utils.ts</b> file.
+  <h2>Object Tree</h2>
+
+  <ul id="list@shouldmakeit" class="branch nt_nonEmptyObject">
+    <li id="shouldmakeit.key" class="leaf nt_string">
+      <span class="key">key</span>: <span class="value">shouldmakeit</span>
+    </li>
+    <li id="shouldmakeit.value" class="leaf nt_nonEmptyObject">
+      <span class="key">value</span>:
+      <ul id="list@shouldmakeit.value" class="branch nt_nonEmptyObject">
+        <li id="shouldmakeit.value.a" class="leaf nt_number">
+          <span class="key">a</span>: <span class="value">1</span>
+        </li>
+        <li id="shouldmakeit.value.b" class="leaf nt_nonEmptyObject">
+          <span class="key">b</span>:
+          <ul id="list@shouldmakeit.value.b" class="branch nt_nonEmptyObject">
+            <li id="shouldmakeit.value.b.c" class="leaf nt_string">
+              <span class="key">c</span>: <span class="value">#</span>
+            </li>
+            <li id="shouldmakeit.value.b.xtra" class="leaf nt_nonEmptyObject">
+              <span class="key">xtra</span>:
+              <ul id="list@shouldmakeit.value.b.xtra" class="branch nt_nonEmptyObject">
+                <li id="shouldmakeit.value.b.xtra.alpha" class="leaf nt_array">
+                  <span class="key">alpha</span>: <span class="value">[9, z, 8, y]</span>
+                </li>
+                <li id="shouldmakeit.value.b.xtra.beta" class="leaf nt_string">
+                  <span class="key">beta</span>: <span class="value">maximum</span>
+                </li>
+                <li id="shouldmakeit.value.b.xtra.delta" class="leaf nt_number">
+                  <span class="key">delta</span>: <span class="value">4711</span>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li id="shouldmakeit.value.f" class="leaf nt_function">
+          <span class="key">f</span>: <span class="value">function</span>
+        </li>
+        <li id="shouldmakeit.value.g" class="leaf nt_nonEmptyObject">
+          <span class="key">g</span>:
+          <ul id="list@shouldmakeit.value.g" class="branch nt_nonEmptyObject">
+            <li id="shouldmakeit.value.g.h" class="leaf nt_nonEmptyObject">
+              <span class="key">h</span>:
+              <ul id="list@shouldmakeit.value.g.h" class="branch nt_nonEmptyObject">
+                <li id="shouldmakeit.value.g.h.i" class="leaf nt_nonEmptyObject">
+                  <span class="key">i</span>:
+                  <ul id="list@shouldmakeit.value.g.h.i" class="branch nt_nonEmptyObject">
+                    <li id="shouldmakeit.value.g.h.i.j" class="leaf nt_number">
+                      <span class="key">j</span>: <span class="value">987</span>
+                    </li>
+                    <li id="shouldmakeit.value.g.h.i.k" class="leaf nt_string">
+                      <span class="key">k</span>: <span class="value">test</span>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li id="shouldmakeit.value.g.l" class="leaf nt_array">
+              <span class="key">l</span>: <span class="value">[a, b, c]</span>
+            </li>
+          </ul>
+        </li>
+        <li id="shouldmakeit.value.m" class="leaf nt_number">
+          <span class="key">m</span>: <span class="value">3</span>
+        </li>
+        <li id="shouldmakeit.value.n" class="leaf nt_nonEmptyObject">
+          <span class="key">n</span>:
+          <ul id="list@shouldmakeit.value.n" class="branch nt_nonEmptyObject">
+            <li id="shouldmakeit.value.n.someparent" class="leaf nt_nonEmptyObject">
+              <span class="key">someparent</span>: <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.value">value</a></span>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li id="shouldmakeit.index" class="leaf nt_number">
+      <span class="key">index</span>: <span class="value">0</span>
+    </li>
+    <li id="shouldmakeit.parent" class="leaf nt_empty">
+      <span class="key">parent</span>: <span class="value">null</span>
+    </li>
+    <li id="shouldmakeit.nodeType" class="leaf nt_number">
+      <span class="key">nodeType</span>: <span class="value">10</span>
+    </li>
+    <li id="shouldmakeit.ancestors" class="leaf nt_array">
+      <span class="key">ancestors</span>: <span class="value">[]</span>
+    </li>
+    <li id="shouldmakeit.circularRefIndex" class="leaf nt_number">
+      <span class="key">circularRefIndex</span>: <span class="value">-1</span>
+    </li>
+    <li id="shouldmakeit.isCircular" class="leaf nt_boolean">
+      <span class="key">isCircular</span>: <span class="value">false</span>
+    </li>
+    <li id="shouldmakeit.circularRefNode" class="leaf nt_empty">
+      <span class="key">circularRefNode</span>: <span class="value">null</span>
+    </li>
+    <li id="shouldmakeit.isLeaf" class="leaf nt_boolean">
+      <span class="key">isLeaf</span>: <span class="value">false</span>
+    </li>
+    <li id="shouldmakeit.isBranch" class="leaf nt_boolean">
+      <span class="key">isBranch</span>: <span class="value">true</span>
+    </li>
+    <li id="shouldmakeit.isValue" class="leaf nt_boolean">
+      <span class="key">isValue</span>: <span class="value">false</span>
+    </li>
+    <li id="shouldmakeit.depth" class="leaf nt_number">
+      <span class="key">depth</span>: <span class="value">0</span>
+    </li>
+    <li id="shouldmakeit.maxIndex" class="leaf nt_number">
+      <span class="key">maxIndex</span>: <span class="value">0</span>
+    </li>
+    <li id="shouldmakeit.prefix" class="leaf nt_string">
+      <span class="key">prefix</span>: <span class="value"></span>
+    </li>
+    <li id="shouldmakeit.joint" class="leaf nt_string">
+      <span class="key">joint</span>: <span class="value"></span>
+    </li>
+    <li id="shouldmakeit.children" class="leaf nt_arrayofobjects">
+      <span class="key">children</span>:
+      <ol start="0" id="list@shouldmakeit.children" class="branch nt_arrayofobjects">
+        <li id="shouldmakeit.children.0" class="leaf nt_nonEmptyObject">
+
+          <ul id="list@shouldmakeit.children.0" class="branch nt_nonEmptyObject">
+            <li id="shouldmakeit.children.0.key" class="leaf nt_string">
+              <span class="key">key</span>: <span class="value">a</span>
+            </li>
+            <li id="shouldmakeit.children.0.value" class="leaf nt_number">
+              <span class="key">value</span>: <span class="value">1</span>
+            </li>
+            <li id="shouldmakeit.children.0.index" class="leaf nt_number">
+              <span class="key">index</span>: <span class="value">0</span>
+            </li>
+            <li id="shouldmakeit.children.0.parent" class="leaf nt_nonEmptyObject">
+              <span class="key">parent</span>: <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit">shouldmakeit</a></span>
+            </li>
+            <li id="shouldmakeit.children.0.nodeType" class="leaf nt_number">
+              <span class="key">nodeType</span>: <span class="value">3</span>
+            </li>
+            <li id="shouldmakeit.children.0.ancestors" class="leaf nt_arrayofobjects">
+              <span class="key">ancestors</span>:
+              <ol start="0" id="list@shouldmakeit.children.0.ancestors" class="branch nt_arrayofobjects">
+                <li id="shouldmakeit.children.0.ancestors.0" class="leaf nt_nonEmptyObject">
+                  <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit">shouldmakeit</a></span>
+                </li>
+              </ol>
+            </li>
+            <li id="shouldmakeit.children.0.circularRefIndex" class="leaf nt_number">
+              <span class="key">circularRefIndex</span>: <span class="value">-1</span>
+            </li>
+            <li id="shouldmakeit.children.0.isCircular" class="leaf nt_boolean">
+              <span class="key">isCircular</span>: <span class="value">false</span>
+            </li>
+            <li id="shouldmakeit.children.0.circularRefNode" class="leaf nt_empty">
+              <span class="key">circularRefNode</span>: <span class="value">null</span>
+            </li>
+            <li id="shouldmakeit.children.0.isLeaf" class="leaf nt_boolean">
+              <span class="key">isLeaf</span>: <span class="value">true</span>
+            </li>
+            <li id="shouldmakeit.children.0.isBranch" class="leaf nt_boolean">
+              <span class="key">isBranch</span>: <span class="value">false</span>
+            </li>
+            <li id="shouldmakeit.children.0.isValue" class="leaf nt_boolean">
+              <span class="key">isValue</span>: <span class="value">true</span>
+            </li>
+            <li id="shouldmakeit.children.0.depth" class="leaf nt_number">
+              <span class="key">depth</span>: <span class="value">1</span>
+            </li>
+            <li id="shouldmakeit.children.0.maxIndex" class="leaf nt_number">
+              <span class="key">maxIndex</span>: <span class="value">5</span>
+            </li>
+            <li id="shouldmakeit.children.0.prefix" class="leaf nt_string">
+              <span class="key">prefix</span>: <span class="value"></span>
+            </li>
+            <li id="shouldmakeit.children.0.joint" class="leaf nt_string">
+              <span class="key">joint</span>: <span class="value">├─ </span>
+            </li>
+            <li id="shouldmakeit.children.0.children" class="leaf nt_array">
+              <span class="key">children</span>: <span class="value">[]</span>
+            </li>
+            <li id="shouldmakeit.children.0.path" class="leaf nt_string">
+              <span class="key">path</span>: <span class="value">shouldmakeit.a</span>
+            </li>
+            <li id="shouldmakeit.children.0.processResult" class="leaf nt_string">
+              <span class="key">processResult</span>: <span class="value">├─ a : 1</span>
+            </li>
+          </ul>
+        </li>
+        <li id="shouldmakeit.children.1" class="leaf nt_nonEmptyObject">
+
+          <ul id="list@shouldmakeit.children.1" class="branch nt_nonEmptyObject">
+            <li id="shouldmakeit.children.1.key" class="leaf nt_string">
+              <span class="key">key</span>: <span class="value">b</span>
+            </li>
+            <li id="shouldmakeit.children.1.value" class="leaf nt_nonEmptyObject">
+              <span class="key">value</span>:
+              <ul id="list@shouldmakeit.children.1.value" class="branch nt_nonEmptyObject">
+                <li id="shouldmakeit.children.1.value.c" class="leaf nt_string">
+                  <span class="key">c</span>: <span class="value">#</span>
+                </li>
+                <li id="shouldmakeit.children.1.value.xtra" class="leaf nt_nonEmptyObject">
+                  <span class="key">xtra</span>:
+                  <ul id="list@shouldmakeit.children.1.value.xtra" class="branch nt_nonEmptyObject">
+                    <li id="shouldmakeit.children.1.value.xtra.alpha" class="leaf nt_array">
+                      <span class="key">alpha</span>: <span class="value">[9, z, 8, y]</span>
+                    </li>
+                    <li id="shouldmakeit.children.1.value.xtra.beta" class="leaf nt_string">
+                      <span class="key">beta</span>: <span class="value">maximum</span>
+                    </li>
+                    <li id="shouldmakeit.children.1.value.xtra.delta" class="leaf nt_number">
+                      <span class="key">delta</span>: <span class="value">4711</span>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li id="shouldmakeit.children.1.index" class="leaf nt_number">
+              <span class="key">index</span>: <span class="value">1</span>
+            </li>
+            <li id="shouldmakeit.children.1.parent" class="leaf nt_nonEmptyObject">
+              <span class="key">parent</span>: <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit">shouldmakeit</a></span>
+            </li>
+            <li id="shouldmakeit.children.1.nodeType" class="leaf nt_number">
+              <span class="key">nodeType</span>: <span class="value">10</span>
+            </li>
+            <li id="shouldmakeit.children.1.ancestors" class="leaf nt_arrayofobjects">
+              <span class="key">ancestors</span>:
+              <ol start="0" id="list@shouldmakeit.children.1.ancestors" class="branch nt_arrayofobjects">
+                <li id="shouldmakeit.children.1.ancestors.0" class="leaf nt_nonEmptyObject">
+                  <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit">shouldmakeit</a></span>
+                </li>
+              </ol>
+            </li>
+            <li id="shouldmakeit.children.1.circularRefIndex" class="leaf nt_number">
+              <span class="key">circularRefIndex</span>: <span class="value">-1</span>
+            </li>
+            <li id="shouldmakeit.children.1.isCircular" class="leaf nt_boolean">
+              <span class="key">isCircular</span>: <span class="value">false</span>
+            </li>
+            <li id="shouldmakeit.children.1.circularRefNode" class="leaf nt_empty">
+              <span class="key">circularRefNode</span>: <span class="value">null</span>
+            </li>
+            <li id="shouldmakeit.children.1.isLeaf" class="leaf nt_boolean">
+              <span class="key">isLeaf</span>: <span class="value">false</span>
+            </li>
+            <li id="shouldmakeit.children.1.isBranch" class="leaf nt_boolean">
+              <span class="key">isBranch</span>: <span class="value">true</span>
+            </li>
+            <li id="shouldmakeit.children.1.isValue" class="leaf nt_boolean">
+              <span class="key">isValue</span>: <span class="value">false</span>
+            </li>
+            <li id="shouldmakeit.children.1.depth" class="leaf nt_number">
+              <span class="key">depth</span>: <span class="value">1</span>
+            </li>
+            <li id="shouldmakeit.children.1.maxIndex" class="leaf nt_number">
+              <span class="key">maxIndex</span>: <span class="value">5</span>
+            </li>
+            <li id="shouldmakeit.children.1.prefix" class="leaf nt_string">
+              <span class="key">prefix</span>: <span class="value"></span>
+            </li>
+            <li id="shouldmakeit.children.1.joint" class="leaf nt_string">
+              <span class="key">joint</span>: <span class="value">├─ </span>
+            </li>
+            <li id="shouldmakeit.children.1.children" class="leaf nt_arrayofobjects">
+              <span class="key">children</span>:
+              <ol start="0" id="list@shouldmakeit.children.1.children" class="branch nt_arrayofobjects">
+                <li id="shouldmakeit.children.1.children.0" class="leaf nt_nonEmptyObject">
+
+                  <ul id="list@shouldmakeit.children.1.children.0" class="branch nt_nonEmptyObject">
+                    <li id="shouldmakeit.children.1.children.0.key" class="leaf nt_string">
+                      <span class="key">key</span>: <span class="value">c</span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.0.value" class="leaf nt_string">
+                      <span class="key">value</span>: <span class="value">#</span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.0.index" class="leaf nt_number">
+                      <span class="key">index</span>: <span class="value">0</span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.0.parent" class="leaf nt_nonEmptyObject">
+                      <span class="key">parent</span>: <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.1">1</a></span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.0.nodeType" class="leaf nt_number">
+                      <span class="key">nodeType</span>: <span class="value">2</span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.0.ancestors" class="leaf nt_arrayofobjects">
+                      <span class="key">ancestors</span>:
+                      <ol start="0" id="list@shouldmakeit.children.1.children.0.ancestors" class="branch nt_arrayofobjects">
+                        <li id="shouldmakeit.children.1.children.0.ancestors.0" class="leaf nt_nonEmptyObject">
+                          <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit">shouldmakeit</a></span>
+                        </li>
+                        <li id="shouldmakeit.children.1.children.0.ancestors.1" class="leaf nt_nonEmptyObject">
+                          <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.1">1</a></span>
+                        </li>
+                      </ol>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.0.circularRefIndex" class="leaf nt_number">
+                      <span class="key">circularRefIndex</span>: <span class="value">-1</span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.0.isCircular" class="leaf nt_boolean">
+                      <span class="key">isCircular</span>: <span class="value">false</span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.0.circularRefNode" class="leaf nt_empty">
+                      <span class="key">circularRefNode</span>: <span class="value">null</span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.0.isLeaf" class="leaf nt_boolean">
+                      <span class="key">isLeaf</span>: <span class="value">true</span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.0.isBranch" class="leaf nt_boolean">
+                      <span class="key">isBranch</span>: <span class="value">false</span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.0.isValue" class="leaf nt_boolean">
+                      <span class="key">isValue</span>: <span class="value">true</span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.0.depth" class="leaf nt_number">
+                      <span class="key">depth</span>: <span class="value">2</span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.0.maxIndex" class="leaf nt_number">
+                      <span class="key">maxIndex</span>: <span class="value">1</span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.0.prefix" class="leaf nt_string">
+                      <span class="key">prefix</span>: <span class="value">│ </span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.0.joint" class="leaf nt_string">
+                      <span class="key">joint</span>: <span class="value">├─ </span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.0.children" class="leaf nt_array">
+                      <span class="key">children</span>: <span class="value">[]</span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.0.path" class="leaf nt_string">
+                      <span class="key">path</span>: <span class="value">shouldmakeit.b.c</span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.0.processResult" class="leaf nt_string">
+                      <span class="key">processResult</span>: <span class="value">│ ├─ c : #</span>
+                    </li>
+                  </ul>
+                </li>
+                <li id="shouldmakeit.children.1.children.1" class="leaf nt_nonEmptyObject">
+
+                  <ul id="list@shouldmakeit.children.1.children.1" class="branch nt_nonEmptyObject">
+                    <li id="shouldmakeit.children.1.children.1.key" class="leaf nt_string">
+                      <span class="key">key</span>: <span class="value">xtra</span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.1.value" class="leaf nt_nonEmptyObject">
+                      <span class="key">value</span>:
+                      <ul id="list@shouldmakeit.children.1.children.1.value" class="branch nt_nonEmptyObject">
+                        <li id="shouldmakeit.children.1.children.1.value.alpha" class="leaf nt_array">
+                          <span class="key">alpha</span>: <span class="value">[9, z, 8, y]</span>
+                        </li>
+                        <li id="shouldmakeit.children.1.children.1.value.beta" class="leaf nt_string">
+                          <span class="key">beta</span>: <span class="value">maximum</span>
+                        </li>
+                        <li id="shouldmakeit.children.1.children.1.value.delta" class="leaf nt_number">
+                          <span class="key">delta</span>: <span class="value">4711</span>
+                        </li>
+                      </ul>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.1.index" class="leaf nt_number">
+                      <span class="key">index</span>: <span class="value">1</span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.1.parent" class="leaf nt_nonEmptyObject">
+                      <span class="key">parent</span>: <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.1">1</a></span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.1.nodeType" class="leaf nt_number">
+                      <span class="key">nodeType</span>: <span class="value">10</span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.1.ancestors" class="leaf nt_arrayofobjects">
+                      <span class="key">ancestors</span>:
+                      <ol start="0" id="list@shouldmakeit.children.1.children.1.ancestors" class="branch nt_arrayofobjects">
+                        <li id="shouldmakeit.children.1.children.1.ancestors.0" class="leaf nt_nonEmptyObject">
+                          <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit">shouldmakeit</a></span>
+                        </li>
+                        <li id="shouldmakeit.children.1.children.1.ancestors.1" class="leaf nt_nonEmptyObject">
+                          <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.1">1</a></span>
+                        </li>
+                      </ol>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.1.circularRefIndex" class="leaf nt_number">
+                      <span class="key">circularRefIndex</span>: <span class="value">-1</span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.1.isCircular" class="leaf nt_boolean">
+                      <span class="key">isCircular</span>: <span class="value">false</span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.1.circularRefNode" class="leaf nt_empty">
+                      <span class="key">circularRefNode</span>: <span class="value">null</span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.1.isLeaf" class="leaf nt_boolean">
+                      <span class="key">isLeaf</span>: <span class="value">false</span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.1.isBranch" class="leaf nt_boolean">
+                      <span class="key">isBranch</span>: <span class="value">true</span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.1.isValue" class="leaf nt_boolean">
+                      <span class="key">isValue</span>: <span class="value">false</span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.1.depth" class="leaf nt_number">
+                      <span class="key">depth</span>: <span class="value">2</span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.1.maxIndex" class="leaf nt_number">
+                      <span class="key">maxIndex</span>: <span class="value">1</span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.1.prefix" class="leaf nt_string">
+                      <span class="key">prefix</span>: <span class="value">│ </span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.1.joint" class="leaf nt_string">
+                      <span class="key">joint</span>: <span class="value">└─ </span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.1.children" class="leaf nt_arrayofobjects">
+                      <span class="key">children</span>:
+                      <ol start="0" id="list@shouldmakeit.children.1.children.1.children" class="branch nt_arrayofobjects">
+                        <li id="shouldmakeit.children.1.children.1.children.0" class="leaf nt_nonEmptyObject">
+
+                          <ul id="list@shouldmakeit.children.1.children.1.children.0" class="branch nt_nonEmptyObject">
+                            <li id="shouldmakeit.children.1.children.1.children.0.key" class="leaf nt_string">
+                              <span class="key">key</span>: <span class="value">alpha</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.0.value" class="leaf nt_array">
+                              <span class="key">value</span>: <span class="value">[9, z, 8, y]</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.0.index" class="leaf nt_number">
+                              <span class="key">index</span>: <span class="value">0</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.0.parent" class="leaf nt_nonEmptyObject">
+                              <span class="key">parent</span>: <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.1.children.1">1</a></span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.0.nodeType" class="leaf nt_number">
+                              <span class="key">nodeType</span>: <span class="value">8</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.0.ancestors" class="leaf nt_arrayofobjects">
+                              <span class="key">ancestors</span>:
+                              <ol start="0" id="list@shouldmakeit.children.1.children.1.children.0.ancestors" class="branch nt_arrayofobjects">
+                                <li id="shouldmakeit.children.1.children.1.children.0.ancestors.0" class="leaf nt_nonEmptyObject">
+                                  <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit">shouldmakeit</a></span>
+                                </li>
+                                <li id="shouldmakeit.children.1.children.1.children.0.ancestors.1" class="leaf nt_nonEmptyObject">
+                                  <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.1">1</a></span>
+                                </li>
+                                <li id="shouldmakeit.children.1.children.1.children.0.ancestors.2" class="leaf nt_nonEmptyObject">
+                                  <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.1.children.1">1</a></span>
+                                </li>
+                              </ol>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.0.circularRefIndex" class="leaf nt_number">
+                              <span class="key">circularRefIndex</span>: <span class="value">-1</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.0.isCircular" class="leaf nt_boolean">
+                              <span class="key">isCircular</span>: <span class="value">false</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.0.circularRefNode" class="leaf nt_empty">
+                              <span class="key">circularRefNode</span>: <span class="value">null</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.0.isLeaf" class="leaf nt_boolean">
+                              <span class="key">isLeaf</span>: <span class="value">true</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.0.isBranch" class="leaf nt_boolean">
+                              <span class="key">isBranch</span>: <span class="value">false</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.0.isValue" class="leaf nt_boolean">
+                              <span class="key">isValue</span>: <span class="value">false</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.0.depth" class="leaf nt_number">
+                              <span class="key">depth</span>: <span class="value">3</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.0.maxIndex" class="leaf nt_number">
+                              <span class="key">maxIndex</span>: <span class="value">2</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.0.prefix" class="leaf nt_string">
+                              <span class="key">prefix</span>: <span class="value">│ </span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.0.joint" class="leaf nt_string">
+                              <span class="key">joint</span>: <span class="value">├─ </span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.0.children" class="leaf nt_array">
+                              <span class="key">children</span>: <span class="value">[]</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.0.path" class="leaf nt_string">
+                              <span class="key">path</span>: <span class="value">shouldmakeit.b.xtra.alpha</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.0.processResult" class="leaf nt_string">
+                              <span class="key">processResult</span>: <span class="value">│ ├─ alpha : [9, z, 8, y]</span>
+                            </li>
+                          </ul>
+                        </li>
+                        <li id="shouldmakeit.children.1.children.1.children.1" class="leaf nt_nonEmptyObject">
+
+                          <ul id="list@shouldmakeit.children.1.children.1.children.1" class="branch nt_nonEmptyObject">
+                            <li id="shouldmakeit.children.1.children.1.children.1.key" class="leaf nt_string">
+                              <span class="key">key</span>: <span class="value">beta</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.1.value" class="leaf nt_string">
+                              <span class="key">value</span>: <span class="value">maximum</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.1.index" class="leaf nt_number">
+                              <span class="key">index</span>: <span class="value">1</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.1.parent" class="leaf nt_nonEmptyObject">
+                              <span class="key">parent</span>: <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.1.children.1">1</a></span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.1.nodeType" class="leaf nt_number">
+                              <span class="key">nodeType</span>: <span class="value">2</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.1.ancestors" class="leaf nt_arrayofobjects">
+                              <span class="key">ancestors</span>:
+                              <ol start="0" id="list@shouldmakeit.children.1.children.1.children.1.ancestors" class="branch nt_arrayofobjects">
+                                <li id="shouldmakeit.children.1.children.1.children.1.ancestors.0" class="leaf nt_nonEmptyObject">
+                                  <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit">shouldmakeit</a></span>
+                                </li>
+                                <li id="shouldmakeit.children.1.children.1.children.1.ancestors.1" class="leaf nt_nonEmptyObject">
+                                  <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.1">1</a></span>
+                                </li>
+                                <li id="shouldmakeit.children.1.children.1.children.1.ancestors.2" class="leaf nt_nonEmptyObject">
+                                  <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.1.children.1">1</a></span>
+                                </li>
+                              </ol>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.1.circularRefIndex" class="leaf nt_number">
+                              <span class="key">circularRefIndex</span>: <span class="value">-1</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.1.isCircular" class="leaf nt_boolean">
+                              <span class="key">isCircular</span>: <span class="value">false</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.1.circularRefNode" class="leaf nt_empty">
+                              <span class="key">circularRefNode</span>: <span class="value">null</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.1.isLeaf" class="leaf nt_boolean">
+                              <span class="key">isLeaf</span>: <span class="value">true</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.1.isBranch" class="leaf nt_boolean">
+                              <span class="key">isBranch</span>: <span class="value">false</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.1.isValue" class="leaf nt_boolean">
+                              <span class="key">isValue</span>: <span class="value">true</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.1.depth" class="leaf nt_number">
+                              <span class="key">depth</span>: <span class="value">3</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.1.maxIndex" class="leaf nt_number">
+                              <span class="key">maxIndex</span>: <span class="value">2</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.1.prefix" class="leaf nt_string">
+                              <span class="key">prefix</span>: <span class="value">│ </span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.1.joint" class="leaf nt_string">
+                              <span class="key">joint</span>: <span class="value">├─ </span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.1.children" class="leaf nt_array">
+                              <span class="key">children</span>: <span class="value">[]</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.1.path" class="leaf nt_string">
+                              <span class="key">path</span>: <span class="value">shouldmakeit.b.xtra.beta</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.1.processResult" class="leaf nt_string">
+                              <span class="key">processResult</span>: <span class="value">│ ├─ beta : maximum</span>
+                            </li>
+                          </ul>
+                        </li>
+                        <li id="shouldmakeit.children.1.children.1.children.2" class="leaf nt_nonEmptyObject">
+
+                          <ul id="list@shouldmakeit.children.1.children.1.children.2" class="branch nt_nonEmptyObject">
+                            <li id="shouldmakeit.children.1.children.1.children.2.key" class="leaf nt_string">
+                              <span class="key">key</span>: <span class="value">delta</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.2.value" class="leaf nt_number">
+                              <span class="key">value</span>: <span class="value">4711</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.2.index" class="leaf nt_number">
+                              <span class="key">index</span>: <span class="value">2</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.2.parent" class="leaf nt_nonEmptyObject">
+                              <span class="key">parent</span>: <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.1.children.1">1</a></span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.2.nodeType" class="leaf nt_number">
+                              <span class="key">nodeType</span>: <span class="value">3</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.2.ancestors" class="leaf nt_arrayofobjects">
+                              <span class="key">ancestors</span>:
+                              <ol start="0" id="list@shouldmakeit.children.1.children.1.children.2.ancestors" class="branch nt_arrayofobjects">
+                                <li id="shouldmakeit.children.1.children.1.children.2.ancestors.0" class="leaf nt_nonEmptyObject">
+                                  <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit">shouldmakeit</a></span>
+                                </li>
+                                <li id="shouldmakeit.children.1.children.1.children.2.ancestors.1" class="leaf nt_nonEmptyObject">
+                                  <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.1">1</a></span>
+                                </li>
+                                <li id="shouldmakeit.children.1.children.1.children.2.ancestors.2" class="leaf nt_nonEmptyObject">
+                                  <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.1.children.1">1</a></span>
+                                </li>
+                              </ol>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.2.circularRefIndex" class="leaf nt_number">
+                              <span class="key">circularRefIndex</span>: <span class="value">-1</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.2.isCircular" class="leaf nt_boolean">
+                              <span class="key">isCircular</span>: <span class="value">false</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.2.circularRefNode" class="leaf nt_empty">
+                              <span class="key">circularRefNode</span>: <span class="value">null</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.2.isLeaf" class="leaf nt_boolean">
+                              <span class="key">isLeaf</span>: <span class="value">true</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.2.isBranch" class="leaf nt_boolean">
+                              <span class="key">isBranch</span>: <span class="value">false</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.2.isValue" class="leaf nt_boolean">
+                              <span class="key">isValue</span>: <span class="value">true</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.2.depth" class="leaf nt_number">
+                              <span class="key">depth</span>: <span class="value">3</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.2.maxIndex" class="leaf nt_number">
+                              <span class="key">maxIndex</span>: <span class="value">2</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.2.prefix" class="leaf nt_string">
+                              <span class="key">prefix</span>: <span class="value">│ </span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.2.joint" class="leaf nt_string">
+                              <span class="key">joint</span>: <span class="value">└─ </span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.2.children" class="leaf nt_array">
+                              <span class="key">children</span>: <span class="value">[]</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.2.path" class="leaf nt_string">
+                              <span class="key">path</span>: <span class="value">shouldmakeit.b.xtra.delta</span>
+                            </li>
+                            <li id="shouldmakeit.children.1.children.1.children.2.processResult" class="leaf nt_string">
+                              <span class="key">processResult</span>: <span class="value">│ └─ delta : 4711</span>
+                            </li>
+                          </ul>
+                        </li>
+                      </ol>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.1.path" class="leaf nt_string">
+                      <span class="key">path</span>: <span class="value">shouldmakeit.b.xtra</span>
+                    </li>
+                    <li id="shouldmakeit.children.1.children.1.processResult" class="leaf nt_string">
+                      <span class="key">processResult</span>: <span class="value">│ └─ xtra
+                        │ ├─ alpha : [9, z, 8, y]
+                        │ ├─ beta : maximum
+                        │ └─ delta : 4711</span>
+                    </li>
+                  </ul>
+                </li>
+              </ol>
+            </li>
+            <li id="shouldmakeit.children.1.path" class="leaf nt_string">
+              <span class="key">path</span>: <span class="value">shouldmakeit.b</span>
+            </li>
+            <li id="shouldmakeit.children.1.processResult" class="leaf nt_string">
+              <span class="key">processResult</span>: <span class="value">├─ b
+                │ ├─ c : #
+                │ └─ xtra
+                │ ├─ alpha : [9, z, 8, y]
+                │ ├─ beta : maximum
+                │ └─ delta : 4711</span>
+            </li>
+          </ul>
+        </li>
+        <li id="shouldmakeit.children.2" class="leaf nt_nonEmptyObject">
+
+          <ul id="list@shouldmakeit.children.2" class="branch nt_nonEmptyObject">
+            <li id="shouldmakeit.children.2.key" class="leaf nt_string">
+              <span class="key">key</span>: <span class="value">f</span>
+            </li>
+            <li id="shouldmakeit.children.2.value" class="leaf nt_function">
+              <span class="key">value</span>: <span class="value">function</span>
+            </li>
+            <li id="shouldmakeit.children.2.index" class="leaf nt_number">
+              <span class="key">index</span>: <span class="value">2</span>
+            </li>
+            <li id="shouldmakeit.children.2.parent" class="leaf nt_nonEmptyObject">
+              <span class="key">parent</span>: <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit">shouldmakeit</a></span>
+            </li>
+            <li id="shouldmakeit.children.2.nodeType" class="leaf nt_number">
+              <span class="key">nodeType</span>: <span class="value">6</span>
+            </li>
+            <li id="shouldmakeit.children.2.ancestors" class="leaf nt_arrayofobjects">
+              <span class="key">ancestors</span>:
+              <ol start="0" id="list@shouldmakeit.children.2.ancestors" class="branch nt_arrayofobjects">
+                <li id="shouldmakeit.children.2.ancestors.0" class="leaf nt_nonEmptyObject">
+                  <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit">shouldmakeit</a></span>
+                </li>
+              </ol>
+            </li>
+            <li id="shouldmakeit.children.2.circularRefIndex" class="leaf nt_number">
+              <span class="key">circularRefIndex</span>: <span class="value">-1</span>
+            </li>
+            <li id="shouldmakeit.children.2.isCircular" class="leaf nt_boolean">
+              <span class="key">isCircular</span>: <span class="value">false</span>
+            </li>
+            <li id="shouldmakeit.children.2.circularRefNode" class="leaf nt_empty">
+              <span class="key">circularRefNode</span>: <span class="value">null</span>
+            </li>
+            <li id="shouldmakeit.children.2.isLeaf" class="leaf nt_boolean">
+              <span class="key">isLeaf</span>: <span class="value">true</span>
+            </li>
+            <li id="shouldmakeit.children.2.isBranch" class="leaf nt_boolean">
+              <span class="key">isBranch</span>: <span class="value">false</span>
+            </li>
+            <li id="shouldmakeit.children.2.isValue" class="leaf nt_boolean">
+              <span class="key">isValue</span>: <span class="value">true</span>
+            </li>
+            <li id="shouldmakeit.children.2.depth" class="leaf nt_number">
+              <span class="key">depth</span>: <span class="value">1</span>
+            </li>
+            <li id="shouldmakeit.children.2.maxIndex" class="leaf nt_number">
+              <span class="key">maxIndex</span>: <span class="value">5</span>
+            </li>
+            <li id="shouldmakeit.children.2.prefix" class="leaf nt_string">
+              <span class="key">prefix</span>: <span class="value"></span>
+            </li>
+            <li id="shouldmakeit.children.2.joint" class="leaf nt_string">
+              <span class="key">joint</span>: <span class="value">├─ </span>
+            </li>
+            <li id="shouldmakeit.children.2.children" class="leaf nt_array">
+              <span class="key">children</span>: <span class="value">[]</span>
+            </li>
+            <li id="shouldmakeit.children.2.path" class="leaf nt_string">
+              <span class="key">path</span>: <span class="value">shouldmakeit.f</span>
+            </li>
+            <li id="shouldmakeit.children.2.processResult" class="leaf nt_string">
+              <span class="key">processResult</span>: <span class="value">├─ f : function</span>
+            </li>
+          </ul>
+        </li>
+        <li id="shouldmakeit.children.3" class="leaf nt_nonEmptyObject">
+
+          <ul id="list@shouldmakeit.children.3" class="branch nt_nonEmptyObject">
+            <li id="shouldmakeit.children.3.key" class="leaf nt_string">
+              <span class="key">key</span>: <span class="value">g</span>
+            </li>
+            <li id="shouldmakeit.children.3.value" class="leaf nt_nonEmptyObject">
+              <span class="key">value</span>:
+              <ul id="list@shouldmakeit.children.3.value" class="branch nt_nonEmptyObject">
+                <li id="shouldmakeit.children.3.value.h" class="leaf nt_nonEmptyObject">
+                  <span class="key">h</span>:
+                  <ul id="list@shouldmakeit.children.3.value.h" class="branch nt_nonEmptyObject">
+                    <li id="shouldmakeit.children.3.value.h.i" class="leaf nt_nonEmptyObject">
+                      <span class="key">i</span>:
+                      <ul id="list@shouldmakeit.children.3.value.h.i" class="branch nt_nonEmptyObject">
+                        <li id="shouldmakeit.children.3.value.h.i.j" class="leaf nt_number">
+                          <span class="key">j</span>: <span class="value">987</span>
+                        </li>
+                        <li id="shouldmakeit.children.3.value.h.i.k" class="leaf nt_string">
+                          <span class="key">k</span>: <span class="value">test</span>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li id="shouldmakeit.children.3.value.l" class="leaf nt_array">
+                  <span class="key">l</span>: <span class="value">[a, b, c]</span>
+                </li>
+              </ul>
+            </li>
+            <li id="shouldmakeit.children.3.index" class="leaf nt_number">
+              <span class="key">index</span>: <span class="value">3</span>
+            </li>
+            <li id="shouldmakeit.children.3.parent" class="leaf nt_nonEmptyObject">
+              <span class="key">parent</span>: <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit">shouldmakeit</a></span>
+            </li>
+            <li id="shouldmakeit.children.3.nodeType" class="leaf nt_number">
+              <span class="key">nodeType</span>: <span class="value">10</span>
+            </li>
+            <li id="shouldmakeit.children.3.ancestors" class="leaf nt_arrayofobjects">
+              <span class="key">ancestors</span>:
+              <ol start="0" id="list@shouldmakeit.children.3.ancestors" class="branch nt_arrayofobjects">
+                <li id="shouldmakeit.children.3.ancestors.0" class="leaf nt_nonEmptyObject">
+                  <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit">shouldmakeit</a></span>
+                </li>
+              </ol>
+            </li>
+            <li id="shouldmakeit.children.3.circularRefIndex" class="leaf nt_number">
+              <span class="key">circularRefIndex</span>: <span class="value">-1</span>
+            </li>
+            <li id="shouldmakeit.children.3.isCircular" class="leaf nt_boolean">
+              <span class="key">isCircular</span>: <span class="value">false</span>
+            </li>
+            <li id="shouldmakeit.children.3.circularRefNode" class="leaf nt_empty">
+              <span class="key">circularRefNode</span>: <span class="value">null</span>
+            </li>
+            <li id="shouldmakeit.children.3.isLeaf" class="leaf nt_boolean">
+              <span class="key">isLeaf</span>: <span class="value">false</span>
+            </li>
+            <li id="shouldmakeit.children.3.isBranch" class="leaf nt_boolean">
+              <span class="key">isBranch</span>: <span class="value">true</span>
+            </li>
+            <li id="shouldmakeit.children.3.isValue" class="leaf nt_boolean">
+              <span class="key">isValue</span>: <span class="value">false</span>
+            </li>
+            <li id="shouldmakeit.children.3.depth" class="leaf nt_number">
+              <span class="key">depth</span>: <span class="value">1</span>
+            </li>
+            <li id="shouldmakeit.children.3.maxIndex" class="leaf nt_number">
+              <span class="key">maxIndex</span>: <span class="value">5</span>
+            </li>
+            <li id="shouldmakeit.children.3.prefix" class="leaf nt_string">
+              <span class="key">prefix</span>: <span class="value"></span>
+            </li>
+            <li id="shouldmakeit.children.3.joint" class="leaf nt_string">
+              <span class="key">joint</span>: <span class="value">├─ </span>
+            </li>
+            <li id="shouldmakeit.children.3.children" class="leaf nt_arrayofobjects">
+              <span class="key">children</span>:
+              <ol start="0" id="list@shouldmakeit.children.3.children" class="branch nt_arrayofobjects">
+                <li id="shouldmakeit.children.3.children.0" class="leaf nt_nonEmptyObject">
+
+                  <ul id="list@shouldmakeit.children.3.children.0" class="branch nt_nonEmptyObject">
+                    <li id="shouldmakeit.children.3.children.0.key" class="leaf nt_string">
+                      <span class="key">key</span>: <span class="value">h</span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.0.value" class="leaf nt_nonEmptyObject">
+                      <span class="key">value</span>:
+                      <ul id="list@shouldmakeit.children.3.children.0.value" class="branch nt_nonEmptyObject">
+                        <li id="shouldmakeit.children.3.children.0.value.i" class="leaf nt_nonEmptyObject">
+                          <span class="key">i</span>:
+                          <ul id="list@shouldmakeit.children.3.children.0.value.i" class="branch nt_nonEmptyObject">
+                            <li id="shouldmakeit.children.3.children.0.value.i.j" class="leaf nt_number">
+                              <span class="key">j</span>: <span class="value">987</span>
+                            </li>
+                            <li id="shouldmakeit.children.3.children.0.value.i.k" class="leaf nt_string">
+                              <span class="key">k</span>: <span class="value">test</span>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.0.index" class="leaf nt_number">
+                      <span class="key">index</span>: <span class="value">0</span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.0.parent" class="leaf nt_nonEmptyObject">
+                      <span class="key">parent</span>: <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.3">3</a></span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.0.nodeType" class="leaf nt_number">
+                      <span class="key">nodeType</span>: <span class="value">10</span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.0.ancestors" class="leaf nt_arrayofobjects">
+                      <span class="key">ancestors</span>:
+                      <ol start="0" id="list@shouldmakeit.children.3.children.0.ancestors" class="branch nt_arrayofobjects">
+                        <li id="shouldmakeit.children.3.children.0.ancestors.0" class="leaf nt_nonEmptyObject">
+                          <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit">shouldmakeit</a></span>
+                        </li>
+                        <li id="shouldmakeit.children.3.children.0.ancestors.1" class="leaf nt_nonEmptyObject">
+                          <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.3">3</a></span>
+                        </li>
+                      </ol>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.0.circularRefIndex" class="leaf nt_number">
+                      <span class="key">circularRefIndex</span>: <span class="value">-1</span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.0.isCircular" class="leaf nt_boolean">
+                      <span class="key">isCircular</span>: <span class="value">false</span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.0.circularRefNode" class="leaf nt_empty">
+                      <span class="key">circularRefNode</span>: <span class="value">null</span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.0.isLeaf" class="leaf nt_boolean">
+                      <span class="key">isLeaf</span>: <span class="value">false</span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.0.isBranch" class="leaf nt_boolean">
+                      <span class="key">isBranch</span>: <span class="value">true</span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.0.isValue" class="leaf nt_boolean">
+                      <span class="key">isValue</span>: <span class="value">false</span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.0.depth" class="leaf nt_number">
+                      <span class="key">depth</span>: <span class="value">2</span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.0.maxIndex" class="leaf nt_number">
+                      <span class="key">maxIndex</span>: <span class="value">1</span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.0.prefix" class="leaf nt_string">
+                      <span class="key">prefix</span>: <span class="value">│ </span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.0.joint" class="leaf nt_string">
+                      <span class="key">joint</span>: <span class="value">├─ </span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.0.children" class="leaf nt_arrayofobjects">
+                      <span class="key">children</span>:
+                      <ol start="0" id="list@shouldmakeit.children.3.children.0.children" class="branch nt_arrayofobjects">
+                        <li id="shouldmakeit.children.3.children.0.children.0" class="leaf nt_nonEmptyObject">
+
+                          <ul id="list@shouldmakeit.children.3.children.0.children.0" class="branch nt_nonEmptyObject">
+                            <li id="shouldmakeit.children.3.children.0.children.0.key" class="leaf nt_string">
+                              <span class="key">key</span>: <span class="value">i</span>
+                            </li>
+                            <li id="shouldmakeit.children.3.children.0.children.0.value" class="leaf nt_nonEmptyObject">
+                              <span class="key">value</span>:
+                              <ul id="list@shouldmakeit.children.3.children.0.children.0.value" class="branch nt_nonEmptyObject">
+                                <li id="shouldmakeit.children.3.children.0.children.0.value.j" class="leaf nt_number">
+                                  <span class="key">j</span>: <span class="value">987</span>
+                                </li>
+                                <li id="shouldmakeit.children.3.children.0.children.0.value.k" class="leaf nt_string">
+                                  <span class="key">k</span>: <span class="value">test</span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li id="shouldmakeit.children.3.children.0.children.0.index" class="leaf nt_number">
+                              <span class="key">index</span>: <span class="value">0</span>
+                            </li>
+                            <li id="shouldmakeit.children.3.children.0.children.0.parent" class="leaf nt_nonEmptyObject">
+                              <span class="key">parent</span>: <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.3.children.0">0</a></span>
+                            </li>
+                            <li id="shouldmakeit.children.3.children.0.children.0.nodeType" class="leaf nt_number">
+                              <span class="key">nodeType</span>: <span class="value">10</span>
+                            </li>
+                            <li id="shouldmakeit.children.3.children.0.children.0.ancestors" class="leaf nt_arrayofobjects">
+                              <span class="key">ancestors</span>:
+                              <ol start="0" id="list@shouldmakeit.children.3.children.0.children.0.ancestors" class="branch nt_arrayofobjects">
+                                <li id="shouldmakeit.children.3.children.0.children.0.ancestors.0" class="leaf nt_nonEmptyObject">
+                                  <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit">shouldmakeit</a></span>
+                                </li>
+                                <li id="shouldmakeit.children.3.children.0.children.0.ancestors.1" class="leaf nt_nonEmptyObject">
+                                  <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.3">3</a></span>
+                                </li>
+                                <li id="shouldmakeit.children.3.children.0.children.0.ancestors.2" class="leaf nt_nonEmptyObject">
+                                  <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.3.children.0">0</a></span>
+                                </li>
+                              </ol>
+                            </li>
+                            <li id="shouldmakeit.children.3.children.0.children.0.circularRefIndex" class="leaf nt_number">
+                              <span class="key">circularRefIndex</span>: <span class="value">-1</span>
+                            </li>
+                            <li id="shouldmakeit.children.3.children.0.children.0.isCircular" class="leaf nt_boolean">
+                              <span class="key">isCircular</span>: <span class="value">false</span>
+                            </li>
+                            <li id="shouldmakeit.children.3.children.0.children.0.circularRefNode" class="leaf nt_empty">
+                              <span class="key">circularRefNode</span>: <span class="value">null</span>
+                            </li>
+                            <li id="shouldmakeit.children.3.children.0.children.0.isLeaf" class="leaf nt_boolean">
+                              <span class="key">isLeaf</span>: <span class="value">false</span>
+                            </li>
+                            <li id="shouldmakeit.children.3.children.0.children.0.isBranch" class="leaf nt_boolean">
+                              <span class="key">isBranch</span>: <span class="value">true</span>
+                            </li>
+                            <li id="shouldmakeit.children.3.children.0.children.0.isValue" class="leaf nt_boolean">
+                              <span class="key">isValue</span>: <span class="value">false</span>
+                            </li>
+                            <li id="shouldmakeit.children.3.children.0.children.0.depth" class="leaf nt_number">
+                              <span class="key">depth</span>: <span class="value">3</span>
+                            </li>
+                            <li id="shouldmakeit.children.3.children.0.children.0.maxIndex" class="leaf nt_number">
+                              <span class="key">maxIndex</span>: <span class="value">0</span>
+                            </li>
+                            <li id="shouldmakeit.children.3.children.0.children.0.prefix" class="leaf nt_string">
+                              <span class="key">prefix</span>: <span class="value">│ │ </span>
+                            </li>
+                            <li id="shouldmakeit.children.3.children.0.children.0.joint" class="leaf nt_string">
+                              <span class="key">joint</span>: <span class="value">└─ </span>
+                            </li>
+                            <li id="shouldmakeit.children.3.children.0.children.0.children" class="leaf nt_arrayofobjects">
+                              <span class="key">children</span>:
+                              <ol start="0" id="list@shouldmakeit.children.3.children.0.children.0.children" class="branch nt_arrayofobjects">
+                                <li id="shouldmakeit.children.3.children.0.children.0.children.0" class="leaf nt_nonEmptyObject">
+
+                                  <ul id="list@shouldmakeit.children.3.children.0.children.0.children.0" class="branch nt_nonEmptyObject">
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.0.key" class="leaf nt_string">
+                                      <span class="key">key</span>: <span class="value">j</span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.0.value" class="leaf nt_number">
+                                      <span class="key">value</span>: <span class="value">987</span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.0.index" class="leaf nt_number">
+                                      <span class="key">index</span>: <span class="value">0</span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.0.parent" class="leaf nt_nonEmptyObject">
+                                      <span class="key">parent</span>: <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.3.children.0.children.0">0</a></span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.0.nodeType" class="leaf nt_number">
+                                      <span class="key">nodeType</span>: <span class="value">3</span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.0.ancestors" class="leaf nt_arrayofobjects">
+                                      <span class="key">ancestors</span>:
+                                      <ol start="0" id="list@shouldmakeit.children.3.children.0.children.0.children.0.ancestors" class="branch nt_arrayofobjects">
+                                        <li id="shouldmakeit.children.3.children.0.children.0.children.0.ancestors.0" class="leaf nt_nonEmptyObject">
+                                          <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit">shouldmakeit</a></span>
+                                        </li>
+                                        <li id="shouldmakeit.children.3.children.0.children.0.children.0.ancestors.1" class="leaf nt_nonEmptyObject">
+                                          <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.3">3</a></span>
+                                        </li>
+                                        <li id="shouldmakeit.children.3.children.0.children.0.children.0.ancestors.2" class="leaf nt_nonEmptyObject">
+                                          <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.3.children.0">0</a></span>
+                                        </li>
+                                        <li id="shouldmakeit.children.3.children.0.children.0.children.0.ancestors.3" class="leaf nt_nonEmptyObject">
+                                          <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.3.children.0.children.0">0</a></span>
+                                        </li>
+                                      </ol>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.0.circularRefIndex" class="leaf nt_number">
+                                      <span class="key">circularRefIndex</span>: <span class="value">-1</span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.0.isCircular" class="leaf nt_boolean">
+                                      <span class="key">isCircular</span>: <span class="value">false</span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.0.circularRefNode" class="leaf nt_empty">
+                                      <span class="key">circularRefNode</span>: <span class="value">null</span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.0.isLeaf" class="leaf nt_boolean">
+                                      <span class="key">isLeaf</span>: <span class="value">true</span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.0.isBranch" class="leaf nt_boolean">
+                                      <span class="key">isBranch</span>: <span class="value">false</span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.0.isValue" class="leaf nt_boolean">
+                                      <span class="key">isValue</span>: <span class="value">true</span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.0.depth" class="leaf nt_number">
+                                      <span class="key">depth</span>: <span class="value">4</span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.0.maxIndex" class="leaf nt_number">
+                                      <span class="key">maxIndex</span>: <span class="value">1</span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.0.prefix" class="leaf nt_string">
+                                      <span class="key">prefix</span>: <span class="value">│ │ </span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.0.joint" class="leaf nt_string">
+                                      <span class="key">joint</span>: <span class="value">├─ </span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.0.children" class="leaf nt_array">
+                                      <span class="key">children</span>: <span class="value">[]</span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.0.path" class="leaf nt_string">
+                                      <span class="key">path</span>: <span class="value">shouldmakeit.g.h.i.j</span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.0.processResult" class="leaf nt_string">
+                                      <span class="key">processResult</span>: <span class="value">│ │ ├─ j : 987</span>
+                                    </li>
+                                  </ul>
+                                </li>
+                                <li id="shouldmakeit.children.3.children.0.children.0.children.1" class="leaf nt_nonEmptyObject">
+
+                                  <ul id="list@shouldmakeit.children.3.children.0.children.0.children.1" class="branch nt_nonEmptyObject">
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.1.key" class="leaf nt_string">
+                                      <span class="key">key</span>: <span class="value">k</span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.1.value" class="leaf nt_string">
+                                      <span class="key">value</span>: <span class="value">test</span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.1.index" class="leaf nt_number">
+                                      <span class="key">index</span>: <span class="value">1</span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.1.parent" class="leaf nt_nonEmptyObject">
+                                      <span class="key">parent</span>: <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.3.children.0.children.0">0</a></span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.1.nodeType" class="leaf nt_number">
+                                      <span class="key">nodeType</span>: <span class="value">2</span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.1.ancestors" class="leaf nt_arrayofobjects">
+                                      <span class="key">ancestors</span>:
+                                      <ol start="0" id="list@shouldmakeit.children.3.children.0.children.0.children.1.ancestors" class="branch nt_arrayofobjects">
+                                        <li id="shouldmakeit.children.3.children.0.children.0.children.1.ancestors.0" class="leaf nt_nonEmptyObject">
+                                          <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit">shouldmakeit</a></span>
+                                        </li>
+                                        <li id="shouldmakeit.children.3.children.0.children.0.children.1.ancestors.1" class="leaf nt_nonEmptyObject">
+                                          <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.3">3</a></span>
+                                        </li>
+                                        <li id="shouldmakeit.children.3.children.0.children.0.children.1.ancestors.2" class="leaf nt_nonEmptyObject">
+                                          <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.3.children.0">0</a></span>
+                                        </li>
+                                        <li id="shouldmakeit.children.3.children.0.children.0.children.1.ancestors.3" class="leaf nt_nonEmptyObject">
+                                          <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.3.children.0.children.0">0</a></span>
+                                        </li>
+                                      </ol>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.1.circularRefIndex" class="leaf nt_number">
+                                      <span class="key">circularRefIndex</span>: <span class="value">-1</span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.1.isCircular" class="leaf nt_boolean">
+                                      <span class="key">isCircular</span>: <span class="value">false</span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.1.circularRefNode" class="leaf nt_empty">
+                                      <span class="key">circularRefNode</span>: <span class="value">null</span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.1.isLeaf" class="leaf nt_boolean">
+                                      <span class="key">isLeaf</span>: <span class="value">true</span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.1.isBranch" class="leaf nt_boolean">
+                                      <span class="key">isBranch</span>: <span class="value">false</span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.1.isValue" class="leaf nt_boolean">
+                                      <span class="key">isValue</span>: <span class="value">true</span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.1.depth" class="leaf nt_number">
+                                      <span class="key">depth</span>: <span class="value">4</span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.1.maxIndex" class="leaf nt_number">
+                                      <span class="key">maxIndex</span>: <span class="value">1</span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.1.prefix" class="leaf nt_string">
+                                      <span class="key">prefix</span>: <span class="value">│ │ </span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.1.joint" class="leaf nt_string">
+                                      <span class="key">joint</span>: <span class="value">└─ </span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.1.children" class="leaf nt_array">
+                                      <span class="key">children</span>: <span class="value">[]</span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.1.path" class="leaf nt_string">
+                                      <span class="key">path</span>: <span class="value">shouldmakeit.g.h.i.k</span>
+                                    </li>
+                                    <li id="shouldmakeit.children.3.children.0.children.0.children.1.processResult" class="leaf nt_string">
+                                      <span class="key">processResult</span>: <span class="value">│ │ └─ k : test</span>
+                                    </li>
+                                  </ul>
+                                </li>
+                              </ol>
+                            </li>
+                            <li id="shouldmakeit.children.3.children.0.children.0.path" class="leaf nt_string">
+                              <span class="key">path</span>: <span class="value">shouldmakeit.g.h.i</span>
+                            </li>
+                            <li id="shouldmakeit.children.3.children.0.children.0.processResult" class="leaf nt_string">
+                              <span class="key">processResult</span>: <span class="value">│ │ └─ i
+                                │ │ ├─ j : 987
+                                │ │ └─ k : test</span>
+                            </li>
+                          </ul>
+                        </li>
+                      </ol>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.0.path" class="leaf nt_string">
+                      <span class="key">path</span>: <span class="value">shouldmakeit.g.h</span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.0.processResult" class="leaf nt_string">
+                      <span class="key">processResult</span>: <span class="value">│ ├─ h
+                        │ │ └─ i
+                        │ │ ├─ j : 987
+                        │ │ └─ k : test</span>
+                    </li>
+                  </ul>
+                </li>
+                <li id="shouldmakeit.children.3.children.1" class="leaf nt_nonEmptyObject">
+
+                  <ul id="list@shouldmakeit.children.3.children.1" class="branch nt_nonEmptyObject">
+                    <li id="shouldmakeit.children.3.children.1.key" class="leaf nt_string">
+                      <span class="key">key</span>: <span class="value">l</span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.1.value" class="leaf nt_array">
+                      <span class="key">value</span>: <span class="value">[a, b, c]</span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.1.index" class="leaf nt_number">
+                      <span class="key">index</span>: <span class="value">1</span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.1.parent" class="leaf nt_nonEmptyObject">
+                      <span class="key">parent</span>: <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.3">3</a></span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.1.nodeType" class="leaf nt_number">
+                      <span class="key">nodeType</span>: <span class="value">8</span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.1.ancestors" class="leaf nt_arrayofobjects">
+                      <span class="key">ancestors</span>:
+                      <ol start="0" id="list@shouldmakeit.children.3.children.1.ancestors" class="branch nt_arrayofobjects">
+                        <li id="shouldmakeit.children.3.children.1.ancestors.0" class="leaf nt_nonEmptyObject">
+                          <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit">shouldmakeit</a></span>
+                        </li>
+                        <li id="shouldmakeit.children.3.children.1.ancestors.1" class="leaf nt_nonEmptyObject">
+                          <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.3">3</a></span>
+                        </li>
+                      </ol>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.1.circularRefIndex" class="leaf nt_number">
+                      <span class="key">circularRefIndex</span>: <span class="value">-1</span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.1.isCircular" class="leaf nt_boolean">
+                      <span class="key">isCircular</span>: <span class="value">false</span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.1.circularRefNode" class="leaf nt_empty">
+                      <span class="key">circularRefNode</span>: <span class="value">null</span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.1.isLeaf" class="leaf nt_boolean">
+                      <span class="key">isLeaf</span>: <span class="value">true</span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.1.isBranch" class="leaf nt_boolean">
+                      <span class="key">isBranch</span>: <span class="value">false</span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.1.isValue" class="leaf nt_boolean">
+                      <span class="key">isValue</span>: <span class="value">false</span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.1.depth" class="leaf nt_number">
+                      <span class="key">depth</span>: <span class="value">2</span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.1.maxIndex" class="leaf nt_number">
+                      <span class="key">maxIndex</span>: <span class="value">1</span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.1.prefix" class="leaf nt_string">
+                      <span class="key">prefix</span>: <span class="value">│ </span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.1.joint" class="leaf nt_string">
+                      <span class="key">joint</span>: <span class="value">└─ </span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.1.children" class="leaf nt_array">
+                      <span class="key">children</span>: <span class="value">[]</span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.1.path" class="leaf nt_string">
+                      <span class="key">path</span>: <span class="value">shouldmakeit.g.l</span>
+                    </li>
+                    <li id="shouldmakeit.children.3.children.1.processResult" class="leaf nt_string">
+                      <span class="key">processResult</span>: <span class="value">│ └─ l : [a, b, c]</span>
+                    </li>
+                  </ul>
+                </li>
+              </ol>
+            </li>
+            <li id="shouldmakeit.children.3.path" class="leaf nt_string">
+              <span class="key">path</span>: <span class="value">shouldmakeit.g</span>
+            </li>
+            <li id="shouldmakeit.children.3.processResult" class="leaf nt_string">
+              <span class="key">processResult</span>: <span class="value">├─ g
+                │ ├─ h
+                │ │ └─ i
+                │ │ ├─ j : 987
+                │ │ └─ k : test
+                │ └─ l : [a, b, c]</span>
+            </li>
+          </ul>
+        </li>
+        <li id="shouldmakeit.children.4" class="leaf nt_nonEmptyObject">
+
+          <ul id="list@shouldmakeit.children.4" class="branch nt_nonEmptyObject">
+            <li id="shouldmakeit.children.4.key" class="leaf nt_string">
+              <span class="key">key</span>: <span class="value">m</span>
+            </li>
+            <li id="shouldmakeit.children.4.value" class="leaf nt_number">
+              <span class="key">value</span>: <span class="value">3</span>
+            </li>
+            <li id="shouldmakeit.children.4.index" class="leaf nt_number">
+              <span class="key">index</span>: <span class="value">4</span>
+            </li>
+            <li id="shouldmakeit.children.4.parent" class="leaf nt_nonEmptyObject">
+              <span class="key">parent</span>: <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit">shouldmakeit</a></span>
+            </li>
+            <li id="shouldmakeit.children.4.nodeType" class="leaf nt_number">
+              <span class="key">nodeType</span>: <span class="value">3</span>
+            </li>
+            <li id="shouldmakeit.children.4.ancestors" class="leaf nt_arrayofobjects">
+              <span class="key">ancestors</span>:
+              <ol start="0" id="list@shouldmakeit.children.4.ancestors" class="branch nt_arrayofobjects">
+                <li id="shouldmakeit.children.4.ancestors.0" class="leaf nt_nonEmptyObject">
+                  <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit">shouldmakeit</a></span>
+                </li>
+              </ol>
+            </li>
+            <li id="shouldmakeit.children.4.circularRefIndex" class="leaf nt_number">
+              <span class="key">circularRefIndex</span>: <span class="value">-1</span>
+            </li>
+            <li id="shouldmakeit.children.4.isCircular" class="leaf nt_boolean">
+              <span class="key">isCircular</span>: <span class="value">false</span>
+            </li>
+            <li id="shouldmakeit.children.4.circularRefNode" class="leaf nt_empty">
+              <span class="key">circularRefNode</span>: <span class="value">null</span>
+            </li>
+            <li id="shouldmakeit.children.4.isLeaf" class="leaf nt_boolean">
+              <span class="key">isLeaf</span>: <span class="value">true</span>
+            </li>
+            <li id="shouldmakeit.children.4.isBranch" class="leaf nt_boolean">
+              <span class="key">isBranch</span>: <span class="value">false</span>
+            </li>
+            <li id="shouldmakeit.children.4.isValue" class="leaf nt_boolean">
+              <span class="key">isValue</span>: <span class="value">true</span>
+            </li>
+            <li id="shouldmakeit.children.4.depth" class="leaf nt_number">
+              <span class="key">depth</span>: <span class="value">1</span>
+            </li>
+            <li id="shouldmakeit.children.4.maxIndex" class="leaf nt_number">
+              <span class="key">maxIndex</span>: <span class="value">5</span>
+            </li>
+            <li id="shouldmakeit.children.4.prefix" class="leaf nt_string">
+              <span class="key">prefix</span>: <span class="value"></span>
+            </li>
+            <li id="shouldmakeit.children.4.joint" class="leaf nt_string">
+              <span class="key">joint</span>: <span class="value">├─ </span>
+            </li>
+            <li id="shouldmakeit.children.4.children" class="leaf nt_array">
+              <span class="key">children</span>: <span class="value">[]</span>
+            </li>
+            <li id="shouldmakeit.children.4.path" class="leaf nt_string">
+              <span class="key">path</span>: <span class="value">shouldmakeit.m</span>
+            </li>
+            <li id="shouldmakeit.children.4.processResult" class="leaf nt_string">
+              <span class="key">processResult</span>: <span class="value">├─ m : 3</span>
+            </li>
+          </ul>
+        </li>
+        <li id="shouldmakeit.children.5" class="leaf nt_nonEmptyObject">
+
+          <ul id="list@shouldmakeit.children.5" class="branch nt_nonEmptyObject">
+            <li id="shouldmakeit.children.5.key" class="leaf nt_string">
+              <span class="key">key</span>: <span class="value">n</span>
+            </li>
+            <li id="shouldmakeit.children.5.value" class="leaf nt_nonEmptyObject">
+              <span class="key">value</span>:
+              <ul id="list@shouldmakeit.children.5.value" class="branch nt_nonEmptyObject">
+                <li id="shouldmakeit.children.5.value.someparent" class="leaf nt_nonEmptyObject">
+                  <span class="key">someparent</span>:
+                  <ul id="list@shouldmakeit.children.5.value.someparent" class="branch nt_nonEmptyObject">
+                    <li id="shouldmakeit.children.5.value.someparent.a" class="leaf nt_number">
+                      <span class="key">a</span>: <span class="value">1</span>
+                    </li>
+                    <li id="shouldmakeit.children.5.value.someparent.b" class="leaf nt_nonEmptyObject">
+                      <span class="key">b</span>:
+                      <ul id="list@shouldmakeit.children.5.value.someparent.b" class="branch nt_nonEmptyObject">
+                        <li id="shouldmakeit.children.5.value.someparent.b.c" class="leaf nt_string">
+                          <span class="key">c</span>: <span class="value">#</span>
+                        </li>
+                        <li id="shouldmakeit.children.5.value.someparent.b.xtra" class="leaf nt_nonEmptyObject">
+                          <span class="key">xtra</span>:
+                          <ul id="list@shouldmakeit.children.5.value.someparent.b.xtra" class="branch nt_nonEmptyObject">
+                            <li id="shouldmakeit.children.5.value.someparent.b.xtra.alpha" class="leaf nt_array">
+                              <span class="key">alpha</span>: <span class="value">[9, z, 8, y]</span>
+                            </li>
+                            <li id="shouldmakeit.children.5.value.someparent.b.xtra.beta" class="leaf nt_string">
+                              <span class="key">beta</span>: <span class="value">maximum</span>
+                            </li>
+                            <li id="shouldmakeit.children.5.value.someparent.b.xtra.delta" class="leaf nt_number">
+                              <span class="key">delta</span>: <span class="value">4711</span>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li id="shouldmakeit.children.5.value.someparent.f" class="leaf nt_function">
+                      <span class="key">f</span>: <span class="value">function</span>
+                    </li>
+                    <li id="shouldmakeit.children.5.value.someparent.g" class="leaf nt_nonEmptyObject">
+                      <span class="key">g</span>:
+                      <ul id="list@shouldmakeit.children.5.value.someparent.g" class="branch nt_nonEmptyObject">
+                        <li id="shouldmakeit.children.5.value.someparent.g.h" class="leaf nt_nonEmptyObject">
+                          <span class="key">h</span>:
+                          <ul id="list@shouldmakeit.children.5.value.someparent.g.h" class="branch nt_nonEmptyObject">
+                            <li id="shouldmakeit.children.5.value.someparent.g.h.i" class="leaf nt_nonEmptyObject">
+                              <span class="key">i</span>:
+                              <ul id="list@shouldmakeit.children.5.value.someparent.g.h.i" class="branch nt_nonEmptyObject">
+                                <li id="shouldmakeit.children.5.value.someparent.g.h.i.j" class="leaf nt_number">
+                                  <span class="key">j</span>: <span class="value">987</span>
+                                </li>
+                                <li id="shouldmakeit.children.5.value.someparent.g.h.i.k" class="leaf nt_string">
+                                  <span class="key">k</span>: <span class="value">test</span>
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                        <li id="shouldmakeit.children.5.value.someparent.g.l" class="leaf nt_array">
+                          <span class="key">l</span>: <span class="value">[a, b, c]</span>
+                        </li>
+                      </ul>
+                    </li>
+                    <li id="shouldmakeit.children.5.value.someparent.m" class="leaf nt_number">
+                      <span class="key">m</span>: <span class="value">3</span>
+                    </li>
+                    <li id="shouldmakeit.children.5.value.someparent.n" class="leaf nt_nonEmptyObject">
+                      <span class="key">n</span>: <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.5.value">value</a></span>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li id="shouldmakeit.children.5.index" class="leaf nt_number">
+              <span class="key">index</span>: <span class="value">5</span>
+            </li>
+            <li id="shouldmakeit.children.5.parent" class="leaf nt_nonEmptyObject">
+              <span class="key">parent</span>: <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit">shouldmakeit</a></span>
+            </li>
+            <li id="shouldmakeit.children.5.nodeType" class="leaf nt_number">
+              <span class="key">nodeType</span>: <span class="value">10</span>
+            </li>
+            <li id="shouldmakeit.children.5.ancestors" class="leaf nt_arrayofobjects">
+              <span class="key">ancestors</span>:
+              <ol start="0" id="list@shouldmakeit.children.5.ancestors" class="branch nt_arrayofobjects">
+                <li id="shouldmakeit.children.5.ancestors.0" class="leaf nt_nonEmptyObject">
+                  <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit">shouldmakeit</a></span>
+                </li>
+              </ol>
+            </li>
+            <li id="shouldmakeit.children.5.circularRefIndex" class="leaf nt_number">
+              <span class="key">circularRefIndex</span>: <span class="value">-1</span>
+            </li>
+            <li id="shouldmakeit.children.5.isCircular" class="leaf nt_boolean">
+              <span class="key">isCircular</span>: <span class="value">false</span>
+            </li>
+            <li id="shouldmakeit.children.5.circularRefNode" class="leaf nt_empty">
+              <span class="key">circularRefNode</span>: <span class="value">null</span>
+            </li>
+            <li id="shouldmakeit.children.5.isLeaf" class="leaf nt_boolean">
+              <span class="key">isLeaf</span>: <span class="value">false</span>
+            </li>
+            <li id="shouldmakeit.children.5.isBranch" class="leaf nt_boolean">
+              <span class="key">isBranch</span>: <span class="value">true</span>
+            </li>
+            <li id="shouldmakeit.children.5.isValue" class="leaf nt_boolean">
+              <span class="key">isValue</span>: <span class="value">false</span>
+            </li>
+            <li id="shouldmakeit.children.5.depth" class="leaf nt_number">
+              <span class="key">depth</span>: <span class="value">1</span>
+            </li>
+            <li id="shouldmakeit.children.5.maxIndex" class="leaf nt_number">
+              <span class="key">maxIndex</span>: <span class="value">5</span>
+            </li>
+            <li id="shouldmakeit.children.5.prefix" class="leaf nt_string">
+              <span class="key">prefix</span>: <span class="value"></span>
+            </li>
+            <li id="shouldmakeit.children.5.joint" class="leaf nt_string">
+              <span class="key">joint</span>: <span class="value">└─ </span>
+            </li>
+            <li id="shouldmakeit.children.5.children" class="leaf nt_arrayofobjects">
+              <span class="key">children</span>:
+              <ol start="0" id="list@shouldmakeit.children.5.children" class="branch nt_arrayofobjects">
+                <li id="shouldmakeit.children.5.children.0" class="leaf nt_nonEmptyObject">
+
+                  <ul id="list@shouldmakeit.children.5.children.0" class="branch nt_nonEmptyObject">
+                    <li id="shouldmakeit.children.5.children.0.key" class="leaf nt_string">
+                      <span class="key">key</span>: <span class="value">someparent</span>
+                    </li>
+                    <li id="shouldmakeit.children.5.children.0.value" class="leaf nt_nonEmptyObject">
+                      <span class="key">value</span>:
+                      <ul id="list@shouldmakeit.children.5.children.0.value" class="branch nt_nonEmptyObject">
+                        <li id="shouldmakeit.children.5.children.0.value.a" class="leaf nt_number">
+                          <span class="key">a</span>: <span class="value">1</span>
+                        </li>
+                        <li id="shouldmakeit.children.5.children.0.value.b" class="leaf nt_nonEmptyObject">
+                          <span class="key">b</span>:
+                          <ul id="list@shouldmakeit.children.5.children.0.value.b" class="branch nt_nonEmptyObject">
+                            <li id="shouldmakeit.children.5.children.0.value.b.c" class="leaf nt_string">
+                              <span class="key">c</span>: <span class="value">#</span>
+                            </li>
+                            <li id="shouldmakeit.children.5.children.0.value.b.xtra" class="leaf nt_nonEmptyObject">
+                              <span class="key">xtra</span>:
+                              <ul id="list@shouldmakeit.children.5.children.0.value.b.xtra" class="branch nt_nonEmptyObject">
+                                <li id="shouldmakeit.children.5.children.0.value.b.xtra.alpha" class="leaf nt_array">
+                                  <span class="key">alpha</span>: <span class="value">[9, z, 8, y]</span>
+                                </li>
+                                <li id="shouldmakeit.children.5.children.0.value.b.xtra.beta" class="leaf nt_string">
+                                  <span class="key">beta</span>: <span class="value">maximum</span>
+                                </li>
+                                <li id="shouldmakeit.children.5.children.0.value.b.xtra.delta" class="leaf nt_number">
+                                  <span class="key">delta</span>: <span class="value">4711</span>
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                        <li id="shouldmakeit.children.5.children.0.value.f" class="leaf nt_function">
+                          <span class="key">f</span>: <span class="value">function</span>
+                        </li>
+                        <li id="shouldmakeit.children.5.children.0.value.g" class="leaf nt_nonEmptyObject">
+                          <span class="key">g</span>:
+                          <ul id="list@shouldmakeit.children.5.children.0.value.g" class="branch nt_nonEmptyObject">
+                            <li id="shouldmakeit.children.5.children.0.value.g.h" class="leaf nt_nonEmptyObject">
+                              <span class="key">h</span>:
+                              <ul id="list@shouldmakeit.children.5.children.0.value.g.h" class="branch nt_nonEmptyObject">
+                                <li id="shouldmakeit.children.5.children.0.value.g.h.i" class="leaf nt_nonEmptyObject">
+                                  <span class="key">i</span>:
+                                  <ul id="list@shouldmakeit.children.5.children.0.value.g.h.i" class="branch nt_nonEmptyObject">
+                                    <li id="shouldmakeit.children.5.children.0.value.g.h.i.j" class="leaf nt_number">
+                                      <span class="key">j</span>: <span class="value">987</span>
+                                    </li>
+                                    <li id="shouldmakeit.children.5.children.0.value.g.h.i.k" class="leaf nt_string">
+                                      <span class="key">k</span>: <span class="value">test</span>
+                                    </li>
+                                  </ul>
+                                </li>
+                              </ul>
+                            </li>
+                            <li id="shouldmakeit.children.5.children.0.value.g.l" class="leaf nt_array">
+                              <span class="key">l</span>: <span class="value">[a, b, c]</span>
+                            </li>
+                          </ul>
+                        </li>
+                        <li id="shouldmakeit.children.5.children.0.value.m" class="leaf nt_number">
+                          <span class="key">m</span>: <span class="value">3</span>
+                        </li>
+                        <li id="shouldmakeit.children.5.children.0.value.n" class="leaf nt_nonEmptyObject">
+                          <span class="key">n</span>:
+                          <ul id="list@shouldmakeit.children.5.children.0.value.n" class="branch nt_nonEmptyObject">
+                            <li id="shouldmakeit.children.5.children.0.value.n.someparent" class="leaf nt_nonEmptyObject">
+                              <span class="key">someparent</span>: <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.5.children.0.value">value</a></span>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li id="shouldmakeit.children.5.children.0.index" class="leaf nt_number">
+                      <span class="key">index</span>: <span class="value">0</span>
+                    </li>
+                    <li id="shouldmakeit.children.5.children.0.parent" class="leaf nt_nonEmptyObject">
+                      <span class="key">parent</span>: <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.5">5</a></span>
+                    </li>
+                    <li id="shouldmakeit.children.5.children.0.nodeType" class="leaf nt_number">
+                      <span class="key">nodeType</span>: <span class="value">10</span>
+                    </li>
+                    <li id="shouldmakeit.children.5.children.0.ancestors" class="leaf nt_arrayofobjects">
+                      <span class="key">ancestors</span>:
+                      <ol start="0" id="list@shouldmakeit.children.5.children.0.ancestors" class="branch nt_arrayofobjects">
+                        <li id="shouldmakeit.children.5.children.0.ancestors.0" class="leaf nt_nonEmptyObject">
+                          <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit">shouldmakeit</a></span>
+                        </li>
+                        <li id="shouldmakeit.children.5.children.0.ancestors.1" class="leaf nt_nonEmptyObject">
+                          <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit.children.5">5</a></span>
+                        </li>
+                      </ol>
+                    </li>
+                    <li id="shouldmakeit.children.5.children.0.circularRefIndex" class="leaf nt_number">
+                      <span class="key">circularRefIndex</span>: <span class="value">0</span>
+                    </li>
+                    <li id="shouldmakeit.children.5.children.0.isCircular" class="leaf nt_boolean">
+                      <span class="key">isCircular</span>: <span class="value">true</span>
+                    </li>
+                    <li id="shouldmakeit.children.5.children.0.circularRefNode" class="leaf nt_nonEmptyObject">
+                      <span class="key">circularRefNode</span>: <span class="value circular">circular ref.</span> <span class="circularlink"><a href="#list@shouldmakeit">shouldmakeit</a></span>
+                    </li>
+                    <li id="shouldmakeit.children.5.children.0.isLeaf" class="leaf nt_boolean">
+                      <span class="key">isLeaf</span>: <span class="value">true</span>
+                    </li>
+                    <li id="shouldmakeit.children.5.children.0.isBranch" class="leaf nt_boolean">
+                      <span class="key">isBranch</span>: <span class="value">false</span>
+                    </li>
+                    <li id="shouldmakeit.children.5.children.0.isValue" class="leaf nt_boolean">
+                      <span class="key">isValue</span>: <span class="value">false</span>
+                    </li>
+                    <li id="shouldmakeit.children.5.children.0.depth" class="leaf nt_number">
+                      <span class="key">depth</span>: <span class="value">2</span>
+                    </li>
+                    <li id="shouldmakeit.children.5.children.0.maxIndex" class="leaf nt_number">
+                      <span class="key">maxIndex</span>: <span class="value">0</span>
+                    </li>
+                    <li id="shouldmakeit.children.5.children.0.prefix" class="leaf nt_string">
+                      <span class="key">prefix</span>: <span class="value"> </span>
+                    </li>
+                    <li id="shouldmakeit.children.5.children.0.joint" class="leaf nt_string">
+                      <span class="key">joint</span>: <span class="value">└─ </span>
+                    </li>
+                    <li id="shouldmakeit.children.5.children.0.children" class="leaf nt_array">
+                      <span class="key">children</span>: <span class="value">[]</span>
+                    </li>
+                    <li id="shouldmakeit.children.5.children.0.path" class="leaf nt_string">
+                      <span class="key">path</span>: <span class="value">shouldmakeit.n.someparent</span>
+                    </li>
+                    <li id="shouldmakeit.children.5.children.0.processResult" class="leaf nt_string">
+                      <span class="key">processResult</span>: <span class="value"> └─ someparent : circular ref. -> shouldmakeit</span>
+                    </li>
+                  </ul>
+                </li>
+              </ol>
+            </li>
+            <li id="shouldmakeit.children.5.path" class="leaf nt_string">
+              <span class="key">path</span>: <span class="value">shouldmakeit.n</span>
+            </li>
+            <li id="shouldmakeit.children.5.processResult" class="leaf nt_string">
+              <span class="key">processResult</span>: <span class="value">└─ n
+                └─ someparent : circular ref. -> shouldmakeit</span>
+            </li>
+          </ul>
+        </li>
+      </ol>
+    </li>
+    <li id="shouldmakeit.path" class="leaf nt_string">
+      <span class="key">path</span>: <span class="value">shouldmakeit</span>
+    </li>
+    <li id="shouldmakeit.processResult" class="leaf nt_string">
+      <span class="key">processResult</span>: <span class="value">shouldmakeit
+        ├─ a : 1
+        ├─ b
+        │ ├─ c : #
+        │ └─ xtra
+        │ ├─ alpha : [9, z, 8, y]
+        │ ├─ beta : maximum
+        │ └─ delta : 4711
+        ├─ f : function
+        ├─ g
+        │ ├─ h
+        │ │ └─ i
+        │ │ ├─ j : 987
+        │ │ └─ k : test
+        │ └─ l : [a, b, c]
+        ├─ m : 3
+        └─ n
+        └─ someparent : circular ref. -> shouldmakeit</span>
+    </li>
+  </ul>
+
+</body>
+
+</html>

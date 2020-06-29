@@ -8,8 +8,10 @@
  *
 **/
 
-import { TreeifierNode } from './TreeifierNode';
-import { TreeifierNodeTypes } from './TreeifierNodeParser';
+// TODO: TBD :: add a "compare treenodes" function. 
+
+import { TreeifierNode } from './treeifier-node';
+import { TreeifierNodeTypes } from './treeifier-node-parser';
 import chalk from "chalk";
 import { Treeifier, NodeProcessorFunction } from './treeifier';
 
@@ -45,12 +47,14 @@ export class TreeifierUtils {
   }
 
   static defaultHTMLProcessor( node: TreeifierNode ): string {
-    // TODO: add anchor tags on keys and links on circulars ??
     let result = '';
-    const circularReference = node.isCircular ? `<span class="circular">${node.circularRefNode?.key ?? '?'}</span>` : '';
+    const circularKey = node.circularRefNode?.key ?? '?';
+    const circularPath = node.circularRefNode?.path ?? '';
+    const circularLink = node.isCircular ? `<a href="#list@${circularPath}">${circularKey}</a>` : circularKey;
+    const circularReference = node.isCircular ? `<span class="circularlink">${circularLink}</span>` : '';
     const nodeTypeClass = `nt_${TreeifierUtils.nodeTypeToString( node.nodeType )}`;
-    const nodeKey = ( node.parent?.nodeType === TreeifierNodeTypes.arrayofobjects )? '' : `<span class="key">${node.key}: </span>`;
-    const nodeValue = node.isLeaf? `<span class="value">${node.toString()}</span> ${circularReference}` : '';
+    const nodeKey = ( node.parent?.nodeType === TreeifierNodeTypes.arrayofobjects ) ? '' : `<span class="key">${node.key}</span>: `;
+    const nodeValue = node.isLeaf ? `<span class="value${node.isCircular ? ' circular':''}">${node.toString()}</span> ${circularReference}` : '';
     node.parent && ( result = `<li id="${node.path}" class="leaf ${nodeTypeClass}">\n${nodeKey}${nodeValue}` );
     if ( node.isBranch ) {
       const listType = ( node.nodeType === TreeifierNodeTypes.arrayofobjects ) ? 'ol start="0"' : 'ul';
@@ -74,10 +78,11 @@ export class TreeifierUtils {
     let nodeValueString = node.toString();
     if ( node.key === 'processResult' ) nodeValueString = nodeValueString.replace( /\r?\n|\r/g, '\\n' );
     if ( node.key === 'nodeType' ) nodeValueString = TreeifierUtils.nodeTypeToString( node.value );
-    // if ( node.key === 'nodeType' ) nodeValueString = '#' +TreeifierNodeTypes[node.value];
-    // if ( node.key === 'nodeType' ) nodeValueString = TreeifierNodeTypes[parseInt( nodeValueString, 10 )];
-    let result = TreeifierUtils.StructureColor( node.prefix + node.joint ) + TreeifierUtils.KeyColor( node.key ) + TreeifierUtils.ValueColor( ( node.isLeaf ? ' ' + nodeValueString : '' ) ) + TreeifierUtils.CircularColor( circular );
-    if ( node.isBranch ) {
+    if ( node.key === 'ancestors' ) {
+      nodeValueString = '[' + node.ancestors.map((element: TreeifierNode) => { return element.path }).join(', ') + ']';
+    }
+    let result = TreeifierUtils.StructureColor( node.prefix + node.joint ) + TreeifierUtils.KeyColor( node.key ) + TreeifierUtils.ValueColor( ( (node.isLeaf || node.key === 'ancestors') ? ' ' + nodeValueString : '' ) ) + TreeifierUtils.CircularColor( circular );
+    if ( node.isBranch && !( node.key === 'ancestors' )) {
       node.children.forEach( ( child: TreeifierNode ): void => {
         child.processResult && ( result = result + '\n' + child.processResult )
       } );
@@ -87,6 +92,7 @@ export class TreeifierUtils {
 
   static debugResultNode( rootnode: TreeifierNode, treeifier?: Treeifier ): string {
     const debugTreeifier = treeifier ?? new Treeifier();
+    // return debugTreeifier.process( rootnode, rootnode.key, TreeifierUtils.defaultHTMLProcessor );
     return debugTreeifier.process( rootnode, rootnode.key, TreeifierUtils.debugProcessor );
   }
 

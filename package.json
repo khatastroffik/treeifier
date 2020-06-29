@@ -25,7 +25,7 @@
     "prepublishOnly": "npm run prod",
     "prod": "npm run prod:clean && npm run prod:lint && npm run prod:test && npm run prod:build && npm run prod:copy",
     "prod:build": "npm run build",
-    "prod:test": "jest --silent --all",
+    "prod:test": "jest --silent --all --no-cache",
     "prod:lint": "eslint --quiet src",
     "prod:clean": "npm run clean",
     "prod:copy": "npm run copy:typescripts",

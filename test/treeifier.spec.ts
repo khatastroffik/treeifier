@@ -10,9 +10,9 @@
 
 import 'jest-extended';
 import { Treeifier, NodeProcessorFunction } from "../src/treeifier";
-import { TreeifierNode } from '../src/TreeifierNode';
-import { TreeifierNodeTypes } from '../src/TreeifierNodeParser';
-import { TreeifierUtils } from '../src/treeifierUtils';
+import { TreeifierNode } from '../src/treeifier-node';
+import { TreeifierNodeTypes } from '../src/treeifier-node-parser';
+import { TreeifierUtils } from '../src/treeifier-utils';
 import chalk from 'chalk';
 
 let standardProcessor: NodeProcessorFunction;
@@ -137,18 +137,29 @@ describe( 'treeifier', () => {
     const expected2 = 'root\\n├─ a : 1\\n├─ b : function\\n├─ c : Symbol(test symbol)\\n└─ d : d';
     const processResultNode = tree.parse( item, '', standardProcessor );
     TreeifierUtils.CircularColor = chalk.magenta;
-    const debugResult = TreeifierUtils.debugResultNode(processResultNode, tree);
-    // console.log(debugResult);
+    const debugResult = TreeifierUtils.debugResultNode( processResultNode, tree );
     expect( debugResult ).toContain( expected1 );
     expect( debugResult ).toContain( expected2 );
   } );
 
-  it( 'should debug directly, adapting color of the output', () => {
+  it( 'should debug an object containing circular refs directly', () => {
+    const item = { a: 1, b: { c: '#', xtra: { alpha: [9, "z", 8, "y"], beta: "maximum", delta: 4711 } }, f: (): number => { return 1 }, g: { h: { i: { j: 987, k: 'test' } }, l: ["a", "b", "c"] }, m: 3, n: { someparent: new Object() } };
+    item.n.someparent = item; // setup a circular reference
+    const debugResult = TreeifierUtils.debug( item, 'shouldmakeit', standardProcessor );
+    const expected1 = '└─ n\\n   └─ someparent : circular ref. -> shouldmakeit';
+    const expected2 = '[shouldmakeit, shouldmakeit.children, shouldmakeit.children.5, shouldmakeit.children.5.children, shouldmakeit.children.5.children.0]';
+    const expected3 = 'shouldmakeit.g.h.i.j';
+    expect( debugResult ).toContain( expected1 );
+    expect( debugResult ).toContain( expected2 );
+    expect( debugResult ).toContain( expected3 );
+  } );
+
+  it( 'should debug an object directly, adapting the color of the output', () => {
     const item = { a: 1, b: new Function(), c: Symbol( 'test symbol' ), d: 'd' };
     const expected1 = 'processResult';
     const expected2 = 'root\\n├─ a : 1\\n├─ b : function\\n├─ c : Symbol(test symbol)\\n└─ d : d';
     TreeifierUtils.CircularColor = chalk.yellow;
-    const debugResult = TreeifierUtils.debug(item, '', standardProcessor);
+    const debugResult = TreeifierUtils.debug( item, '', standardProcessor );
     expect( debugResult ).toContain( expected1 );
     expect( debugResult ).toContain( expected2 );
   } );

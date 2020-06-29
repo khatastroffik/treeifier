@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { TreeifierNodeParser, TreeifierNodeTypes } from './TreeifierNodeParser';
+import { TreeifierNodeParser, TreeifierNodeTypes } from './treeifier-node-parser';
 
 /**
  * @khatastroffik/treeifier :: Treeifier Node
