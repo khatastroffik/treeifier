@@ -9,6 +9,15 @@
  *
 **/
 
+// TODO: allow the client app to redefine/modify the criteria used to identify/differentiate between "leaf" and "branch" nodes.
+
+/**
+ * The TreeifierNodeTypes describes the possible types of values stored in the tree nodes.
+ * Beside "pure" value types, compounds or "complex" types are defined.
+ *
+ * @export
+ * @enum {number}
+ */
 export enum TreeifierNodeTypes {
   unknown = 0,
   empty = 1,
@@ -23,6 +32,10 @@ export enum TreeifierNodeTypes {
   nonEmptyObject = 10,
   arrayofobjects = 11
 }
+
+/**
+ * HELPER Filter/Criteria indentifying all kind of nodes
+ */
 const NodeTypesArray: Array<TreeifierNodeTypes> = [
   TreeifierNodeTypes.unknown,
   TreeifierNodeTypes.empty,
@@ -37,6 +50,10 @@ const NodeTypesArray: Array<TreeifierNodeTypes> = [
   TreeifierNodeTypes.nonEmptyObject,
   TreeifierNodeTypes.arrayofobjects
 ]
+
+/**
+ * Filter/Criteria indentifying a "pure value" node
+ */
 const NodeValueTypesArray : Array<TreeifierNodeTypes> = [
   TreeifierNodeTypes.empty,
   TreeifierNodeTypes.string,
@@ -47,17 +64,32 @@ const NodeValueTypesArray : Array<TreeifierNodeTypes> = [
   TreeifierNodeTypes.symbol,
 
 ];
+
+/**
+ * Filter/Criteria indentifying a "LEAF" node
+ */
 const LeafTypesArray: Array<TreeifierNodeTypes> = [
   ...NodeValueTypesArray,
   TreeifierNodeTypes.unknown,  
   TreeifierNodeTypes.array,
   TreeifierNodeTypes.emptyObject
 ];
+
+/**
+ * Filter/Criteria indentifying a "BRANCH" node - automatically generated out of the "LeafTypesArray"...
+ */
 const BranchTypesArray: Array<TreeifierNodeTypes> = NodeTypesArray.filter(x => !LeafTypesArray.includes(x));
 
 /**
  * Abstract class used to create Treeifier Node objects (TreeifierNode)
- *
+ * The static methods of this class are used to analyze and parse the item given as input to Treeifier.
+ * The results of those methods help to instanciate the corresponding tree nodes (TreeifierNode).
+ * 
+ * The methods "isLeafNode", "isLeaf", "isBranchNode" and "isBranch" are intended to be adjustable i.e.:
+ * The client application should be able to adapt the results of those methods to its needs.
+ * For that purpose, the predefined arrays "BranchTypesArray" and "LeafTypesArray" should be modified.
+ * NOTE: TO BE DONE!
+ * 
  * @export
  * @abstract
  * @class TreeifierNodeParser

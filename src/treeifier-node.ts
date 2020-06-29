@@ -10,6 +10,39 @@ import { TreeifierNodeParser, TreeifierNodeTypes } from './treeifier-node-parser
  * Copyright (c) 2020, Loïs Bégué
  *
 **/
+
+// TODO: implement deep property access i.e. a function to access "item[..][..]...[..]" using the "path" information
+//       i.e. a kind of recursive version of:
+//       function get(obj: any, ...props: string[]): any {
+//         return obj && props.reduce(
+//           (result, prop) => result == null ? undefined : result[prop],
+//           obj
+//         );
+//       }
+//      as defined in https://codewithstyle.info/Deep-property-access-in-TypeScript/
+
+/**
+ * This class represents the building block of the tree structure corresponding 
+ * to the analyzed/parsed/processed input (object).
+ *
+ * @export
+ * @member nodeType the type of the value stored in the node.
+ * @member isLeaf true when the node is "at the end of a branch" (eq. to "not isBranch").
+ * @member isBranch true when the node is "carrying further branches or leafs" (eq. to "not isLeaf").
+ * @member isValue the stored value can be interpreted as "pure data" i.e. is not itself an object holding further data.
+ * @member depth the branching depth of the node i.e. how far away from the root node it is. Level 0 = root node.
+ * @member ancestors an array containing the hierarchically (relative to the node instance) sorted (!) list of ancestor nodes up to the root node. The array item at index 0 is the root node.
+ * @member maxIndex the amount of the sibling nodes on the current branch i.e. how many children -1 the parent node is holding.
+ * @member isCircular true when the value correspond to a node listed as "ancestor" of the current node instance.
+ * @member circularRefNode the reference to the tree node which value corresponds to the circular reference (if any).
+ * @member circularRefIndex (private) the index of the circularly referenced ancestor in the ancestors array (if any)
+ * @member prefix the ascii text representing a "branch" structure of the tree representation for the current node. Helper for the representation of a node in a textual tree view.
+ * @member joint   the ascii text representing a "leaf" structure representation for the current node. Helper for the representation of a node in a textual tree view.
+ * @member children an array containing the list of all 1st level (sibling) child nodes directly bound to the current node instance.
+ * @member processResult: the textual or objectal representation of the node as provided by the "processor" callback function. Used to "output" the tree representation.
+  * @member path the "chain" of node "keys" leading to the current node. The keys are separated by a ".". Can be used to IDENTIFY the node and to access the item value directly (e.g. for path = root.b.xtra.beta, then use 'item.b.xtra.beta' or 'item["b"]["xtra"]["beta"]'.
+ * @class TreeifierNode
+ */
 export class TreeifierNode {
   public readonly nodeType: TreeifierNodeTypes;
   public readonly isLeaf: boolean;
@@ -27,6 +60,15 @@ export class TreeifierNode {
   public processResult: any;
   public readonly path: string;
 
+  /**
+   * Creates an instance of a TreeifierNode and initialize all its properties
+   * 
+   * @param {string} key the "label" corresponding to the item name/property
+   * @param {*} value the value i.e. data originally contained in the item or its property
+   * @param {number} index the index of the tree node in a node sequence (sibling) or node array
+   * @param {(TreeifierNode | null)} parent the tree node referencing this instance as its child
+   * @memberof TreeifierNode
+   */
   constructor(
     public readonly key: string,
     public readonly value: any,
@@ -51,7 +93,22 @@ export class TreeifierNode {
     this.path = `${parent? parent.path + '.': ''}${this.key}`;
     this.processResult = null;
   } 
-
+  /**
+   * This function returns a default textual representation of the  
+   * original "value" stored in the tree node.
+   * 
+   * @description By default, some values are "translated" in their respective types
+   * to avoid textual noise or because the value cannot be represented properly. 
+   * e.g.
+   * - values corresponding to functions and symbols
+   * - values of "container" nodes
+   * - values of circularly referenced objects
+   * - non existing values (null or empty)
+   * etc.
+   *
+   * @returns {string} the textual representation of a "value" (or its type...)
+   * @memberof TreeifierNode
+   */
   toString(): string {
     // IMPORTANT: the order of the tests is important here!
     // => 1. empty 2. non displayable values 3. circular 4. branches 5. array 6. values

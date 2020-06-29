@@ -149,6 +149,7 @@ describe( 'treeifier', () => {
     const expected1 = '└─ n\\n   └─ someparent : circular ref. -> shouldmakeit';
     const expected2 = '[shouldmakeit, shouldmakeit.children, shouldmakeit.children.5, shouldmakeit.children.5.children, shouldmakeit.children.5.children.0]';
     const expected3 = 'shouldmakeit.g.h.i.j';
+    // console.log(item["b"]["xtra"]["beta"]);
     expect( debugResult ).toContain( expected1 );
     expect( debugResult ).toContain( expected2 );
     expect( debugResult ).toContain( expected3 );
