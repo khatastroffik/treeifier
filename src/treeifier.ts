@@ -48,21 +48,21 @@ export class Treeifier {
     }
     node.processResult = processor( node );
   }
-/**
- * a function returning a root node (TreeifierNode) mapping the tree structure of the input
- *
- * @param {*} root the input item/object to be analyzed and parsed
- * @param {string} label the name/identifier of the input item (used as "key" of the root node)
- * @param {NodeProcessorFunction} nodeProcessorCallback a function responsible of generating a representation of each tree node.
- * @returns {TreeifierNode} the "root" node of the generated tree node structure
- * @memberof Treeifier
- */
-parse( root: any, label: string, nodeProcessorCallback: NodeProcessorFunction ): TreeifierNode {
+  /**
+   * a function returning a root node (TreeifierNode) mapping the tree structure of the input
+   *
+   * @param {*} root the input item/object to be analyzed and parsed
+   * @param {string} label the name/identifier of the input item (used as "key" of the root node)
+   * @param {NodeProcessorFunction} nodeProcessorCallback a function responsible of generating a representation of each tree node.
+   * @returns {TreeifierNode} the "root" node of the generated tree node structure
+   * @memberof Treeifier
+   */
+  parse( root: any, label: string, nodeProcessorCallback: NodeProcessorFunction ): TreeifierNode {
     if ( !nodeProcessorCallback ) throw new Error( 'Cannot process without a processor function.' );
     const rootObjectNode = new TreeifierNode( label ? label : 'root', root, 0, null );
     this.processInternal( rootObjectNode, nodeProcessorCallback );
     return rootObjectNode;
-  }  
+  }
   /**
    * a function returning a textual or objectal representation of the tree structure corresponding to the input
    *
@@ -73,7 +73,7 @@ parse( root: any, label: string, nodeProcessorCallback: NodeProcessorFunction ):
    * @memberof Treeifier
    */
   process( root: any, label: string, nodeProcessorCallback: NodeProcessorFunction ): any {
-    return this.parse(root, label, nodeProcessorCallback).processResult;
+    return this.parse( root, label, nodeProcessorCallback ).processResult;
   }
 
 }

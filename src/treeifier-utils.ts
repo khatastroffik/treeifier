@@ -34,8 +34,6 @@ export class TreeifierUtils {
   }
 
   static defaultColoredProcessor( node: TreeifierNode ): string {
-    console.log( this );
-
     const circular = node.isCircular ? ' -> ' + node.circularRefNode?.key ?? '?' : '';
     let result = TreeifierUtils.StructureColor( node.prefix + node.joint ) + TreeifierUtils.KeyColor( node.key ) + TreeifierUtils.ValueColor( ( node.isLeaf ? ' : ' + node.toString() : '' ) ) + TreeifierUtils.CircularColor( circular );
     if ( node.isBranch ) {
@@ -98,6 +96,6 @@ export class TreeifierUtils {
 
   static debug( item: any, label: string, nodeProcessorCallback: NodeProcessorFunction ): string {
     const treeifier = new Treeifier();
-    return TreeifierUtils.debugResultNode( treeifier.parse( item, label ?? 'root node', nodeProcessorCallback ), treeifier );
+    return TreeifierUtils.debugResultNode( treeifier.parse( item, label ?? 'rootnode', nodeProcessorCallback ), treeifier );
   }
 }

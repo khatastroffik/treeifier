@@ -20,6 +20,16 @@ import { TreeifierNodeParser, TreeifierNodeTypes } from './treeifier-node-parser
 //         );
 //       }
 //      as defined in https://codewithstyle.info/Deep-property-access-in-TypeScript/
+// 
+//      or
+// 
+//      const getNestedObject = (nestedObj, pathArr) => {
+//        return pathArr.reduce((obj, key) =>
+//            (obj && obj[key] !== 'undefined') ? obj[key] : undefined, nestedObj);
+//      }
+//      etc. as in https://hackernoon.com/accessing-nested-objects-in-javascript-f02f1bd6387f
+//           https://www.npmjs.com/package/typy
+
 
 /**
  * This class represents the building block of the tree structure corresponding 
@@ -75,7 +85,6 @@ export class TreeifierNode {
     public readonly index: number,
     public readonly parent: TreeifierNode | null,
   ) {
-
     this.nodeType = TreeifierNodeParser.getNodeType( value );
     this.ancestors = parent ? [...parent.ancestors, parent] : [];
     this.circularRefIndex = this.ancestors.map( ( nodeitem ) => nodeitem.value ).indexOf( value );
