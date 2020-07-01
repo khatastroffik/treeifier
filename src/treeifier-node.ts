@@ -30,6 +30,7 @@ import { TreeifierNodeParser, TreeifierNodeTypes } from './treeifier-node-parser
 //      etc. as in https://hackernoon.com/accessing-nested-objects-in-javascript-f02f1bd6387f
 //           https://www.npmjs.com/package/typy
 
+// TODO: implement automatic recognition of properties containing a date as string or number e.g. with names like "Date, DateTime, TimeStamp, fromDate, toDate, start, end ..."
 
 /**
  * This class represents the building block of the tree structure corresponding 
@@ -87,7 +88,7 @@ export class TreeifierNode {
   ) {
     this.nodeType = TreeifierNodeParser.getNodeType( value );
     this.ancestors = parent ? [...parent.ancestors, parent] : [];
-    this.circularRefIndex = this.ancestors.map( ( nodeitem ) => nodeitem.value ).indexOf( value );
+    this.circularRefIndex = this.ancestors.map( ( nodeitem: TreeifierNode ): any => nodeitem.value ).indexOf( value );
     this.isCircular = this.circularRefIndex >= 0;//this.ancestors.map( (nodeitem) => nodeitem.value).includes( value );
     this.circularRefNode = this.isCircular ? this.ancestors[this.circularRefIndex] : null;
     this.isLeaf = TreeifierNodeParser.isLeafNode( this.nodeType ) || this.isCircular;
@@ -98,10 +99,10 @@ export class TreeifierNode {
     this.prefix = parent ? ( parent.prefix ) + ( ( ( parent.maxIndex - parent.index ) === 0 ) ? ( ( this.depth > 1 ) ? '   ' : '' ) : '│  ' ) : '';
     this.joint = parent ? ( ( this.index === this.maxIndex ) ? '└─ ' : '├─ ' ) : '';
     this.children = [];
-    parent && (parent.children.push(this)); // add this node to its parent's children list
-    this.path = `${parent? parent.path + '.': ''}${this.key}`;
+    parent && ( parent.children.push( this ) ); // add this node to its parent's children list
+    this.path = `${parent ? parent.path + '.' : ''}${this.key}`;
     this.processResult = null;
-  } 
+  }
   /**
    * This function returns a default textual representation of the  
    * original "value" stored in the tree node.

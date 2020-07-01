@@ -22,17 +22,6 @@ export class TreeifierUtils {
   static ValueColor = chalk.greenBright;
   static CircularColor = chalk.redBright;
 
-  static defaultProcessor( node: TreeifierNode ): string {
-    const circular = node.isCircular ? ' -> ' + node.circularRefNode?.key ?? '?' : '';
-    let result = node.prefix + node.joint + node.key + ( node.isLeaf ? ' : ' + node.toString() : '' ) + circular;
-    if ( node.isBranch ) {
-      node.children.forEach( ( child: TreeifierNode ): void => {
-        child.processResult && ( result = result + '\n' + child.processResult )
-      } );
-    }
-    return result;
-  }
-
   static defaultColoredProcessor( node: TreeifierNode ): string {
     const circular = node.isCircular ? ' -> ' + node.circularRefNode?.key ?? '?' : '';
     let result = TreeifierUtils.StructureColor( node.prefix + node.joint ) + TreeifierUtils.KeyColor( node.key ) + TreeifierUtils.ValueColor( ( node.isLeaf ? ' : ' + node.toString() : '' ) ) + TreeifierUtils.CircularColor( circular );
@@ -52,7 +41,7 @@ export class TreeifierUtils {
     const circularReference = node.isCircular ? `<span class="circularlink">${circularLink}</span>` : '';
     const nodeTypeClass = `nt_${TreeifierUtils.nodeTypeToString( node.nodeType )}`;
     const nodeKey = ( node.parent?.nodeType === TreeifierNodeTypes.arrayofobjects ) ? '' : `<span class="key">${node.key}</span>: `;
-    const nodeValue = node.isLeaf ? `<span class="value${node.isCircular ? ' circular':''}">${node.toString()}</span> ${circularReference}` : '';
+    const nodeValue = node.isLeaf ? `<span class="value${node.isCircular ? ' circular' : ''}">${node.toString()}</span> ${circularReference}` : '';
     node.parent && ( result = `<li id="${node.path}" class="leaf ${nodeTypeClass}">\n${nodeKey}${nodeValue}` );
     if ( node.isBranch ) {
       const listType = ( node.nodeType === TreeifierNodeTypes.arrayofobjects ) ? 'ol start="0"' : 'ul';
@@ -72,15 +61,20 @@ export class TreeifierUtils {
   }
 
   private static debugProcessor( node: TreeifierNode ): string {
-    const circular = node.isCircular ? ' ' + node.circularRefNode?.key ?? '?' : '';
+    const circular = ( node.isCircular && node.circularRefNode ) ? node.circularRefNode.value.path ?? node.circularRefNode.key : '';
     let nodeValueString = node.toString();
     if ( node.key === 'processResult' ) nodeValueString = nodeValueString.replace( /\r?\n|\r/g, '\\n' );
     if ( node.key === 'nodeType' ) nodeValueString = TreeifierUtils.nodeTypeToString( node.value );
     if ( node.key === 'ancestors' ) {
-      nodeValueString = '[' + node.ancestors.map((element: TreeifierNode) => { return element.path }).join(', ') + ']';
+      if ( node.circularRefNode === null ) return '';
+      nodeValueString = '[' + node.ancestors.map( ( element: TreeifierNode ) => { return element.value.path } ).join( ', ' ) + ']';
     }
-    let result = TreeifierUtils.StructureColor( node.prefix + node.joint ) + TreeifierUtils.KeyColor( node.key ) + TreeifierUtils.ValueColor( ( (node.isLeaf || node.key === 'ancestors') ? ' ' + nodeValueString : '' ) ) + TreeifierUtils.CircularColor( circular );
-    if ( node.isBranch && !( node.key === 'ancestors' )) {
+    if ( node.key === 'circularRefIndex' && node.value < 0 ) return '';
+    if ( node.key === 'circularRefNode' && node.value === null ) return '';
+    if ( node.key === 'isCircular' && node.value != true ) return '';
+    if ( node.key === 'children' && node.value.length < 1 ) return '';
+    let result = TreeifierUtils.StructureColor( node.prefix + node.joint ) + TreeifierUtils.KeyColor( node.key ) + TreeifierUtils.ValueColor( ( ( node.isLeaf || node.key === 'ancestors' ) ? ' ' + nodeValueString : '' ) ) + TreeifierUtils.CircularColor( ' ' + circular );
+    if ( node.isBranch && !( node.key === 'ancestors' ) ) {
       node.children.forEach( ( child: TreeifierNode ): void => {
         child.processResult && ( result = result + '\n' + child.processResult )
       } );
@@ -90,12 +84,11 @@ export class TreeifierUtils {
 
   static debugResultNode( rootnode: TreeifierNode, treeifier?: Treeifier ): string {
     const debugTreeifier = treeifier ?? new Treeifier();
-    // return debugTreeifier.process( rootnode, rootnode.key, TreeifierUtils.defaultHTMLProcessor );
-    return debugTreeifier.process( rootnode, rootnode.key, TreeifierUtils.debugProcessor );
+    return debugTreeifier.process( rootnode, 'debug@' + rootnode.key, TreeifierUtils.debugProcessor );
   }
 
-  static debug( item: any, label: string, nodeProcessorCallback: NodeProcessorFunction ): string {
+  static debug( item: any, label?: string, nodeProcessorCallback?: NodeProcessorFunction ): string {
     const treeifier = new Treeifier();
-    return TreeifierUtils.debugResultNode( treeifier.parse( item, label ?? 'rootnode', nodeProcessorCallback ), treeifier );
+    return TreeifierUtils.debugResultNode( treeifier.parse( item, label, nodeProcessorCallback ), treeifier );
   }
 }
