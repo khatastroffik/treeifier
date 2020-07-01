@@ -38,14 +38,17 @@ That's it!
 
 ## screenshots (output examples)
 
-Using the `defaultProcessor` (no need to specify it explicitly) and the `defaultColoredProcessor` provided in the `treeifier-utils` module, you'd get:
+Using the `defaultProcessor` (no need to specify it explicitly) and the `defaultColoredValuesProcessor` &amp; `defaultColoredTypesProcessor` provided in the `treeifier-utils` module, you'd get:
 
-|default ASCII tree (string)|colored ASCII tree (string)|
-|:---:|:---:|
-| ![ASCII tree representation](./doc/screenshot-default-ascii-tree.png) | ![ASCII tree representation](./doc/screenshot-colored-ascii-tree.png) |
-|`myTreeifier.process( aPerson )`|`myTreeifier.process( aPerson, 'person', TreeifierUtils.defaultColoredProcessor )`|
+|default ASCII tree (string)|*values* colored ASCII tree (string)|*types* colored ASCII tree (string)
+|:---:|:---:|:---:|
+| ![ASCII tree representation](./doc/screenshot-default-ascii-tree.png) | ![ASCII tree representation](./doc/screenshot-colored-ascii-tree.png) | ![ASCII tree representation](./doc/screenshot-colored-types-ascii-tree.png) |
+|`myTreeifier.process( aPerson )`|`myTreeifier.process( aPerson, 'person', TreeifierUtils.defaultColoredValuesProcessor )`| `myTreeifier.process( aPerson, 'person', TreeifierUtils.defaultColoredTypesProcessor )`|
 
-Note: not all available output formats are demonstrated here.
+Note:
+
+- colors can be redefined/overriden as needed (colors for 'tree structure', 'key', 'value' and 'circular ref.')
+- not all available output formats are demonstrated here.
 
 ## use cases
 
@@ -166,10 +169,11 @@ const person = {
 
 a single function used to **shape the tree** i.e. shape the branches and leafs exposed by the process result:
 
-- use one of the "default" processors (examples are available)
-- BYOP: bring your own processor function
-- sort-as-you-need: organize the output as required (some example "sort" functions are included)
-- filter-as-you-need: select the branches and leafs you'd like to output
+- **defaults**: use one of the default processors as provided in the `treeifier-utils` module
+- **BYOP**: bring your own processor function
+  - **sort-as-you-need**: organize the output as required (some example "sort" functions are included)
+  - **filter-as-you-need**: select the branches and leafs you'd like to output
+  - **shape-as-you-want**: generate the "processResult" as needed i.e. as a specifically formated string or object.
 
 Note the resulting **tree** may be a simple list i.e. it doesn't need to be structured at all, depending on your implementation goals.
 
@@ -286,5 +290,6 @@ treeifier_root_node_person
 ```
 
 note: the standard output of the `debug` function is colored by default, though this is not visible in the example above.
+
 
 [write-processor]: ./docs/writing-a-processor-function.md

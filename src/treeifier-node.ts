@@ -96,7 +96,9 @@ export class TreeifierNode {
     this.isValue = TreeifierNodeParser.isValueNode( this.nodeType );
     this.depth = this.ancestors.length;
     this.maxIndex = parent ? Object.entries( parent.value ).length - 1 : 0; // this works for both arrays and objects
+    // this.prefix = parent ? ( parent.prefix ) + ( ( ( parent.maxIndex - parent.index ) === 0 ) ? ( ( this.depth > 1 ) ? '   ' : '' ) : '║  ' ) : '';
     this.prefix = parent ? ( parent.prefix ) + ( ( ( parent.maxIndex - parent.index ) === 0 ) ? ( ( this.depth > 1 ) ? '   ' : '' ) : '│  ' ) : '';
+    // this.joint = parent ? ( ( this.index === this.maxIndex ) ? '╚═ ' : '╠═ ' ) : '';
     this.joint = parent ? ( ( this.index === this.maxIndex ) ? '└─ ' : '├─ ' ) : '';
     this.children = [];
     parent && ( parent.children.push( this ) ); // add this node to its parent's children list

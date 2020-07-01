@@ -17,14 +17,44 @@ import { Treeifier, NodeProcessorFunction } from './treeifier';
 
 export class TreeifierUtils {
 
-  static StructureColor = chalk.blue;
-  static KeyColor = chalk.white;
-  static ValueColor = chalk.greenBright;
-  static CircularColor = chalk.redBright;
+  static readonly defaultStructureColor = chalk.blue;
+  static readonly defaultKeyColor = chalk.white;
+  static readonly defaultValueColor = chalk.greenBright;
+  static readonly defaultCircularColor = chalk.redBright;
 
-  static defaultColoredProcessor( node: TreeifierNode ): string {
+  static StructureColor = TreeifierUtils.defaultStructureColor;
+  static KeyColor = TreeifierUtils.defaultKeyColor;
+  static ValueColor = TreeifierUtils.defaultValueColor;
+  static CircularColor = TreeifierUtils.defaultCircularColor;
+
+  static resetAllColors(): void {
+    TreeifierUtils.StructureColor = TreeifierUtils.defaultStructureColor;
+    TreeifierUtils.KeyColor = TreeifierUtils.defaultKeyColor;
+    TreeifierUtils.ValueColor = TreeifierUtils.defaultValueColor;
+    TreeifierUtils.CircularColor = TreeifierUtils.defaultCircularColor;
+  }
+
+  static defaultColoredTypesProcessor( node: TreeifierNode ): string {
+    let result = TreeifierUtils.StructureColor( node.prefix + node.joint ) +
+      TreeifierUtils.KeyColor( node.key ) +
+      TreeifierUtils.StructureColor( ' : ' ) +
+      TreeifierUtils.ValueColor( TreeifierUtils.nodeTypeToString( node.nodeType ) );
+    if ( node.isBranch ) {
+      node.children.forEach( ( child: TreeifierNode ): void => {
+        child.processResult && ( result = result + '\n' + child.processResult )
+      } );
+    }
+    return result;
+  }
+
+  static defaultColoredValuesProcessor( node: TreeifierNode ): string {
     const circular = node.isCircular ? ' -> ' + node.circularRefNode?.key ?? '?' : '';
-    let result = TreeifierUtils.StructureColor( node.prefix + node.joint ) + TreeifierUtils.KeyColor( node.key ) + TreeifierUtils.ValueColor( ( node.isLeaf ? ' : ' + node.toString() : '' ) ) + TreeifierUtils.CircularColor( circular );
+    const nodeValue = node.isLeaf ? node.toString() : ''
+    let result = TreeifierUtils.StructureColor( node.prefix + node.joint ) +
+      TreeifierUtils.KeyColor( node.key ) +
+      TreeifierUtils.StructureColor( nodeValue? ' : ': '' ) +
+      TreeifierUtils.ValueColor( nodeValue ) +
+      TreeifierUtils.CircularColor( circular );
     if ( node.isBranch ) {
       node.children.forEach( ( child: TreeifierNode ): void => {
         child.processResult && ( result = result + '\n' + child.processResult )

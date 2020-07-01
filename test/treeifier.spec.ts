@@ -190,7 +190,8 @@ describe( 'treeifier', () => {
     // ======== test processing and debugging the object "person" ========
     // console.log( new Treeifier().process( person ) );
     // console.log( new Treeifier().process( person, 'person', TreeifierUtils.defaultHTMLProcessor ) );
-    // console.log( new Treeifier().process( person, 'person', TreeifierUtils.defaultColoredProcessor ) );
+    // console.log( new Treeifier().process( person, 'person', TreeifierUtils.defaultColoredValuesProcessor ) );
+    // console.log( new Treeifier().process( person, 'person', TreeifierUtils.defaultColoredTypesProcessor ) );
     // console.log( TreeifierUtils.debug( person ) );
 
     // ======== test debugging an object with circular reference ========
