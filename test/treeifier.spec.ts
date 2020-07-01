@@ -47,10 +47,10 @@ describe( 'treeifier', () => {
     }
   } );
 
-  beforeEach(function() {
+  beforeEach( function () {
     TreeifierUtils.CircularColor = chalk.redBright;
-  });
-  
+  } );
+
 
   it( 'should process all node types', () => {
     const tree = new Treeifier();
@@ -131,8 +131,8 @@ describe( 'treeifier', () => {
     const tree = new Treeifier();
     const item = { a: 1, d: 'd' };
     const dummyProcessorFunction: any = null;
-    expect( () => { tree.process( item, '', dummyProcessorFunction ) } ).not.toThrow( );
-    expect( () => { tree.process( item ) } ).not.toThrow( );
+    expect( () => { tree.process( item, '', dummyProcessorFunction ) } ).not.toThrow();
+    expect( () => { tree.process( item ) } ).not.toThrow();
   } );
 
   it( 'should debug Treeifier result node, adapting color of the output', () => {
@@ -162,7 +162,7 @@ describe( 'treeifier', () => {
     const expected1 = 'processResult';
     const expected2 = 'root\\n├─ a : 1\\n├─ b : function\\n├─ c : Symbol(test symbol)\\n└─ d : d';
     TreeifierUtils.CircularColor = chalk.yellow;
-    const debugResult = TreeifierUtils.debug( item, '', standardProcessorFixture ); 
+    const debugResult = TreeifierUtils.debug( item, '', standardProcessorFixture );
     expect( debugResult ).toContain( expected1 );
     expect( debugResult ).toContain( expected2 );
   } );
@@ -188,16 +188,17 @@ describe( 'treeifier', () => {
     };
 
     // ======== test processing and debugging the object "person" ========
-    // console.log(new Treeifier().process( person, 'person', TreeifierUtils.defaultHTMLProcessor ));   
-    // console.log(new Treeifier().process( person, 'person', TreeifierUtils.defaultColoredProcessor ));   
-    // console.log(TreeifierUtils.debug(person));
+    // console.log( new Treeifier().process( person ) );
+    // console.log( new Treeifier().process( person, 'person', TreeifierUtils.defaultHTMLProcessor ) );
+    // console.log( new Treeifier().process( person, 'person', TreeifierUtils.defaultColoredProcessor ) );
+    // console.log( TreeifierUtils.debug( person ) );
 
     // ======== test debugging an object with circular reference ========
     // const item = { a: 1, b: { c: '#', xtra: { alpha: [9, "z", 8, "y"], beta: "maximum", delta: 4711 } }, f: (): number => { return 1 }, g: { h: { i: { j: 987, k: 'test' } }, l: ["a", "b", "c"] }, m: 3, n: { someparent: new Object() } };
     // item.n.someparent = item; // setup a circular reference
-    // console.log(TreeifierUtils.debug(item));
+    // console.log( TreeifierUtils.debug( item ) );
 
-    expect( person.age ).toBe(30);
+    expect( person.age ).toBe( 30 );
   } );
 
 

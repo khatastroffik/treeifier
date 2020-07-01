@@ -1,41 +1,55 @@
 # treeifier
 
-A Typescript/JavaScript library generating a tree representation of any object. It makes your "valuables" visible!
+- A Typescript/JavaScript library generating a tree representation of any object.
+  - Treeifier is able to process any kind of input javascript object (structured or not).
+  - Treeifier evaluates the types of the contained values (empty, string, number, date, function, symbol, array, array of objects, non empty objects) and adapt the output/representation accordingly.
+  - A *client application* may adapt the representation as needed in its own representation *processor*, using the analysis performed i.e the information ascertained by Treeifier. e.g. to generate a DOM elements structure (objectual representation) or an alternative output string format (textual representation).
+  - Treeifier can be integrated in multiple kind of applications: the library can be used as a TS (typescript), CJS (nodejs) or ESM (browser) module.
+
+- A CLI parsing folders, JSON files ... to generate a tree-view of the content. (*not released yet*)
+
+**treeifier** makes your "valuables" visible!
 
 ## introduction
 
-> what's the structure of the instance ...? What's its content, what's inside?
+> What's the structure of the instance, array, variable ...? What's its content, what's inside?
 
-This are questions **treeifier** may be able to answer for you in a very pramgmatic way i.e. in form of a "tree representation" of the actually observed "valuable" (the intransparent object of your attention).
+This are questions **treeifier** aims to answer in a very pramgmatic way i.e. in form of a **tree representation** of the actually observed "valuable" (the *intransparent* object of your attention).
 
-> How to...? Is this simple?
+> How to...? Is treeifier eaysy to use?
 
 Indeed!
 
 ```javascript
-// output as ascii-ed tree view using default processor
-console.log( new Treeifier().process( myClassInstance, '', TreeifierUtils.defaultProcessor ) );
+import { Treeifier } from "treeifier";
+
+// output as ascii tree using default processor
+console.log( new Treeifier().process( myObject ) );
+
+// or
+
+// output as ascii tree using default processor
+const treeifier = new Treeifier();
+const tree: string = treeifier.process( myObject );
+console.log( tree );
 ```
 
-## screenshots
+That's it!
 
-using the **default** processors `defaultColoredProcessor` and `defaultHTMLProcessor` provided in the `treeifier-utils` module, you'd get:
+## screenshots (output examples)
 
-|ASCII tree (as string)|HTML list (as string)|
-|---|---|
-| ![ASCII tree representation](./doc/screenshot-ascii-tree.png) | ![HTML lists representation](./doc/screenshot-html-tree.png) |
+Using the `defaultProcessor` (no need to specify it explicitly) and the `defaultColoredProcessor` provided in the `treeifier-utils` module, you'd get:
+
+|default ASCII tree (string)|colored ASCII tree (string)|
+|:---:|:---:|
+| ![ASCII tree representation](./doc/screenshot-default-ascii-tree.png) | ![ASCII tree representation](./doc/screenshot-colored-ascii-tree.png) |
+|`myTreeifier.process( aPerson )`|`myTreeifier.process( aPerson, 'person', TreeifierUtils.defaultColoredProcessor )`|
+
+Note: not all available output formats are demonstrated here.
 
 ## use cases
 
-### CLI usage
-
-A CLI application is **planned**:
-
-- display "folders and files"  structures as tree
-- display JSON file content as tree (e.g. package.json ...)
-- ... web API query responses, DB queries...
-
-### software development usage
+### software development
 
 Among others:
 
@@ -46,6 +60,14 @@ Among others:
 - **user friendly visualization**: visualize the content of folders or "structured data" as a tree...
 
 Note: the *transformation* use case could aim at displaying data on the UI directly i.e. per DOM element creation.
+
+### CLI
+
+A CLI application is **planned**:
+
+- display "folders and files"  structures as tree
+- display JSON file content as tree (e.g. package.json ...)
+- ... web API query responses, DB queries...
 
 ## usage
 
@@ -60,7 +82,7 @@ import { TreeifierUtils } from 'treeifier-utils';
 console.log( new Treeifier().process( myObjectInstance, '', TreeifierUtils.defaultColoredProcessor) );
 ```
 
-see a sample output in the screenshot chapter above.
+see second screenshot above.
 
 ### generate a textual (i.e. string) HTML list representation
 
@@ -75,9 +97,7 @@ const htmlList: string = treeifier.process( myObjectInstance, '', TreeifierUtils
 
 ```
 
-see a sample output in the screenshot chapter above.
-
-### analyze the result of processing an object (&rightarrow; console)
+### debug/analyze the result of processing an object (&rightarrow; console)
 
 This can be useful to debug your own processor function:
 
@@ -133,15 +153,9 @@ const person = {
     firstName: 'Bobby',
     lastName: 'Brown'
   },
-  age: 30,
-  gender: 'male',
+  age: 30, 
   dateOfBirth: new Date( 1990, 11, 11 ), // => 11.12.1990
   interests: ['music', 'skiing'],
-  bio: function (): void {
-    alert( this.name.firstName + ' ' + this.name.lastName +
-      ' is ' + this.age + ' years old. He likes ' +
-      this.interests[0] + ' and ' + this.interests[1] + '.' );
-  },
   greeting: function (): string {
     return 'Hi! I\'m ' + this.name.firstName + '.';
   }
@@ -157,7 +171,7 @@ a single function used to **shape the tree** i.e. shape the branches and leafs e
 - sort-as-you-need: organize the output as required (some example "sort" functions are included)
 - filter-as-you-need: select the branches and leafs you'd like to output
 
-Note the resulting **tree** may by a simple list i.e. not structured at all, depending on your implementation goals.
+Note the resulting **tree** may be a simple list i.e. it doesn't need to be structured at all, depending on your implementation goals.
 
 See the documentation on [Writing a "processor" function][write-processor]
 
@@ -181,7 +195,6 @@ example of ascii-ed tree representation using the "defaultProcessor" provided in
   ├─ gender : male
   ├─ dateOfBirth : 11.12.1990
   ├─ interests : [music, skiing]
-  ├─ bio : function
   └─ greeting : function
 ```
 
@@ -195,9 +208,46 @@ See the documentation on [Writing a "processor" function][write-processor]
 
 ## debugging
 
-You may want to debug the analyzed item/object (e.g. to check the types of the object properties as recognized by treeifier) or to debug the result of your own treeifier processor function (e.g. as provided in the "processResult" property of each TreeifierNode). For that purpose, use the `debug` function provided in the `treeifier-utils` module:
+You may want to:
 
-example (shortened) of the TreeifierNode structure as exposed by the **debug** function:
+- debug the analyzed *input object* (e.g. to check the details, properties, values etc. of the object as analysed/recognized by treeifier) or
+- debug the result of your own treeifier *processor function* (stored in the "processResult" property of each TreeifierNode).
+
+For such purposes, use the `debug` function provided in the `treeifier-utils` module:
+
+### calling the debug function
+
+```javascript
+// debug the input object
+import { TreeifierUtils } from 'treeifier-utils';
+
+const debugResult = TreeifierUtils.debug( item );
+console.log( debugResult );
+```
+
+or
+
+```javascript
+// debug the object and the very special processor...
+import { Treeifier } from "treeifier";
+import { TreeifierUtils } from 'treeifier-utils';
+import { TreeifierNode } from 'treeifier-node';
+
+function myVerySpecialProcessor ( node: TreeifierNode ): any => {
+  ...
+  // generate the representation of the current node
+  ...
+  return representation_of_the_current_node;
+}
+
+const debugResult = TreeifierUtils.debug( item, '', myVerySpecialProcessor );
+console.log( debugResult );
+
+```
+
+### debug output example
+
+Shortened example of the `TreeifierNode` structure as exposed by the **debug** function:
 
 ```ascii
 treeifier_root_node_person
