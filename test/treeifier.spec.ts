@@ -167,6 +167,14 @@ describe( 'treeifier', () => {
     expect( debugResult ).toContain( expected2 );
   } );
 
+  it( 'should use the processor passed when creating the Treeifier instance', () => {
+    const simpleProcessor = ( node: TreeifierNode ): any => { return node.children.map(node => { return node.key + ' - ' + node.value }).join('\n') ; };
+    const treeifier = new Treeifier(simpleProcessor);
+    const item = { firstProperty: 'first value', secondProperty: 'second value' };
+    const result = treeifier.process( item );
+    expect( result ).toBe( 'firstProperty - first value\nsecondProperty - second value' );   
+  } );
+
   it( '++++ DEBUG ++++', () => {
     const person = {
       name: {

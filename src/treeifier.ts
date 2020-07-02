@@ -26,11 +26,28 @@ export type NodeProcessorFunction = ( node: TreeifierNode ) => any;
  *   the analyzed input. Textual representation is valuable for producing console output.
  *   Objectal representation is used to transform the input in a structured form
  *   like XML nodes or HTML DOM elements representing the analyzed input as a tree.
+ * At instanciation time, the client application may defined/pass a processor function
+ * that should be used whenever "parse" or "process" are called without explicitly specifying 
+ * their own argument "nodeProcessorCallback". The processor may also be set by directly 
+ * assigning the function to the instance member.
  *
  * @export
  * @class Treeifier
  */
 export class Treeifier {
+
+  processor: NodeProcessorFunction | undefined;
+
+  /**
+   *Creates an instance of Treeifier.
+   *
+   * @param {NodeProcessorFunction} [nodeProcessorCallback] the processor function to be used by default 
+   *   when "parse" or "process" are called without specifying a processor.
+   * @memberof Treeifier
+   */
+  constructor(nodeProcessorCallback?: NodeProcessorFunction){
+    this.processor = nodeProcessorCallback?? undefined;
+  }
 
   /**
    * The default processor used in case the client app is not providing any processor.
@@ -69,6 +86,7 @@ export class Treeifier {
     }
     node.processResult = processor( node );
   }
+
   /**
    * a function returning a root node (TreeifierNode) mapping the tree structure of the input
    *
@@ -79,10 +97,7 @@ export class Treeifier {
    * @memberof Treeifier
    */
   parse( root: any, label?: string, nodeProcessorCallback?: NodeProcessorFunction ): TreeifierNode {
-    if ( !nodeProcessorCallback ) nodeProcessorCallback = Treeifier.defaultProcessor;
-    // const rootObjectNode = (root instanceof TreeifierNode)? root : new TreeifierNode( label ? label : 'root', root, 0, null );
-    // const rootObjectNode = new TreeifierNode( label ? label : 'root', null, 0, null );
-
+    if ( !nodeProcessorCallback ) nodeProcessorCallback = this.processor?? Treeifier.defaultProcessor;
     const rootObjectNode = new TreeifierNode( label ? label : 'root', root, 0, null );
     this.processInternal( rootObjectNode, nodeProcessorCallback );
     return rootObjectNode;
