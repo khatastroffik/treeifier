@@ -1,33 +1,59 @@
+<!-- markdownlint-disable MD033 MD005 -->
 # treeifier
 
-- A Typescript/JavaScript library generating a tree representation of any object.
-  - Treeifier is able to process any kind of input javascript object (structured or not).
-  - Treeifier evaluates the types of the contained values (empty, string, number, date, function, symbol, array, array of objects, non empty objects) and adapt the output/representation accordingly.
-  - A *client application* may adapt the representation as needed in its own representation *processor*, using the analysis performed i.e the information ascertained by Treeifier. e.g. to generate a DOM elements structure (objectual representation) or an alternative output string format (textual representation).
-  - Treeifier can be integrated in multiple kind of applications: the library can be used as a TS (typescript), CJS (nodejs) or ESM (browser) module.
+A (dependency-free) Typescript/JavaScript library generating a **structured (tree) representation** (textual or objectual) of any object.
 
-- A CLI parsing folders, JSON files ... to generate a tree-view of the content. (*not released yet*)
+**treeifier** should make your "valuables" visible!
 
-**treeifier** makes your "valuables" visible!
+## screenshots
+
+Examples of object representation/output as generated using the integrated `defaultProcessor` (no need to specify it explicitly) and the `defaultColoredValuesProcessor` provided in the [treeifier-utils][treeifier-utils] library:
+
+|default ASCII tree (string)<br>using *treeifier*|colored ASCII tree (string)<br>using *treeifier-utils* library|
+|:---:|:---:|
+| ![ASCII tree representation](./doc/screenshot-default-ascii-tree.png) | ![ASCII tree representation](./doc/screenshot-colored-ascii-tree.png) |
+|`myTreeifier.process( aPerson )`|`myTreeifier.process( aPerson, 'person', TreeifierUtils.defaultColoredValuesProcessor )`|
+
+Note:
+
+- not all available output formats are demonstrated here. See the additional library package [treeifier-utils][treeifier-utils] for more *predefined formats*.
 
 ## introduction
 
-> What's the structure of the instance, array, variable ...? What's its content, what's inside?
+Treeifier is able to process any kind of javascript input e.g. objects (structured or not), arrays etc.
 
-This are questions **treeifier** aims to answer in a very pramgmatic way i.e. in form of a **tree representation** of the actually observed "valuable" (the *intransparent* object of your attention).
+- Treeifier evaluates the types of the contained property values (empty, string, number, date, function, symbol, array, array of objects, non empty objects) and adapt the output/representation accordingly.
+- A *client application* may adapt the representation as needed in its own representation *processor*, using the analysis performed i.e the information ascertained by Treeifier. e.g. to generate a DOM elements structure (objectual representation) or an alternative output string format (textual representation).
+- Treeifier can be integrated in multiple kind of applications: the library can be used as a TS (typescript), CJS (nodejs) or ESM (browser) module.
+
+> What's the structure of my object instance, array, variable ...? What's its content, what's inside?
+
+This are questions **treeifier** aims to answer in a very pragmatic way i.e. in form of a **tree representation** of the actually observed "valuable" (the *intransparent* object of your attention).
 
 > How to...? Is treeifier eaysy to use?
 
 Indeed!
+
+## installation and first-step
+
+Install the treeifier library in your (typescript/javascript) project as a **development dependency** (example below) or **standard dependency** (replace *--save-dev* with *--save* ) depending on your project's requirements:
+
+```shell
+> npm install --save-dev @khatastroffik/treeifier
+```
+
+and then use it as in
 
 ```javascript
 import { Treeifier } from "treeifier";
 
 // output as ascii tree using default processor
 console.log( new Treeifier().process( myObject ) );
+```
 
-// or
+or
 
+```javascript
 // output as ascii tree using default processor
 const treeifier = new Treeifier();
 const tree: string = treeifier.process( myObject );
@@ -36,23 +62,7 @@ console.log( tree );
 
 That's it!
 
-## screenshots (output examples)
-
-Using the `defaultProcessor` (no need to specify it explicitly) and the `defaultColoredValuesProcessor` &amp; `defaultColoredTypesProcessor` provided in the `treeifier-utils` module, you'd get:
-
-|default ASCII tree (string)|*values* colored ASCII tree (string)|*types* colored ASCII tree (string)
-|:---:|:---:|:---:|
-| ![ASCII tree representation](./doc/screenshot-default-ascii-tree.png) | ![ASCII tree representation](./doc/screenshot-colored-ascii-tree.png) | ![ASCII tree representation](./doc/screenshot-colored-types-ascii-tree.png) |
-|`myTreeifier.process( aPerson )`|`myTreeifier.process( aPerson, 'person', TreeifierUtils.defaultColoredValuesProcessor )`| `myTreeifier.process( aPerson, 'person', TreeifierUtils.defaultColoredTypesProcessor )`|
-
-Note:
-
-- colors can be redefined/overriden as needed (colors for 'tree structure', 'key', 'value' and 'circular ref.')
-- not all available output formats are demonstrated here.
-
 ## use cases
-
-### software development
 
 Among others:
 
@@ -64,66 +74,23 @@ Among others:
 
 Note: the *transformation* use case could aim at displaying data on the UI directly i.e. per DOM element creation.
 
-### CLI
-
-A CLI application is **planned**:
-
-- display "folders and files"  structures as tree
-- display JSON file content as tree (e.g. package.json ...)
-- ... web API query responses, DB queries...
-
 ## usage
 
 Below are example demonstrating some of the use cases as defined above:
 
 ### display a tree representation of an object instance in the console
 
-```javascript
-import { Treeifier } from "treeifier";
-import { TreeifierUtils } from 'treeifier-utils';
-
-console.log( new Treeifier().process( myObjectInstance, '', TreeifierUtils.defaultColoredProcessor) );
-```
-
-see second screenshot above.
-
-### generate a textual (i.e. string) HTML list representation
+This example makes use of the standard processor (integrated in the Treeifier instance).
 
 ```javascript
 import { Treeifier } from "treeifier";
-import { TreeifierUtils } from 'treeifier-utils';
 
-const treeifier = new Treeifier();
-const htmlList: string = treeifier.process( myObjectInstance, '', TreeifierUtils.defaultHTMLProcessor) ;
-
-// do proceed with the html list as string e.g. output to console etc.
-
+console.log( new Treeifier().process( myObjectInstance ) );
 ```
 
-### debug/analyze the result of processing an object (&rightarrow; console)
+### treeify an object instance using your own processor
 
-This can be useful to debug your own processor function:
-
-```javascript
-import { Treeifier } from "treeifier";
-import { TreeifierUtils } from 'treeifier-utils';
-import { TreeifierNode } from 'treeifier-node';
-import chalk from 'chalk';
-
-const treeifier = new Treeifier();
-// 0. OPTIONAL: adapt the color of displayed circular references (if any)
-TreeifierUtils.CircularColor = chalk.magenta;
-// 1. process the input object using own processor function and a label for the tree root
-const processResultRootNode: TreeifierNode = treeifier.parse( myObjectInstance, 'myObjectInstance', myProcessorFunction) ;
-// 2. output the ASCII tree representation of the node structure generated by treeifier. In other words "treeify the treeified".
-const debugResult: string = TreeifierUtils.debugResultNode( processResultRootNode, treeifier );
-// 3. display in the console
-console.log(debugResult);
-```
-
-Further information on debugging can be found in the "debugging" chapter below.
-
-### treeify an object instance using own processor
+This example makes use of of a processor as provided by the client application.
 
 ```javascript
 import { Treeifier } from "treeifier";
@@ -142,11 +109,11 @@ console.log( treeifier.process( myObjectInstance, '', myProcessor) );
 
 To learn how to write your own processor function, see the documentation on [Writing a "processor" function][write-processor].
 
-## principles
+## treeifier principles
 
 ### INPUT
 
-your object instance / your variable. It can be in an unknow shape.
+your object instance / your variable. It can be of **any (unknown) shape**.
 
 e.g. (simplified for demonstration purpose. Usually, a class definition and an instance of this class would have been used)
 
@@ -169,7 +136,7 @@ const person = {
 
 a single function used to **shape the tree** i.e. shape the branches and leafs exposed by the process result:
 
-- **defaults**: use one of the default processors as provided in the `treeifier-utils` module
+- **defaults**: use one of the default processors as provided in the [treeifier-utils][treeifier-utils] module
 - **BYOP**: bring your own processor function
   - **sort-as-you-need**: organize the output as required (some example "sort" functions are included)
   - **filter-as-you-need**: select the branches and leafs you'd like to output
@@ -188,7 +155,7 @@ a textual or objectual representation of the treeified input, according to the u
 
 #### textual output
 
-example of ascii-ed tree representation using the "defaultProcessor" provided in the treeifier utils as per `new Treeifier().process( person, 'person', TreeifierUtils.defaultProcessor )`:
+example of ascii-ed tree representation using the default processor provided by Treeifier as per `new Treeifier().process( person, 'person' )`:
 
 ```ascii
   person
@@ -204,91 +171,107 @@ example of ascii-ed tree representation using the "defaultProcessor" provided in
 
 #### objectual output
 
-The processor may return "objects" instead of "strings" back to the Treeifier.process function. The result of the processing will then be the "root" object as generated by the processor, hence the processor should account to provide a root object.
+The processor may return "objects" instead of "strings" back up to the Treeifier.process function result. The result of the processing will then be the "root" as generated by the processor, hence the processor should account to generate/provide a root object.
 
 e.g. `const XMLStructureRootObject = new Treeifier().process( person, 'person', My_XML_Object_Structure_Processor )`.
 
 See the documentation on [Writing a "processor" function][write-processor]
 
+## API
+
+### Treeifier class
+
+This class is the main class of the *treeifier* library. It allows to analyze and render the input object.
+
+#### constructor
+
+e.g. `const treeifier = new Treeifier(myProcessor);`
+
+| parameters | types | optional | description |
+|---|---|---|---|
+| nodeProcessorCallback | NodeProcessorFunction | yes | the function that generate the representation of each node (default to standard processor)|
+
+Important:
+
+if the `nodeProcessorCallback` parameter is not provided in the constructor, a **standard (default) processor** will be used when `process(..)`or `parse()` methods are called, unless a processor is specified in the call.
+
+&nbsp; | case | behavior
+---|---|---
+1 | no processor defined in the constructor<br>no processor specified in the methods parameters | &rightarrow; default processor will be used
+2 | no processor defined in the constructor<br>a processor is specified in the methods parameters | &rightarrow; processor of the method will be used (e.g. *process( myObject, 'root', myProcessor)* )
+3 | processor defined in the constructor<br>no processor specified in the methods parameters | &rightarrow; processor of the constructor will be used
+4 | processor defined in the constructor<br>a processor is specified in the methods parameters | &rightarrow; processor of the method will be used
+
+#### process(...)
+
+This function is giving the representation (according to the processor function) corresponding to the input object back.
+This is the **primary method** you'd probably use all the time.
+
+e.g. `mytreeifier.process(myObject,'root-object');`
+
+| parameters | types | optional | description |
+|---|---|---|---|
+| root | any | no | the input object to be analyzed |
+| label | string | yes | the "name" of the input object (default to "root")|
+| nodeProcessorCallback | NodeProcessorFunction | yes | the function that generate the representation of each node (default to standard processor) |
+
+#### parse(...)
+
+This function is analyzing the input object and giving the corresponding TreeifierNode structure back. This method is provided for your conveniance e.g. for debugging purposes.
+
+e.g. `mytreeifier.parse(myObject,'root-object', myProcessor);`
+
+| parameters | types | optional | description |
+|---|---|---|---|
+| root | any | no | the input object to be analyzed |
+| label | string | yes | the "name" of the input object (default to "root") |
+| nodeProcessorCallback | NodeProcessorFunction | yes | the function that generate the representation of each node (default to standard processor)|
+
+### TreeifierNode class
+
+This class is the basic element of the internal representation of the input object as generated by *treeifier*. The **internal representation** is a *tree of TreeifierNode*.
+
+One `TreeifierNode` instance corresponds to a "*property / value / treeifier analysis*" combination **for each property of the input object** or its sub-properties (recursive).
+
+- you may use the class *members/properties* and the *toString()* method while **developing your own processor** function. These information help to generate appropriate representations, depending on the node.
+- You should hardly have to instanciate this class on your own: treeifier is doing the job for you when parsing the input object and use the internaly generated tree to output the final representation.
+
+#### members / properties
+
+| member | type | restriction | description |
+|---|---|---|---|
+**key** | string | ro | the **property** of the input object
+**value** | any | ro | the **original value** of the object property
+**processResult** | any | rw | the **representation** of the node as generated by the *processor* function. Used by Treeifier.process(..) to output the representation.
+**path** | string | ro | path to the analyzed property within the original input object e.g. `myObject.name.firstname`
+index | number | ro | the index of the **property in the object** (e.g. as per Object.keys(...))
+parent | TreeifierNode or null | ro | the **parent TreeifierNode** (if any, depending on the inpüut object)
+nodeType | TreeifierNodeTypes | ro | the **type of the value** as analyzed by Treeifier (see the **node types section** below)
+**isLeaf** | boolean | ro | is this node a **leaf** of the structure? Depends on the node type and the setup (see the **node types section** below)
+**isBranch** | boolean | ro | is this node a **branch** of the structure? Depends on the node type and the setup (see the **node types section** below)
+isValue | boolean | ro | may the *value* directly be **interpreted**/rendered? Depends on the node type and the setup (see the **node types section** below)
+depth | number | ro | how deep in the tree representation is this node situated (starting at depth level 0 = root node)
+ancestors | Array<TreeifierNode> | ro | all nodes up to the root of the structure
+maxIndex | number | ro | amount of **siblings** to the current node
+isCircular | boolean | ro | the value is referencing an object which is in the ancestors list i.e. it's a **circular reference**
+prefix | string | rw | the prefixing "tree structure" (branch parts) as rendered in `prefix + joint + key + value`. Automatically generated at the node creation time.
+joint | string | rw |  the "joint" between a leaf and its branch as rendered in `prefix + joint + key + value`. Automatically generated at the node creation time.
+**children** | Array<TreeifierNode> | ro | list of child nodes (branches or leafs)
+
+#### methods
+
+method | description
+---|---
+constructor(key: string, value: any, index: number, parent: TreeifierNode or null) | see class description above
+**toString**(): string; | this function is providing a **default representation of the property value** as analyzed by treeifier, depending on the value type (see the **node types section** below)
+
 ## debugging
 
-You may want to:
+You may like to debug the analyze done by Treeifier. For this purpose, you can use the `debug` function provided in the [treeifier-utils][treeifier-utils] library. This function will provide a **textual representation of the generated TreeifierNode structure** i.e. it will show the details of the generated (internal) nodes.
 
-- debug the analyzed *input object* (e.g. to check the details, properties, values etc. of the object as analysed/recognized by treeifier) or
-- debug the result of your own treeifier *processor function* (stored in the "processResult" property of each TreeifierNode).
+Note:
 
-For such purposes, use the `debug` function provided in the `treeifier-utils` module:
-
-### calling the debug function
-
-```javascript
-// debug the input object
-import { TreeifierUtils } from 'treeifier-utils';
-
-const debugResult = TreeifierUtils.debug( item );
-console.log( debugResult );
-```
-
-or
-
-```javascript
-// debug the object and the very special processor...
-import { Treeifier } from "treeifier";
-import { TreeifierUtils } from 'treeifier-utils';
-import { TreeifierNode } from 'treeifier-node';
-
-function myVerySpecialProcessor ( node: TreeifierNode ): any => {
-  ...
-  // generate the representation of the current node
-  ...
-  return representation_of_the_current_node;
-}
-
-const debugResult = TreeifierUtils.debug( item, '', myVerySpecialProcessor );
-console.log( debugResult );
-
-```
-
-### debug output example
-
-Shortened example of the `TreeifierNode` structure as exposed by the **debug** function:
-
-```ascii
-treeifier_root_node_person
-├─ key person
-├─ value
-│  ├─ name
-│  │  ├─ firstName Bobby
-│  │  └─ lastName Brown
-│  ├─ age 30
-│  ├─ gender male
-│  ├─ dateOfBirth 11.12.1990
-│  ├─ interests [music, skiing]
-│  ├─ bio function
-│  └─ greeting function
-├─ index 0
-├─ parent null
-├─ nodeType nonEmptyObject
-├─ ancestors [person]
-├─ circularRefIndex -1
-├─ isCircular false
-├─ circularRefNode null
-├─ isLeaf false
-├─ isBranch true
-├─ isValue false
-├─ depth 0
-├─ maxIndex 0
-├─ prefix
-├─ joint
-├─ children
-│  ├─ 0
-│  │  ├─ key name
-│  │  ├─ value
-│  │  │  ├─ firstName Bobby
-│  │  │  └─ lastName Brown
-...
-```
-
-note: the standard output of the `debug` function is colored by default, though this is not visible in the example above.
+the `debug` function itself is based on the simple treeifier functionality, only providing a suitable "processor" to generate the *debug representation*. In other words, *treeifier is debugging treeifier*! Kind of a recursion here... ;-)
 
 [write-processor]: ./docs/writing-a-processor-function.md
+[treeifier-utils]: https://github.com/khatastroffik/treeifier-utils

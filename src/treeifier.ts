@@ -58,7 +58,7 @@ export class Treeifier {
    * @returns {string} a textual or objectual representation of the given node
    * @memberof Treeifier
    */
-  static defaultProcessor( node: TreeifierNode ): string {
+  private static defaultProcessor( node: TreeifierNode ): string {
     const circular = node.isCircular ? ' -> ' + node.circularRefNode?.key ?? '?' : '';
     let result = node.prefix + node.joint + node.key + ( node.isLeaf ? ' : ' + node.toString() : '' ) + circular;
     if ( node.isBranch ) {
