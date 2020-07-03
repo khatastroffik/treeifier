@@ -32,7 +32,8 @@
     "clean": "rimraf ./dist ./types ./coverage",
     "copy:typescripts": "copyfiles -u 1 src/**/* dist/",
     "jest:clear": "jest --clearCache",
-    "changelog": "npx generate-changelog"
+    "changelog": "npx generate-changelog",
+    "checkpkg": "npx pkgfiles"
   },
   "keywords": [
     "Typescript",

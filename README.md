@@ -156,7 +156,7 @@ const person = {
     firstName: 'Bobby',
     lastName: 'Brown'
   },
-  age: 30, 
+  age: 30,
   dateOfBirth: new Date( 1990, 11, 11 ), // => 11.12.1990
   interests: ['music', 'skiing'],
   greeting: function (): string {
@@ -290,6 +290,5 @@ treeifier_root_node_person
 ```
 
 note: the standard output of the `debug` function is colored by default, though this is not visible in the example above.
-
 
 [write-processor]: ./docs/writing-a-processor-function.md
