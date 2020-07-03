@@ -412,4 +412,52 @@ describe( 'treeifier node parser', () => {
     });
   } );
 
+  describe('leaf and branch types', () => {
+
+    beforeEach(function() {
+      TreeifierNodeParser.resetLeafAndBranchTypes();
+    });
+    
+    it('leaf types should be set', () => {
+      const fixtureLeafTypes = [TreeifierNodeTypes.array, TreeifierNodeTypes.boolean];
+      TreeifierNodeParser.leafTypes = fixtureLeafTypes;
+      expect(TreeifierNodeParser.leafTypes).toHaveLength(fixtureLeafTypes.length);
+      expect(TreeifierNodeParser.leafTypes).toContainEqual(TreeifierNodeTypes.array);
+      expect(TreeifierNodeParser.branchTypes).toHaveLength(Object.keys(TreeifierNodeTypes).length/2 - fixtureLeafTypes.length);
+      expect(TreeifierNodeParser.branchTypes).not.toIncludeAnyMembers(fixtureLeafTypes);
+    });
+    it('branch types should be set', () => {
+      const fixtureBranchTypes = [TreeifierNodeTypes.array, TreeifierNodeTypes.boolean];
+      TreeifierNodeParser.branchTypes = fixtureBranchTypes;
+      expect(TreeifierNodeParser.branchTypes).toHaveLength(fixtureBranchTypes.length);
+      expect(TreeifierNodeParser.branchTypes).toContainEqual(TreeifierNodeTypes.array);
+      expect(TreeifierNodeParser.leafTypes).toHaveLength(Object.keys(TreeifierNodeTypes).length/2 - fixtureBranchTypes.length);
+      expect(TreeifierNodeParser.leafTypes).not.toIncludeAnyMembers(fixtureBranchTypes);
+    });    
+    it('should be reset', () => {
+      const originalLeafTypes = TreeifierNodeParser.leafTypes;
+      const originalBranchTypes = TreeifierNodeParser.branchTypes;
+      const fixtureLeafTypes = [TreeifierNodeTypes.array, TreeifierNodeTypes.boolean];
+      TreeifierNodeParser.leafTypes = fixtureLeafTypes;
+      expect(TreeifierNodeParser.leafTypes).toHaveLength(fixtureLeafTypes.length);
+      expect(TreeifierNodeParser.branchTypes).not.toIncludeAnyMembers(fixtureLeafTypes);
+      TreeifierNodeParser.resetLeafAndBranchTypes();
+      expect(TreeifierNodeParser.leafTypes).toEqual(originalLeafTypes);
+      expect(TreeifierNodeParser.branchTypes).toEqual(originalBranchTypes);
+    });
+    it('should be used to check nodes', () => {
+      const fixtureBranchTypes = [TreeifierNodeTypes.boolean];
+      expect(TreeifierNodeParser.isLeafNode(TreeifierNodeTypes.boolean)).toBeTrue();
+      expect(TreeifierNodeParser.isLeaf(true)).toBeTrue();
+      expect(TreeifierNodeParser.isBranchNode(TreeifierNodeTypes.boolean)).toBeFalse();
+      expect(TreeifierNodeParser.isBranch(true)).toBeFalse();
+      TreeifierNodeParser.branchTypes = fixtureBranchTypes;
+      expect(TreeifierNodeParser.branchTypes).toHaveLength(fixtureBranchTypes.length);
+      expect(TreeifierNodeParser.isLeafNode(TreeifierNodeTypes.boolean)).toBeFalse();
+      expect(TreeifierNodeParser.isLeaf(true)).toBeFalse();
+      expect(TreeifierNodeParser.isBranchNode(TreeifierNodeTypes.boolean)).toBeTrue();
+      expect(TreeifierNodeParser.isBranch(true)).toBeTrue();
+    });
+  });
+
 } );

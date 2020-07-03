@@ -36,7 +36,7 @@ export enum TreeifierNodeTypes {
 /**
  * HELPER Filter/Criteria indentifying all kind of nodes
  */
-const NodeTypesArray: Array<TreeifierNodeTypes> = [
+const DefaultNodeTypesArray: Array<TreeifierNodeTypes> = [
   TreeifierNodeTypes.unknown,
   TreeifierNodeTypes.empty,
   TreeifierNodeTypes.string,
@@ -54,7 +54,7 @@ const NodeTypesArray: Array<TreeifierNodeTypes> = [
 /**
  * Filter/Criteria indentifying a "pure value" node
  */
-const NodeValueTypesArray : Array<TreeifierNodeTypes> = [
+const DefaultNodeValueTypesArray : Array<TreeifierNodeTypes> = [
   TreeifierNodeTypes.empty,
   TreeifierNodeTypes.string,
   TreeifierNodeTypes.number,
@@ -68,8 +68,8 @@ const NodeValueTypesArray : Array<TreeifierNodeTypes> = [
 /**
  * Filter/Criteria indentifying a "LEAF" node
  */
-const LeafTypesArray: Array<TreeifierNodeTypes> = [
-  ...NodeValueTypesArray,
+const DefaultLeafTypesArray: Array<TreeifierNodeTypes> = [
+  ...DefaultNodeValueTypesArray,
   TreeifierNodeTypes.unknown,  
   TreeifierNodeTypes.array,
   TreeifierNodeTypes.emptyObject
@@ -78,7 +78,7 @@ const LeafTypesArray: Array<TreeifierNodeTypes> = [
 /**
  * Filter/Criteria indentifying a "BRANCH" node - automatically generated out of the "LeafTypesArray"...
  */
-const BranchTypesArray: Array<TreeifierNodeTypes> = NodeTypesArray.filter(x => !LeafTypesArray.includes(x));
+const DefaultBranchTypesArray: Array<TreeifierNodeTypes> = DefaultNodeTypesArray.filter(x => !DefaultLeafTypesArray.includes(x));
 
 /**
  * Abstract class used to create Treeifier Node objects (TreeifierNode)
@@ -95,7 +95,27 @@ const BranchTypesArray: Array<TreeifierNodeTypes> = NodeTypesArray.filter(x => !
  * @class TreeifierNodeParser
  */
 export abstract class TreeifierNodeParser {
+  private static _branchTypes: Array<TreeifierNodeTypes> = DefaultBranchTypesArray;
+  private static _leafTypes: Array<TreeifierNodeTypes> = DefaultLeafTypesArray;
 
+  public static get leafTypes() : Array<TreeifierNodeTypes> {
+    return [...TreeifierNodeParser._leafTypes]; // shallow copy to protect the array
+  }
+  public  static set leafTypes(newLeafTypes: Array<TreeifierNodeTypes>) {
+    TreeifierNodeParser._leafTypes= [...newLeafTypes]; // shallow copy to protect the array
+    TreeifierNodeParser._branchTypes = DefaultNodeTypesArray.filter(x => !TreeifierNodeParser._leafTypes.includes(x));
+  }
+  public static get branchTypes() : Array<TreeifierNodeTypes> {
+    return [...TreeifierNodeParser._branchTypes]; // shallow copy to protect the array
+  }
+  public  static set branchTypes(newBranchTypes: Array<TreeifierNodeTypes>) {
+    TreeifierNodeParser._branchTypes= [...newBranchTypes]; // shallow copy to protect the array
+    TreeifierNodeParser._leafTypes = DefaultNodeTypesArray.filter(x => !TreeifierNodeParser._branchTypes.includes(x));
+  }
+  public static resetLeafAndBranchTypes():void{
+    TreeifierNodeParser._branchTypes = DefaultBranchTypesArray;
+    TreeifierNodeParser._leafTypes = DefaultLeafTypesArray;
+  }
   static isArray( candidate: any ): boolean {
     return Array.isArray( candidate );
   }
@@ -161,24 +181,18 @@ export abstract class TreeifierNodeParser {
     return TreeifierNodeParser.isValueNode(TreeifierNodeParser.getNodeType(candidate));
   }
   static isValueNode( nodeType: TreeifierNodeTypes ): boolean {
-    return NodeValueTypesArray.includes(nodeType);
+    return DefaultNodeValueTypesArray.includes(nodeType);
   }
-
-  // TODO: change to instance function...
   static isLeafNode(nodeType: TreeifierNodeTypes): boolean{
-    return LeafTypesArray.includes(nodeType);
+    return TreeifierNodeParser._leafTypes.includes(nodeType);
   }
-  // TODO: change to instance function...
   static isBranchNode( nodeType: TreeifierNodeTypes): boolean{
-    return BranchTypesArray.includes(nodeType);
+    return TreeifierNodeParser._branchTypes.includes(nodeType);
   }
-  // TODO: change to instance function...
   static isLeaf( candidate: any ): boolean {
     return TreeifierNodeParser.isLeafNode(TreeifierNodeParser.getNodeType(candidate));
   }
-  // TODO: change to instance function...
   static isBranch( candidate: any ): boolean {
     return TreeifierNodeParser.isBranchNode(TreeifierNodeParser.getNodeType(candidate));
   }
-
 }
