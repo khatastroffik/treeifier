@@ -1,7 +1,118 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+
 /**
- * treeifier 
+ * @khatastroffik/treeifier :: Treeifier (parser)
  *
  * License: MIT
  * Copyright (c) 2020, Loïs Bégué
  *
 **/
+
+import { TreeifierNode } from './treeifier-node';
+
+
+export type TreeSortFunction = ( objPropA: [string, unknown], objPropB: [string, unknown] ) => number;
+export type NodeProcessorFunction = ( node: TreeifierNode ) => any;
+
+/**
+ * Treeifier main class
+ * 
+ * @description After instanciation, this class can be used to parse or process any
+ * kind of input object. 
+ * - "Parse" is used to retrieve a tree-nodes structure corresponding to the analyzed input.
+ *   The tree-nodes structure can be used for further (internal) processing.
+ * - "process" is used to directly retrieve a textual or objectal "tree" representation of
+ *   the analyzed input. Textual representation is valuable for producing console output.
+ *   Objectal representation is used to transform the input in a structured form
+ *   like XML nodes or HTML DOM elements representing the analyzed input as a tree.
+ * At instanciation time, the client application may defined/pass a processor function
+ * that should be used whenever "parse" or "process" are called without explicitly specifying 
+ * their own argument "nodeProcessorCallback". The processor may also be set by directly 
+ * assigning the function to the instance member.
+ *
+ * @export
+ * @class Treeifier
+ */
+export class Treeifier {
+
+  processor: NodeProcessorFunction | undefined;
+
+  /**
+   *Creates an instance of Treeifier.
+   *
+   * @param {NodeProcessorFunction} [nodeProcessorCallback] the processor function to be used by default 
+   *   when "parse" or "process" are called without specifying a processor.
+   * @memberof Treeifier
+   */
+  constructor(nodeProcessorCallback?: NodeProcessorFunction){
+    this.processor = nodeProcessorCallback?? undefined;
+  }
+
+  /**
+   * The default processor used in case the client app is not providing any processor.
+   * This render an ASCII tree representation of the input object.
+   *
+   * @static
+   * @param {TreeifierNode} node a tree node (part of the tree structure corresponding to the "input").
+   * @returns {string} a textual or objectual representation of the given node
+   * @memberof Treeifier
+   */
+  private static defaultProcessor( node: TreeifierNode ): string {
+    const circular = node.isCircular ? ' -> ' + node.circularRefNode?.key ?? '?' : '';
+    let result = node.prefix + node.joint + node.key + ( node.isLeaf ? ' : ' + node.toString() : '' ) + circular;
+    if ( node.isBranch ) {
+      node.children.forEach( ( child: TreeifierNode ): void => {
+        child.processResult && ( result = result + '\n' + child.processResult )
+      } );
+    }
+    return result;
+  }
+
+  /**
+   * The "engine" of the parser/processor - it's a recursive function !
+   *
+   * @private
+   * @param {TreeifierNode} node a tree node (part of the tree structure corresponding to the "input")
+   * @param {NodeProcessorFunction} processor a function responsible of generating a representation of each tree node.
+   * @memberof Treeifier
+   */
+  private processInternal( node: TreeifierNode, processor: NodeProcessorFunction ): void {
+    if ( node.isBranch && !node.isCircular ) {
+      Object.entries( node.value ).forEach( ( [key, value], index ) => {
+        const subNode = new TreeifierNode( key, value, index, node );
+        this.processInternal( subNode, processor );
+      } );
+    }
+    node.processResult = processor( node );
+  }
+
+  /**
+   * a function returning a root node (TreeifierNode) mapping the tree structure of the input
+   *
+   * @param {*} root the input item/object to be analyzed and parsed
+   * @param {string} label the name/identifier of the input item (used as "key" of the root node)
+   * @param {NodeProcessorFunction} nodeProcessorCallback a function responsible of generating a representation of each tree node.
+   * @returns {TreeifierNode} the "root" node of the generated tree node structure
+   * @memberof Treeifier
+   */
+  parse( root: any, label?: string, nodeProcessorCallback?: NodeProcessorFunction ): TreeifierNode {
+    if ( !nodeProcessorCallback ) nodeProcessorCallback = this.processor?? Treeifier.defaultProcessor;
+    const rootObjectNode = new TreeifierNode( label ? label : 'root', root, 0, null );
+    this.processInternal( rootObjectNode, nodeProcessorCallback );
+    return rootObjectNode;
+  }
+  /**
+   * a function returning a textual or objectal representation of the tree structure corresponding to the input
+   *
+   * @param {*} root the input item/object to be analyzed and parsed
+   * @param {string} label the name/identifier of the input item (used as "key" of the root node)
+   * @param {NodeProcessorFunction} nodeProcessorCallback a function responsible of generating a representation of each tree node.
+   * @returns {*} textual or objectal representation, depending on the results generated by the processor callback
+   * @memberof Treeifier
+   */
+  process( root: any, label?: string, nodeProcessorCallback?: NodeProcessorFunction ): any {
+    return this.parse( root, label, nodeProcessorCallback ).processResult;
+  }
+
+}
