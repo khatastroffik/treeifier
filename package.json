@@ -16,7 +16,7 @@
     "url": "https://github.com/khatastroffik/treeifier/issues"
   },
   "scripts": {
-    "test": "jest",    
+    "test": "jest",
     "coverage": "jest --coverage",
     "lint": "eslint -f pretty src",
     "build": "tsc",
@@ -76,7 +76,6 @@
     "typescript": "^3.9.5"
   },
   "dependencies": {
-    "chalk": "^4.1.0",
     "tslib": "^2.0.0"
   }
 }
