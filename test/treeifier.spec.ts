@@ -12,8 +12,6 @@ import 'jest-extended';
 import { Treeifier, NodeProcessorFunction } from "../src/treeifier";
 import { TreeifierNode } from '../src/treeifier-node';
 import { TreeifierNodeTypes } from '../src/treeifier-node-parser';
-import { TreeifierUtils } from '../src/treeifier-utils';
-import chalk from 'chalk';
 
 let standardProcessorFixture: NodeProcessorFunction;
 let filteringProcessorFixture: NodeProcessorFunction;
@@ -46,11 +44,6 @@ describe( 'treeifier', () => {
       return result;
     }
   } );
-
-  beforeEach( function () {
-    TreeifierUtils.CircularColor = chalk.redBright;
-  } );
-
 
   it( 'should process all node types', () => {
     const tree = new Treeifier();
@@ -135,38 +128,6 @@ describe( 'treeifier', () => {
     expect( () => { tree.process( item ) } ).not.toThrow();
   } );
 
-  it( 'should debug Treeifier result node, adapting color of the output', () => {
-    const tree = new Treeifier();
-    const item = { a: 1, b: new Function(), c: Symbol( 'test symbol' ), d: 'd' };
-    const expected1 = 'processResult';
-    const expected2 = 'Symbol(test symbol)';
-    const processResultNode = tree.parse( item );
-    TreeifierUtils.CircularColor = chalk.magenta;
-    const debugResult = TreeifierUtils.debugResultNode( processResultNode, tree );
-    expect( debugResult ).toContain( expected1 );
-    expect( debugResult ).toContain( expected2 );
-  } );
-
-  it( 'should debug an object containing circular refs directly', () => {
-    const item = { a: 1, b: { c: '#', xtra: { alpha: [9, "z", 8, "y"], beta: "maximum", delta: 4711 } }, f: (): number => { return 1 }, g: { h: { i: { j: 987, k: 'test' } }, l: ["a", "b", "c"] }, m: 3, n: { someparent: new Object() } };
-    item.n.someparent = item; // setup a circular reference
-    const debugResult = TreeifierUtils.debug( item, 'shouldmakeit', standardProcessorFixture );
-    const expected1 = '└─ n\\n   └─ someparent : circular ref. -> shouldmakeit';
-    const expected2 = 'shouldmakeit.g.h.i.j';
-    expect( debugResult ).toContain( expected1 );
-    expect( debugResult ).toContain( expected2 );
-  } );
-
-  it( 'should debug an object directly, adapting the color of the output', () => {
-    const item = { a: 1, b: new Function(), c: Symbol( 'test symbol' ), d: 'd' };
-    const expected1 = 'processResult';
-    const expected2 = 'root\\n├─ a : 1\\n├─ b : function\\n├─ c : Symbol(test symbol)\\n└─ d : d';
-    TreeifierUtils.CircularColor = chalk.yellow;
-    const debugResult = TreeifierUtils.debug( item, '', standardProcessorFixture );
-    expect( debugResult ).toContain( expected1 );
-    expect( debugResult ).toContain( expected2 );
-  } );
-
   it( 'should use the processor passed when creating the Treeifier instance', () => {
     const simpleProcessor = ( node: TreeifierNode ): any => { return node.children.map(node => { return node.key + ' - ' + node.value }).join('\n') ; };
     const treeifier = new Treeifier(simpleProcessor);
@@ -175,6 +136,14 @@ describe( 'treeifier', () => {
     expect( result ).toBe( 'firstProperty - first value\nsecondProperty - second value' );   
   } );
 
+  it( 'should use the specificaly passed processor instead of the default passed when creating the Treeifier instance', () => {
+    const simpleProcessor = ( node: TreeifierNode ): any => { return node.children.map(node => { return node.key + ' - ' + node.value }).join('\n') ; };
+    const treeifier = new Treeifier(simpleProcessor);
+    const item = { firstProperty: 'first value', secondProperty: 'second value' };
+    const result = treeifier.process( item , '', standardProcessorFixture);
+    expect( result ).toBe( 'root\n├─ firstProperty : first value\n└─ secondProperty : second value' );   
+  } );  
+  
   it( '++++ DEBUG ++++', () => {
     const person = {
       name: {
@@ -195,17 +164,8 @@ describe( 'treeifier', () => {
       }
     };
 
-    // ======== test processing and debugging the object "person" ========
+    // ======== test processing the object "person" ========
     // console.log( new Treeifier().process( person ) );
-    // console.log( new Treeifier().process( person, 'person', TreeifierUtils.defaultHTMLProcessor ) );
-    // console.log( new Treeifier().process( person, 'person', TreeifierUtils.defaultColoredValuesProcessor ) );
-    // console.log( new Treeifier().process( person, 'person', TreeifierUtils.defaultColoredTypesProcessor ) );
-    // console.log( TreeifierUtils.debug( person ) );
-
-    // ======== test debugging an object with circular reference ========
-    // const item = { a: 1, b: { c: '#', xtra: { alpha: [9, "z", 8, "y"], beta: "maximum", delta: 4711 } }, f: (): number => { return 1 }, g: { h: { i: { j: 987, k: 'test' } }, l: ["a", "b", "c"] }, m: 3, n: { someparent: new Object() } };
-    // item.n.someparent = item; // setup a circular reference
-    // console.log( TreeifierUtils.debug( item ) );
 
     expect( person.age ).toBe( 30 );
   } );
