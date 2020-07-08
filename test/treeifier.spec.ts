@@ -129,21 +129,21 @@ describe( 'treeifier', () => {
   } );
 
   it( 'should use the processor passed when creating the Treeifier instance', () => {
-    const simpleProcessor = ( node: TreeifierNode ): any => { return node.children.map(node => { return node.key + ' - ' + node.value }).join('\n') ; };
-    const treeifier = new Treeifier(simpleProcessor);
+    const simpleProcessor = ( node: TreeifierNode ): any => { return node.children.map( node => { return node.key + ' - ' + node.value } ).join( '\n' ); };
+    const treeifier = new Treeifier( simpleProcessor );
     const item = { firstProperty: 'first value', secondProperty: 'second value' };
     const result = treeifier.process( item );
-    expect( result ).toBe( 'firstProperty - first value\nsecondProperty - second value' );   
+    expect( result ).toBe( 'firstProperty - first value\nsecondProperty - second value' );
   } );
 
   it( 'should use the specificaly passed processor instead of the default passed when creating the Treeifier instance', () => {
-    const simpleProcessor = ( node: TreeifierNode ): any => { return node.children.map(node => { return node.key + ' - ' + node.value }).join('\n') ; };
-    const treeifier = new Treeifier(simpleProcessor);
+    const simpleProcessor = ( node: TreeifierNode ): any => { return node.children.map( node => { return node.key + ' - ' + node.value } ).join( '\n' ); };
+    const treeifier = new Treeifier( simpleProcessor );
     const item = { firstProperty: 'first value', secondProperty: 'second value' };
-    const result = treeifier.process( item , '', standardProcessorFixture);
-    expect( result ).toBe( 'root\n├─ firstProperty : first value\n└─ secondProperty : second value' );   
-  } );  
-  
+    const result = treeifier.process( item, '', standardProcessorFixture );
+    expect( result ).toBe( 'root\n├─ firstProperty : first value\n└─ secondProperty : second value' );
+  } );
+
   it( '++++ DEBUG ++++', () => {
     const person = {
       name: {

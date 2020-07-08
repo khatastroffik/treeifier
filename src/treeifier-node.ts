@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { TreeifierNodeParser, TreeifierNodeTypes } from './treeifier-node-parser';
+import { TreeifierNodeParser, TreeifierNodeTypes } from './treeifier-node-parser.js';
 
 /**
  * @khatastroffik/treeifier :: Treeifier Node
@@ -122,6 +122,8 @@ export class TreeifierNode {
    * @memberof TreeifierNode
    */
   toString(): string {
+    // TODO: improve the `asString()` output for arrays containing mixed value types.
+    
     // IMPORTANT: the order of the tests is important here!
     // => 1. empty 2. non displayable values 3. circular 4. branches 5. array 6. values
     let result = '';
