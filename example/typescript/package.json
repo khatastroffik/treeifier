@@ -1,0 +1,19 @@
+{
+  "description": "Sample typescript app using treeifier and treeifier-utils",
+  "scripts": {
+    "start": "ts-node index.ts"
+  },
+  "author": {
+    "name": "Loïs Bégué",
+    "url": "https://www.khatastroffik.net"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.6"
+  },
+  "dependencies": {
+    "@khatastroffik/treeifier": "file:../../../treeifier",
+    "@khatastroffik/treeifier-utils": "file:../../../treeifier-utils"
+  }
+}

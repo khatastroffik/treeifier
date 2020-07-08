@@ -1,0 +1,16 @@
+{
+  "description": "Sample nodejs app using treeifier-utils",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": {
+    "name": "Loïs Bégué",
+    "url": "https://www.khatastroffik.net"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@khatastroffik/treeifier": "file:../../../treeifier",
+    "@khatastroffik/treeifier-utils": "file:../../../treeifier-utils",
+    "chalk": "^4.1.0"
+  }
+}
