@@ -1,0 +1,40 @@
+html {
+  height: 100%;
+}
+body {
+  font-family: Montserrat, sans-serif;
+  background-color: lightgray;
+}
+.key {
+  color: black;
+}
+.value {
+  color: darkolivegreen;
+}
+.nt_number > .value {
+  color: navy;
+}
+.nt_string > .value {
+  color: darkred;
+}
+.nt_date > .value {
+  color: darkorange;
+}
+.nt_boolean > .value {
+  color: yellow;
+  background-color: black;
+  padding-left: 0.3em;
+  padding-right: 0.3em;
+}
+.nt_empty > .value {
+  color: darkcyan;
+}
+.nt_array > .value {
+  color: darkorchid;
+}
+.circular {
+  color: yellow;
+  background-color: red;
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
+}

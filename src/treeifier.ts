@@ -9,7 +9,7 @@
  *
 **/
 
-import { TreeifierNode } from './treeifier-node';
+import { TreeifierNode } from './treeifier-node.js';
 
 
 export type TreeSortFunction = ( objPropA: [string, unknown], objPropB: [string, unknown] ) => number;

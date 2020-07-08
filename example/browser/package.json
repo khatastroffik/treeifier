@@ -1,0 +1,12 @@
+{
+  "description": "Sample browser app using treeifier and treeifier-utils",
+  "scripts": {
+    "start": "npx http-server -o"
+  },
+  "author": {
+    "name": "Loïs Bégué",
+    "url": "https://www.khatastroffik.net"
+  },
+  "license": "MIT",
+  "dependencies": {}
+}
