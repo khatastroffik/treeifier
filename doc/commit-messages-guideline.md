@@ -1,6 +1,6 @@
 # Commit Messages Guideline
 
-back to [README][readme]
+back to [main project page][mainpage]
 
 ## Commit Message Format
 
@@ -105,4 +105,4 @@ Similar guidlines and other references can be found in the following:
 [karma-git-commit]: http://karma-runner.github.io/3.0/dev/git-commit-msg.html
 [semantic-versioning]: https://semver.org/spec/v2.0.0.html
 [conventional-commits]: https://www.conventionalcommits.org
-[readme]: ../README.md
+[mainpage]: ../README.md

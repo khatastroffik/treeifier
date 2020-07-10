@@ -4,6 +4,7 @@
   "description": "A Typescript/JavaScript library generating a tree representation of an object",
   "main": "dist/treeifier",
   "node": "dist/treeifier.js",
+  "browser": "dist/browser/treeifier.js",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
@@ -39,7 +40,13 @@
     "Typescript",
     "Tree",
     "Treeify",
-    "Treeifier"
+    "Treeifier",
+    "object",
+    "representation",
+    "dependency-free",
+    "nodes",
+    "ESM",
+    "commonjs"
   ],
   "author": {
     "name": "Loïs Bégué",
@@ -53,7 +60,7 @@
   },
   "files": [
     "/dist",
-    "/types"
+    "/doc"
   ],
   "directories": {
     "doc": "doc",

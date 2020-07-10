@@ -1,6 +1,8 @@
 <!-- markdownlint-disable MD033 MD005 -->
 # API
 
+back to [main project page][mainpage]
+
 The classes and types you should be aware of when adapting or extending *treeifier* are:
 
 - class **Treeifier**
@@ -149,7 +151,7 @@ Note: the nodeType value `TreeifierNodeTypes.unknown` is defined as well but sho
 
 Here's an example object and its representation
 
-![input object and treeified output](./doc/screenshot-object-transformation.png)
+![input object and treeified output](./screenshot-object-transformation.png)
 
 ## NodeProcessorFunction (type)
 
@@ -160,7 +162,13 @@ This type define the shape of a processor function (callback function) that the 
 
 ## modifiying the behavior of treeifier
 
+Well... this section is still "*to-be-documented*". In the mean time, please have a look at the sources.
+
 <!-- #################### TODO: explain the Array....Types etc. ##############################-->
 
 ## Write your own "processor" function
-<!-- #################### TODO: explain the workflow inside the proc ##############################-->
+
+Please see the [procesor function documentation][write-processor].
+
+[write-processor]: ./writing-a-processor-function.md
+[mainpage]: ../README.md

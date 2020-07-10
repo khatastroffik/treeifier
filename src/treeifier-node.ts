@@ -11,7 +11,7 @@ import { TreeifierNodeParser, TreeifierNodeTypes } from './treeifier-node-parser
  *
 **/
 
-// TODO: implement deep property access i.e. a function to access "item[..][..]...[..]" using the "path" information
+// TODO: (possibly) implement deep property access i.e. a function to access "item[..][..]...[..]" using the "path" information
 //       i.e. a kind of recursive version of:
 //       function get(obj: any, ...props: string[]): any {
 //         return obj && props.reduce(
@@ -30,7 +30,7 @@ import { TreeifierNodeParser, TreeifierNodeTypes } from './treeifier-node-parser
 //      etc. as in https://hackernoon.com/accessing-nested-objects-in-javascript-f02f1bd6387f
 //           https://www.npmjs.com/package/typy
 
-// TODO: implement automatic recognition of properties containing a date as string or number e.g. with names like "Date, DateTime, TimeStamp, fromDate, toDate, start, end ..."
+// TODO: (possibly) implement automatic recognition of properties containing a date as string or number e.g. with names like "Date, DateTime, TimeStamp, fromDate, toDate, start, end ..."
 
 /**
  * This class represents the building block of the tree structure corresponding 
@@ -122,7 +122,7 @@ export class TreeifierNode {
    * @memberof TreeifierNode
    */
   toString(): string {
-    // TODO: improve the `asString()` output for arrays containing mixed value types.
+    // TODO: (possibly) improve the `asString()` output for arrays containing mixed value types.
     
     // IMPORTANT: the order of the tests is important here!
     // => 1. empty 2. non displayable values 3. circular 4. branches 5. array 6. values
@@ -138,7 +138,8 @@ export class TreeifierNode {
       ( ( this.nodeType == TreeifierNodeTypes.nonEmptyObject ) && ( result = 'object' ) ) ||
       ( ( this.nodeType == TreeifierNodeTypes.arrayofobjects ) && ( result = 'array of objects' ) ) ||
       ( ( this.nodeType == TreeifierNodeTypes.array ) && ( result = `[${( this.value as Array<any> ).join( ', ' )}]` ) ) ||
-      // ((this.nodeType == TreeifierNodeTypes.unknown) && ( result = '<UNKNOWN>')) || // this should never happen
+      // the next line should never been triggered, hence it is disabled here (though maintained as documentation)
+      // ((this.nodeType == TreeifierNodeTypes.unknown) && ( result = '<UNKNOWN>')) || ... 
       ( result = this.value.toString() );
     return result;
   }

@@ -1,5 +1,7 @@
 # treeifier + treeifier-utils TYPESCRIPT Sample application
 
+back to [examples page][examples] back to [main project page][mainpage]
+
 ## purpose
 
 Demonstrate the use of the **treeifier** and **treeifier-utils** libraries within a *typescript* application. The example is showing different usages of the libraries.
@@ -17,3 +19,10 @@ Demonstrate the use of the **treeifier** and **treeifier-utils** libraries withi
 ```
 
 IMPORTANT: the colored output depends on the capabilities of the utilized command line environment i.e. shell! If no colors are visible, please use another CL...
+
+## screenshot
+
+![node app](../../doc/screenshot-object-transformation.png)
+
+[mainpage]: ../../README.md
+[examples]: ../README.md

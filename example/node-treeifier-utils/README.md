@@ -1,5 +1,7 @@
 # treeifier + treeifier-utils Node.js Sample application
 
+back to [examples page][examples] back to [main project page][mainpage]
+
 ## purpose
 
 Demonstrate the use of the **treeifier** and **treeifier-utils** libraries. The example is showing different usages of the libraries.
@@ -17,3 +19,10 @@ Demonstrate the use of the **treeifier** and **treeifier-utils** libraries. The 
 ```
 
 IMPORTANT: the colored output depends on the capabilities of the utilized command line environment i.e. shell!
+
+## screenshot
+
+![node app](../../doc/screenshot-colored-ascii-tree.png)
+
+[mainpage]: ../../README.md
+[examples]: ../README.md

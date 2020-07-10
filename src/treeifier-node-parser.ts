@@ -9,8 +9,6 @@
  *
 **/
 
-// TODO: allow the client app to redefine/modify the criteria used to identify/differentiate between "leaf" and "branch" nodes.
-
 /**
  * The TreeifierNodeTypes describes the possible types of values stored in the tree nodes.
  * Beside "pure" value types, compounds or "complex" types are defined.
