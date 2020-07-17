@@ -1,5 +1,7 @@
 # treeifier Node.js Sample application
 
+back to [examples page][examples] back to [main project page][mainpage]
+
 ## purpose
 
 Demonstrate the use of the **treeifier** library. The example is also showing how to use your own (custom) "processor" function.
@@ -15,3 +17,10 @@ Demonstrate the use of the **treeifier** library. The example is also showing ho
 > npm install
 > npm start
 ```
+
+## screenshot
+
+![node app](../../doc/screenshot-default-ascii-tree.png)
+
+[mainpage]: ../../README.md
+[examples]: ../README.md
